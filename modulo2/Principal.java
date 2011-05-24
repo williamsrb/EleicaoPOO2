@@ -22,9 +22,9 @@ public class Principal extends JPanel implements KeyListener, MouseListener {
 		JOptionPane.showMessageDialog(null, "Vote consciente!", "Bem-vindo!", JOptionPane.INFORMATION_MESSAGE);
 		
 		pane.setSize(size);
+		pane.setLayout(null);
 		
 		View.buildInterface(frame);
-		View.prepareEvents(frame);
 		
 		frame.setSize(pane.getWidth(), pane.getHeight());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

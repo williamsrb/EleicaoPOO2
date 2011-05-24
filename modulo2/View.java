@@ -10,14 +10,14 @@ import javax.swing.border.BevelBorder;
 public class View {
 
 	public static void buildInterface(Container pane) {
-		int listsize;
 		Dimension size;
 		String defaultPath = "/resources/images/";
 		Stack<Component> reverselist = new Stack<Component>();
 		
 		//Todos elementos visuais
 		JButton btnD0, btnD1, btnD2, btnD3, btnD4, btnD5, btnD6, btnD7, btnD8, btnD9, btnCGREEN, btnCRED, btnCWHITE;
-		ImagePanel bg, screen, logo, digits;
+		ImagePanel bg, glass, logo, digits;
+		JPanel screen;
 		
 		//Imagens dos botões
 		ImageButton imgD0, imgD1, imgD2, imgD3, imgD4, imgD5, imgD6, imgD7, imgD8, imgD9, imgCGREEN, imgCRED, imgCWHITE;
@@ -37,17 +37,25 @@ public class View {
 		
 		//Imagens dos painéis
 		bg = new ImagePanel(pathToImageIcon(defaultPath + "caixa.png").getImage());
-		screen = new ImagePanel(pathToImageIcon(defaultPath + "tela.png").getImage());
+		glass = new ImagePanel(pathToImageIcon(defaultPath + "tela.png").getImage());
 		logo = new ImagePanel(pathToImageIcon(defaultPath + "rotulo.png").getImage());
 		digits = new ImagePanel(pathToImageIcon(defaultPath + "painel.png").getImage());
 		
+		//Painel de exibição do conteúdo da tela da urna
+		screen = new JPanel();
+		
 		//Dimensões e posicionamento
 		size = bg.getSize();
-		bg.setBounds(0, 0, size.width, size.height); 
+		bg.setBounds(0, 0, size.width, size.height);
 		
-		size = screen.getSize();
-		screen.setBounds(40, 50, size.width, size.height);
-		screen.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, new Color(120, 120, 120), new Color(120, 120, 120), new Color(220, 220, 220), new Color(220, 220, 220)));
+		size = glass.getSize();
+		glass.setBounds(40, 50, size.width, size.height);
+		glass.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, new Color(120, 120, 120), new Color(120, 120, 120), new Color(220, 220, 220), new Color(220, 220, 220)));
+		
+		screen.setBackground(Color.white);
+		screen.setBounds(glass.getBounds());
+		screen.setLayout(null);
+		buildScreen(screen);
 		
 		size = logo.getSize();
 		logo.setBounds(510, 50, size.width, size.height);
@@ -175,6 +183,7 @@ public class View {
 		//Simulando camadas. Inferiores vêm primeiro.
 		reverselist.push(bg);
 		reverselist.push(screen);
+		reverselist.push(glass);
 		reverselist.push(logo);
 		reverselist.push(digits);
 		reverselist.push(btnD1);
@@ -192,15 +201,38 @@ public class View {
 		reverselist.push(btnCGREEN);
 		
 		//Setando elementos no panel pela ordem de camadas
-		listsize = reverselist.size();
-		pane.setLayout(null);
+		preparePanel(pane, reverselist);
+	}
+	
+	private static void buildScreen(JPanel pane) {
+		Stack<Component> reverselist = new Stack<Component>();
+		@SuppressWarnings("unused")
+		JLabel title, bigMiddleMsg, bottomRightMsg;
+		JSeparator separator;
+		
+		title = new JLabel("Eleições");
+		title.setLocation(0, 0);
+		title.setSize(90, 90);
+		separator = new JSeparator(SwingConstants.HORIZONTAL);
+		separator.setLocation(0, 90);
+		separator.setSize(pane.getSize());
+		//texto.setBorder(BorderFactory.createLineBorder(Color.red));
+		
+		//Setando elementos no panel pela ordem de camadas
+		reverselist.push(title);
+		reverselist.push(separator);
+		preparePanel(pane, reverselist);
+	}
+	
+	public static void fillScreen() {
+		
+	}
+	
+	public static void preparePanel(Container pane, Stack<Component> reverselist) {
+		int listsize = reverselist.size();
 		for(int i = 0; i < listsize; i++) {
 			pane.add(reverselist.pop());
 		}
-	}
-	
-	public static void prepareEvents(JFrame frame) {
-
 	}
 	
 	public static ImageIcon pathToImageIcon(String path) {
