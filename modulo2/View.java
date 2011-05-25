@@ -55,7 +55,6 @@ public class View {
 		screen.setBackground(Color.white);
 		screen.setBounds(glass.getBounds());
 		screen.setLayout(null);
-		buildScreen(screen);
 		
 		size = logo.getSize();
 		logo.setBounds(510, 50, size.width, size.height);
@@ -204,7 +203,27 @@ public class View {
 		preparePanel(pane, reverselist);
 	}
 	
-	private static void buildScreen(JPanel pane) {
+	private static void displayStateBlocked(JPanel screenPanel) {
+		Stack<Component> reverselist = new Stack<Component>();
+		@SuppressWarnings("unused")
+		JLabel title, bigMiddleMsg, bottomRightMsg;
+		JSeparator separator;
+		
+		title = new JLabel("Eleições");
+		title.setLocation(0, 0);
+		title.setSize(90, 90);
+		separator = new JSeparator(SwingConstants.HORIZONTAL);
+		separator.setLocation(0, 90);
+		separator.setSize(screenPanel.getSize());
+		//texto.setBorder(BorderFactory.createLineBorder(Color.red));
+		
+		//Setando elementos no panel pela ordem de camadas
+		reverselist.push(title);
+		reverselist.push(separator);
+		preparePanel(screenPanel, reverselist);
+	}
+	
+	private static void displayStateVoting(JPanel pane) {
 		Stack<Component> reverselist = new Stack<Component>();
 		@SuppressWarnings("unused")
 		JLabel title, bigMiddleMsg, bottomRightMsg;
@@ -224,8 +243,24 @@ public class View {
 		preparePanel(pane, reverselist);
 	}
 	
-	public static void fillScreen() {
+	private static void displayStateNed(JPanel pane) {
+		Stack<Component> reverselist = new Stack<Component>();
+		@SuppressWarnings("unused")
+		JLabel title, bigMiddleMsg, bottomRightMsg;
+		JSeparator separator;
 		
+		title = new JLabel("Eleições");
+		title.setLocation(0, 0);
+		title.setSize(90, 90);
+		separator = new JSeparator(SwingConstants.HORIZONTAL);
+		separator.setLocation(0, 90);
+		separator.setSize(pane.getSize());
+		//texto.setBorder(BorderFactory.createLineBorder(Color.red));
+		
+		//Setando elementos no panel pela ordem de camadas
+		reverselist.push(title);
+		reverselist.push(separator);
+		preparePanel(pane, reverselist);
 	}
 	
 	public static void preparePanel(Container pane, Stack<Component> reverselist) {
