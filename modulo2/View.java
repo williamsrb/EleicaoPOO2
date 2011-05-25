@@ -55,6 +55,9 @@ public class View {
 		screen.setBackground(Color.white);
 		screen.setBounds(glass.getBounds());
 		screen.setLayout(null);
+		//Teste
+		VotingStates st = new VotingStates(screen);
+		st.displayCongressman();
 		
 		size = logo.getSize();
 		logo.setBounds(510, 50, size.width, size.height);
@@ -243,7 +246,7 @@ public class View {
 		preparePanel(pane, reverselist);
 	}
 	
-	private static void displayStateNed(JPanel pane) {
+	private static void displayStateEnd(JPanel pane) {
 		Stack<Component> reverselist = new Stack<Component>();
 		@SuppressWarnings("unused")
 		JLabel title, bigMiddleMsg, bottomRightMsg;
