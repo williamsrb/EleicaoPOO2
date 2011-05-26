@@ -65,25 +65,21 @@ public class VotingState {
 		
 		title = new JLabel("ELEIÇÃO");
 		title.setBounds(10, 10, 70, 24);
-		//title.setBorder(BorderFactory.createLineBorder(Color.magenta));
 		title.setVerticalAlignment(JLabel.TOP);
 		title.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
 		
 		textTop = new JLabel("SEU VOTO PARA");
 		textTop.setBounds(15, 33, 170, 28);
-		//textTop.setBorder(BorderFactory.createLineBorder(Color.magenta));
 		textTop.setVerticalAlignment(JLabel.TOP);
 		textTop.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
 		
 		post = new JLabel("DEPUTADO FEDERAL");
 		post.setBounds(20, 75, 305, 42);
-		//post.setBorder(BorderFactory.createLineBorder(Color.magenta));
 		post.setVerticalAlignment(JLabel.TOP);
 		post.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 25));
 		
 		numLabel = new JLabel("Número:");
 		numLabel.setBounds(10, 170, 70, 24);
-		//numLabel.setBorder(BorderFactory.createLineBorder(Color.magenta));
 		numLabel.setVerticalAlignment(JLabel.TOP);
 		numLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
 		
@@ -124,25 +120,21 @@ public class VotingState {
 		
 		nameLabel = new JLabel("Nome:");
 		nameLabel.setBounds(10, 200, 50, 24);
-		//nameLabel.setBorder(BorderFactory.createLineBorder(Color.magenta));
 		nameLabel.setVerticalAlignment(JLabel.TOP);
 		nameLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
 		
 		nameValue = new JLabel("Maria da Silva dos Testes");//Depende do Deputado
 		nameValue.setBounds(65, 200, 230, 24);
-		//nameValue.setBorder(BorderFactory.createLineBorder(Color.magenta));
 		nameValue.setVerticalAlignment(JLabel.TOP);
 		nameValue.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 		
 		partyLabel = new JLabel("Partido:");
 		partyLabel.setBounds(10, 230, 55, 24);
-		//partyLabel.setBorder(BorderFactory.createLineBorder(Color.magenta));
 		partyLabel.setVerticalAlignment(JLabel.TOP);
 		partyLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
 		
 		partyName = new JLabel("PN");//Depende do Deputado
 		partyName.setBounds(70, 230, 28, 24);
-		//partyName.setBorder(BorderFactory.createLineBorder(Color.magenta));
 		partyName.setVerticalAlignment(JLabel.TOP);
 		partyName.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 		
@@ -157,28 +149,21 @@ public class VotingState {
 		horizLine.setBackground(new Color(120, 120, 120));
 		horizLine.setForeground(new Color(220, 220, 220));
 		
-		textBottom = new JLabel("Partido:");
-		textBottom.setBounds(10, 230, 55, 24);
-		textBottom.setBorder(BorderFactory.createLineBorder(Color.magenta));
+		textBottom = new JLabel("Aperte a tecla:");
+		textBottom.setBounds(10, 330, 120, 24);
 		textBottom.setVerticalAlignment(JLabel.TOP);
-		textBottom.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
+		textBottom.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
 		
-		/**
-		 * Título
-		 * Seu voto para
-		 * deputado estadual
-		 * foto
-		 * número
-		 * [X][X][X][X][X] * Cada quadrado será um jlabel
-		 * nome
-		 * "Xnome"
-		 * partido
-		 * "Xpartido"
-		 * divisor
-		 * Aperte a tecla:
-		 * Verde para confirmar este voto
-		 * Vermelho para reiniciar este voto
-		 */
+		greenInstruction = new JLabel("VERDE para CONFIRMAR este voto");
+		greenInstruction.setBounds(20, 350, 220, 24);
+		greenInstruction.setVerticalAlignment(JLabel.TOP);
+		greenInstruction.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
+		
+		redInstruction = new JLabel("VERMELHO para REINICIAR este voto");
+		redInstruction.setBounds(20, 370, 230, 24);
+		redInstruction.setVerticalAlignment(JLabel.TOP);
+		redInstruction.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
+		
 		reverselist.push(title);
 		reverselist.push(textTop);
 		reverselist.push(post);
@@ -189,6 +174,8 @@ public class VotingState {
 		reverselist.push(partyName);
 		reverselist.push(horizLine);
 		reverselist.push(textBottom);
+		reverselist.push(greenInstruction);
+		reverselist.push(redInstruction);
 		reverselist.push(mainPhoto);
 		reverselist.push(numDigit01);
 		reverselist.push(numDigit02);
