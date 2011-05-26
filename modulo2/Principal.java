@@ -14,6 +14,7 @@ public class Principal extends JPanel implements KeyListener, MouseListener {
 		JFrame frame = new JFrame("Urna Eletrônica");
 		Dimension size;
 		Container pane = frame.getContentPane();
+		frame.setResizable(false);
 		frame.setVisible(true);
 		frameInsets = frame.getInsets();
 		frame.setVisible(false);
@@ -28,7 +29,6 @@ public class Principal extends JPanel implements KeyListener, MouseListener {
 		
 		frame.setSize(pane.getWidth(), pane.getHeight());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setResizable(false);
 		frame.setVisible(true);
 	}
 

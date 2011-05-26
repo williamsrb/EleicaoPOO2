@@ -56,8 +56,8 @@ public class View {
 		screen.setBounds(glass.getBounds());
 		screen.setLayout(null);
 		//Teste
-		VotingStates st = new VotingStates(screen);
-		st.displayCongressman();
+		VotingState st = new VotingState(screen);
+		st.displayCongressman(null);
 		
 		size = logo.getSize();
 		logo.setBounds(510, 50, size.width, size.height);
