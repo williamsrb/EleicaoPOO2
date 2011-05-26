@@ -9,6 +9,20 @@ public class Congressman {
 	private int partido;
 	private int cargo;
 	private Date nascimento;
+	
+	
+	public Congressman(int id, int number, String name, int partido, int cargo,
+			Date nascimento) {
+		super();
+		this.id = id;
+		this.number = number;
+		this.name = name;
+		this.partido = partido;
+		this.cargo = cargo;
+		this.nascimento = nascimento;
+	}
+
+
 	/**
 	id(pk)									[int/serial]	NOT NULL
 	numero(suffix)							[int]	NOT NULL

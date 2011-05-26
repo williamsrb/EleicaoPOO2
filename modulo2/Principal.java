@@ -2,7 +2,6 @@ package modulo2;
 
 import java.awt.*;
 import java.awt.event.*;
-
 import javax.swing.*;
 
 public class Principal extends JPanel implements KeyListener, MouseListener {
@@ -30,8 +29,9 @@ public class Principal extends JPanel implements KeyListener, MouseListener {
 		frame.setSize(pane.getWidth(), pane.getHeight());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		
 	}
-
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
