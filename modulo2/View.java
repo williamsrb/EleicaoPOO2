@@ -57,7 +57,7 @@ public class View {
 		screen.setLayout(null);
 		//Teste
 		VotingState st = new VotingState(screen);
-		st.displayCongressman(null);
+		st.displayCongressman(null); //Teste
 		
 		size = logo.getSize();
 		logo.setBounds(510, 50, size.width, size.height);

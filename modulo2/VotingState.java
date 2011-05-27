@@ -8,11 +8,8 @@ import java.util.Stack;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
-import javax.swing.JToolBar.Separator;
 
 import modulo2.domain.Congressman;
 
@@ -43,14 +40,6 @@ public class VotingState {
 	
 	public JPanel getScreenPanel() {
 		return this.screenPanel;
-	}
-
-	public void displayPresident() {
-		JPanel pane = this.getScreenPanel();
-	}
-	
-	public void displayGovernor() {
-		JPanel pane = this.getScreenPanel();
 	}
 	
 	public void displayCongressman(Congressman person) {
