@@ -7,6 +7,8 @@ import java.util.Stack;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
+import modulo2.domain.Deputado;
+
 public class View {
 
 	public static void buildInterface(Container pane) {
@@ -56,8 +58,8 @@ public class View {
 		screen.setBounds(glass.getBounds());
 		screen.setLayout(null);
 		//Teste
-		VotingState st = new VotingState(screen);
-		st.displayCongressman(null); //Teste
+		//VotingState st = new VotingState(screen);
+		//st.displayCongressman(new Deputado()); //Teste
 		
 		size = logo.getSize();
 		logo.setBounds(510, 50, size.width, size.height);
