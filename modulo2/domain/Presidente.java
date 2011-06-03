@@ -1,8 +1,20 @@
 package modulo2.domain;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Stack;
+
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import modulo2.ImagePanel;
+import modulo2.View;
 
 public class Presidente extends Candidato {
 	private String vice_nome;
@@ -42,5 +54,37 @@ public class Presidente extends Candidato {
 	
 	public String getVice_foto() {
 		return vice_foto;
+	}
+	
+	/* Display */
+	public void setDisplay(JPanel pane) {
+		JLabel vicenameLabel, vicenameValue;
+		ImagePanel vicePhoto;
+		Dimension size;
+		
+		Stack<Component> reverselist = new Stack<Component>();
+		
+		this.displaylist = reverselist;
+		displayCandidate((Candidato)person);
+		
+		vicenameLabel = new JLabel("Vice-governador:");
+		vicenameLabel.setBounds(10+50, 200+50, 50, 24);
+		vicenameLabel.setVerticalAlignment(JLabel.TOP);
+		vicenameLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
+		
+		vicenameValue = new JLabel(person.getVice_nome());//Depende do Governador
+		vicenameValue.setBounds(65+50, 200+50, 230, 24);
+		vicenameValue.setVerticalAlignment(JLabel.TOP);
+		vicenameValue.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
+		
+		vicePhoto = new ImagePanel(View.pathToImageIcon(this.defaultPath + person.getVice_foto()).getImage());//Depende do Governador
+		size = vicePhoto.getSize();
+		vicePhoto.setBounds(320-100, 10+100, size.width, size.height);
+		vicePhoto.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		reverselist.add(8, vicenameLabel);//8
+		reverselist.add(9, vicenameValue);//9
+		reverselist.add(15, vicePhoto);//15
+		View.preparePanel(this.screenPanel, reverselist);
 	}
 }

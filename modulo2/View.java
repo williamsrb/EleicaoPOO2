@@ -1,13 +1,21 @@
 package modulo2;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Image;
 import java.net.URL;
 import java.util.Stack;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
 //import modulo2.domain.Deputado;
+import modulo2.domain.Governador;
 
 public class View {
 
@@ -58,8 +66,8 @@ public class View {
 		screen.setBounds(glass.getBounds());
 		screen.setLayout(null);
 		//Teste
-		//VotingState st = new VotingState(screen);
-		//st.displayCongressman(new Deputado()); //Teste
+		VotingState st = new VotingState(screen);
+		st.displayCandidate(new Governador()); //Teste
 		
 		size = logo.getSize();
 		logo.setBounds(510, 50, size.width, size.height);
@@ -207,67 +215,7 @@ public class View {
 		//Setando elementos no panel pela ordem de camadas
 		preparePanel(pane, reverselist);
 	}
-	/*
-	private static void displayStateBlocked(JPanel screenPanel) {
-		Stack<Component> reverselist = new Stack<Component>();
-		@SuppressWarnings("unused")
-		JLabel title, bigMiddleMsg, bottomRightMsg;
-		JSeparator separator;
-		
-		title = new JLabel("Eleições");
-		title.setLocation(0, 0);
-		title.setSize(90, 90);
-		separator = new JSeparator(SwingConstants.HORIZONTAL);
-		separator.setLocation(0, 90);
-		separator.setSize(screenPanel.getSize());
-		//texto.setBorder(BorderFactory.createLineBorder(Color.red));
-		
-		//Setando elementos no panel pela ordem de camadas
-		reverselist.push(title);
-		reverselist.push(separator);
-		preparePanel(screenPanel, reverselist);
-	}
 	
-	private static void displayStateVoting(JPanel pane) {
-		Stack<Component> reverselist = new Stack<Component>();
-		@SuppressWarnings("unused")
-		JLabel title, bigMiddleMsg, bottomRightMsg;
-		JSeparator separator;
-		
-		title = new JLabel("Eleições");
-		title.setLocation(0, 0);
-		title.setSize(90, 90);
-		separator = new JSeparator(SwingConstants.HORIZONTAL);
-		separator.setLocation(0, 90);
-		separator.setSize(pane.getSize());
-		//texto.setBorder(BorderFactory.createLineBorder(Color.red));
-		
-		//Setando elementos no panel pela ordem de camadas
-		reverselist.push(title);
-		reverselist.push(separator);
-		preparePanel(pane, reverselist);
-	}
-	
-	private static void displayStateEnd(JPanel pane) {
-		Stack<Component> reverselist = new Stack<Component>();
-		@SuppressWarnings("unused")
-		JLabel title, bigMiddleMsg, bottomRightMsg;
-		JSeparator separator;
-		
-		title = new JLabel("Eleições");
-		title.setLocation(0, 0);
-		title.setSize(90, 90);
-		separator = new JSeparator(SwingConstants.HORIZONTAL);
-		separator.setLocation(0, 90);
-		separator.setSize(pane.getSize());
-		//texto.setBorder(BorderFactory.createLineBorder(Color.red));
-		
-		//Setando elementos no panel pela ordem de camadas
-		reverselist.push(title);
-		reverselist.push(separator);
-		preparePanel(pane, reverselist);
-	}
-	*/
 	public static void preparePanel(Container pane, Stack<Component> reverselist) {
 		int listsize = reverselist.size();
 		for(int i = 0; i < listsize; i++) {
