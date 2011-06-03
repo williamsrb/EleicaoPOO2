@@ -7,7 +7,7 @@ import java.util.Stack;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
-import modulo2.domain.Deputado;
+//import modulo2.domain.Deputado;
 
 public class View {
 
@@ -207,7 +207,7 @@ public class View {
 		//Setando elementos no panel pela ordem de camadas
 		preparePanel(pane, reverselist);
 	}
-	
+	/*
 	private static void displayStateBlocked(JPanel screenPanel) {
 		Stack<Component> reverselist = new Stack<Component>();
 		@SuppressWarnings("unused")
@@ -267,7 +267,7 @@ public class View {
 		reverselist.push(separator);
 		preparePanel(pane, reverselist);
 	}
-	
+	*/
 	public static void preparePanel(Container pane, Stack<Component> reverselist) {
 		int listsize = reverselist.size();
 		for(int i = 0; i < listsize; i++) {
