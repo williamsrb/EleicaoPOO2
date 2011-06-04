@@ -9,11 +9,11 @@ import java.util.Stack;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
 import modulo2.ImagePanel;
-import modulo2.View;
+import modulo2.util.Display;
+import modulo2.util.FileUpload;
 import modulo2.util.Sequence;
 
 public class Candidato {
@@ -77,15 +77,13 @@ public class Candidato {
 		return this.site;
 	}
 	
-	private void setDisplay(JPanel pane) {
+	protected void setDisplay(Stack<Component> reverselist) {
 		Dimension size;
 		JLabel title, textTop, textBottom, greenInstruction, redInstruction;
 		JLabel post, numLabel, nameLabel, nameValue, partyLabel, partyName;
 		JLabel numDigit01, numDigit02;
 		JSeparator horizLine;
 		ImagePanel mainPhoto;
-		
-		Stack<Component> reverselist = this.displaylist;
 		
 		title = new JLabel("ELEIÇÃO");
 		title.setBounds(10, 10, 70, 24);
@@ -97,7 +95,7 @@ public class Candidato {
 		textTop.setVerticalAlignment(JLabel.TOP);
 		textTop.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
 		
-		post = new JLabel(person.getCargo().getNome().toUpperCase());
+		post = new JLabel(this.cargo.getNome().toUpperCase());
 		post.setBounds(20, 75, 305, 42);
 		post.setVerticalAlignment(JLabel.TOP);
 		post.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 25));
@@ -107,14 +105,14 @@ public class Candidato {
 		numLabel.setVerticalAlignment(JLabel.TOP);
 		numLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
 		
-		numDigit01 = new JLabel(String.format("%c", person.getNumero().toString().charAt(0)));//Depende do Candidato
+		numDigit01 = new JLabel(String.format("%c", this.numero.toString().charAt(0)));//Depende do Candidato
 		numDigit01.setBounds(80, 145, 40, 42);
 		numDigit01.setBorder(BorderFactory.createLineBorder(Color.black));
 		numDigit01.setVerticalAlignment(JLabel.CENTER);
 		numDigit01.setHorizontalAlignment(JLabel.CENTER);
 		numDigit01.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
 		
-		numDigit02 = new JLabel(String.format("%c", person.getNumero().toString().charAt(1)));//Depende do Candidato
+		numDigit02 = new JLabel(String.format("%c", this.numero.toString().charAt(1)));//Depende do Candidato
 		numDigit02.setBounds(125, 145, 40, 42);
 		numDigit02.setBorder(BorderFactory.createLineBorder(Color.black));
 		numDigit02.setVerticalAlignment(JLabel.CENTER);
@@ -126,7 +124,7 @@ public class Candidato {
 		nameLabel.setVerticalAlignment(JLabel.TOP);
 		nameLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
 		
-		nameValue = new JLabel(person.getNome());//Depende do Candidato
+		nameValue = new JLabel(this.nome);//Depende do Candidato
 		nameValue.setBounds(65, 200, 230, 24);
 		nameValue.setVerticalAlignment(JLabel.TOP);
 		nameValue.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
@@ -136,20 +134,21 @@ public class Candidato {
 		partyLabel.setVerticalAlignment(JLabel.TOP);
 		partyLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
 		
-		partyName = new JLabel(person.getPartido().getSigla());//Depende do Candidato
+		partyName = new JLabel(this.partido.getSigla());//Depende do Candidato
 		partyName.setBounds(70, 230, 230, 24);
 		partyName.setVerticalAlignment(JLabel.TOP);
 		partyName.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 		partyName.setBorder(BorderFactory.createLineBorder(Color.magenta));
 		
-		mainPhoto = new ImagePanel(View.pathToImageIcon(this.defaultPath + person.getFoto()).getImage());//Depende do Candidato
+		mainPhoto = new ImagePanel(Display.pathToImageIcon(FileUpload.getDefaultPath() + this.foto).getImage());//Depende do Candidato
 		size = mainPhoto.getSize();
 		mainPhoto.setBounds(320, 10, size.width, size.height);
 		mainPhoto.setBorder(BorderFactory.createLineBorder(Color.black));
 		
 		horizLine = new JSeparator(JSeparator.HORIZONTAL);
 		horizLine.setLocation(0, 320);
-		horizLine.setSize(this.screenPanel.getSize());
+		//horizLine.setSize(pane.getSize());
+		horizLine.setSize(new Dimension(450, 4));
 		horizLine.setBackground(new Color(120, 120, 120));
 		horizLine.setForeground(new Color(220, 220, 220));
 		

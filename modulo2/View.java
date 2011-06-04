@@ -4,18 +4,16 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Image;
-import java.net.URL;
 import java.util.Stack;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
 //import modulo2.domain.Deputado;
 import modulo2.domain.Governador;
+import modulo2.util.Display;
 
 public class View {
 
@@ -46,10 +44,10 @@ public class View {
 		imgCWHITE = new ImageButton(KeyEnum.CWHITE);
 		
 		//Imagens dos painéis
-		bg = new ImagePanel(pathToImageIcon(defaultPath + "caixa.png").getImage());
-		glass = new ImagePanel(pathToImageIcon(defaultPath + "tela.png").getImage());
-		logo = new ImagePanel(pathToImageIcon(defaultPath + "rotulo.png").getImage());
-		digits = new ImagePanel(pathToImageIcon(defaultPath + "painel.png").getImage());
+		bg = new ImagePanel(Display.pathToImageIcon(defaultPath + "caixa.png").getImage());
+		glass = new ImagePanel(Display.pathToImageIcon(defaultPath + "tela.png").getImage());
+		logo = new ImagePanel(Display.pathToImageIcon(defaultPath + "rotulo.png").getImage());
+		digits = new ImagePanel(Display.pathToImageIcon(defaultPath + "painel.png").getImage());
 		
 		//Painel de exibição do conteúdo da tela da urna
 		screen = new JPanel();
@@ -213,27 +211,6 @@ public class View {
 		reverselist.push(btnCGREEN);
 		
 		//Setando elementos no panel pela ordem de camadas
-		preparePanel(pane, reverselist);
-	}
-	
-	public static void preparePanel(Container pane, Stack<Component> reverselist) {
-		int listsize = reverselist.size();
-		for(int i = 0; i < listsize; i++) {
-			pane.add(reverselist.pop());
-		}
-	}
-	
-	public static ImageIcon pathToImageIcon(String path) {
-		URL resource = View.class.getResource(path);
-		if(resource != null) {
-			return new ImageIcon(resource);
-		} else {
-			System.err.println("Arquivo não encontrado: " + path);
-			return null;
-		}
-	}
-	
-	public static Image urlToImage(URL img) {
-		return new ImageIcon(img).getImage();
+		Display.preparePanel(pane, reverselist);
 	}
 }

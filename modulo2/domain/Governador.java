@@ -11,10 +11,10 @@ import java.util.Stack;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import modulo2.ImagePanel;
-import modulo2.View;
+import modulo2.util.Display;
+import modulo2.util.FileUpload;
 
 public class Governador extends Candidato {
 	private String vice_nome;
@@ -57,27 +57,22 @@ public class Governador extends Candidato {
 	}
 	
 	/* Display */
-	public void setDisplay(JPanel pane) {
+	public void setDisplay(Stack<Component> reverselist) {
 		JLabel vicenameLabel, vicenameValue;
 		ImagePanel vicePhoto;
 		Dimension size;
-		
-		Stack<Component> reverselist = new Stack<Component>();
-		
-		this.displaylist = reverselist;
-		displayCandidate((Candidato)person);
 		
 		vicenameLabel = new JLabel("Vice-governador:");
 		vicenameLabel.setBounds(10+50, 200+50, 50, 24);
 		vicenameLabel.setVerticalAlignment(JLabel.TOP);
 		vicenameLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
 		
-		vicenameValue = new JLabel(person.getVice_nome());//Depende do Governador
+		vicenameValue = new JLabel(this.vice_nome);//Depende do Governador
 		vicenameValue.setBounds(65+50, 200+50, 230, 24);
 		vicenameValue.setVerticalAlignment(JLabel.TOP);
 		vicenameValue.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 		
-		vicePhoto = new ImagePanel(View.pathToImageIcon(this.defaultPath + person.getVice_foto()).getImage());//Depende do Governador
+		vicePhoto = new ImagePanel(Display.pathToImageIcon(FileUpload.getDefaultPath() + this.vice_foto).getImage());//Depende do Governador
 		size = vicePhoto.getSize();
 		vicePhoto.setBounds(320-100, 10+100, size.width, size.height);
 		vicePhoto.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -85,6 +80,5 @@ public class Governador extends Candidato {
 		reverselist.add(8, vicenameLabel);//8
 		reverselist.add(9, vicenameValue);//9
 		reverselist.add(15, vicePhoto);//15
-		View.preparePanel(this.screenPanel, reverselist);
 	}
 }
