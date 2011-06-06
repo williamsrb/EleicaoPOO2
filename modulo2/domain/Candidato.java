@@ -11,10 +11,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 
-import modulo2.ImagePanel;
 import modulo2.util.Display;
 import modulo2.util.FileUpload;
 import modulo2.util.Sequence;
+import modulo2.view.ImagePanel;
 
 public class Candidato {
 	protected Integer id;
@@ -138,7 +138,6 @@ public class Candidato {
 		partyName.setBounds(70, 230, 230, 24);
 		partyName.setVerticalAlignment(JLabel.TOP);
 		partyName.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
-		partyName.setBorder(BorderFactory.createLineBorder(Color.magenta));
 		
 		mainPhoto = new ImagePanel(Display.pathToImageIcon(FileUpload.getDefaultPath() + this.foto).getImage());//Depende do Candidato
 		size = mainPhoto.getSize();

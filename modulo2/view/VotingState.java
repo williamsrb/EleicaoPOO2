@@ -1,4 +1,4 @@
-package modulo2;
+package modulo2.view;
 
 import java.awt.Component;
 import java.util.Stack;
@@ -11,40 +11,27 @@ import modulo2.domain.Presidente;
 import modulo2.util.Display;
 
 public class VotingState {
-	private JPanel screenPanel;
-	private String defaultPath;
-
-	VotingState(JPanel screenPanel) {
-		this.screenPanel = screenPanel;
-		this.defaultPath = "/resources/upload/";
-	}
-
-	public JPanel getScreenPanel() {
-		return screenPanel;
-	}
-
-	public String getDefaultPath() {
-		return defaultPath;
-	}
 	
-	public void displayCandidate(Deputado person) {
+	public static void displayCandidate(Deputado person, JPanel screenPanel) {
 		Stack<Component> reverselist = new Stack<Component>();
 		person.setDisplay(reverselist);
-		Display.preparePanel(this.screenPanel, reverselist);
+		Display.preparePanel(screenPanel, reverselist);
 	}
 	
-	public void displayCandidate(Governador person) {
-		//View.preparePanel(this.screenPanel, reverselist);
+	public static void displayCandidate(Governador person, JPanel screenPanel) {
+		Stack<Component> reverselist = new Stack<Component>();
+		person.setDisplay(reverselist);
+		Display.preparePanel(screenPanel, reverselist);
 	}
 	
-	public void displayCandidate(Presidente person) {
-		//View.preparePanel(this.screenPanel, reverselist);
+	public static void displayCandidate(Presidente person, JPanel screenPanel) {
+		Stack<Component> reverselist = new Stack<Component>();
+		person.setDisplay(reverselist);
+		Display.preparePanel(screenPanel, reverselist);
 	}
 	
-	@SuppressWarnings("unused")
-	private static void displayStateBlocked(JPanel screenPanel) {
+	public static void displayStateBlocked() {
 	/*	Stack<Component> reverselist = new Stack<Component>();
-		@SuppressWarnings("unused")
 		JLabel title, bigMiddleMsg, bottomRightMsg;
 		JSeparator separator;
 		
@@ -62,10 +49,8 @@ public class VotingState {
 		preparePanel(screenPanel, reverselist);*/
 	}
 	
-	@SuppressWarnings("unused")
-	private static void displayStateVoting(JPanel pane) {
+	public static void displayStateVoting() {
 	/*	Stack<Component> reverselist = new Stack<Component>();
-		@SuppressWarnings("unused")
 		JLabel title, bigMiddleMsg, bottomRightMsg;
 		JSeparator separator;
 		
@@ -83,10 +68,8 @@ public class VotingState {
 		preparePanel(pane, reverselist);*/
 	}
 	
-	@SuppressWarnings("unused")
-	private static void displayStateEnd(JPanel pane) {
+	public static void displayStateEnd() {
 	/*	Stack<Component> reverselist = new Stack<Component>();
-		@SuppressWarnings("unused")
 		JLabel title, bigMiddleMsg, bottomRightMsg;
 		JSeparator separator;
 		

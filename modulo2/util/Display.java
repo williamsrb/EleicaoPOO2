@@ -8,8 +8,6 @@ import java.util.Stack;
 
 import javax.swing.ImageIcon;
 
-import modulo2.View;
-
 public class Display {
 	public static void preparePanel(Container pane, Stack<Component> reverselist) {
 		int listsize = reverselist.size();
@@ -19,7 +17,7 @@ public class Display {
 	}
 	
 	public static ImageIcon pathToImageIcon(String path) {
-		URL resource = View.class.getResource(path);
+		URL resource = Display.class.getResource(path);
 		if(resource != null) {
 			return new ImageIcon(resource);
 		} else {

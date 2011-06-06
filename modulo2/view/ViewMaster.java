@@ -1,4 +1,4 @@
-package modulo2;
+package modulo2.view;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -12,14 +12,13 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
 //import modulo2.domain.Deputado;
-import modulo2.domain.Governador;
-import modulo2.util.Display;
+import modulo2.domain.*;
+import modulo2.util.*;
 
-public class View {
+public class ViewMaster {
 
 	public static void buildInterface(Container pane) {
 		Dimension size;
-		String defaultPath = "/resources/images/";
 		Stack<Component> reverselist = new Stack<Component>();
 		
 		//Todos elementos visuais
@@ -44,10 +43,10 @@ public class View {
 		imgCWHITE = new ImageButton(KeyEnum.CWHITE);
 		
 		//Imagens dos painéis
-		bg = new ImagePanel(Display.pathToImageIcon(defaultPath + "caixa.png").getImage());
-		glass = new ImagePanel(Display.pathToImageIcon(defaultPath + "tela.png").getImage());
-		logo = new ImagePanel(Display.pathToImageIcon(defaultPath + "rotulo.png").getImage());
-		digits = new ImagePanel(Display.pathToImageIcon(defaultPath + "painel.png").getImage());
+		bg = new ImagePanel(Display.pathToImageIcon(FileUpload.getDefaultPath() + "caixa.png").getImage());
+		glass = new ImagePanel(Display.pathToImageIcon(FileUpload.getDefaultPath() + "tela.png").getImage());
+		logo = new ImagePanel(Display.pathToImageIcon(FileUpload.getDefaultPath() + "rotulo.png").getImage());
+		digits = new ImagePanel(Display.pathToImageIcon(FileUpload.getDefaultPath() + "painel.png").getImage());
 		
 		//Painel de exibição do conteúdo da tela da urna
 		screen = new JPanel();
@@ -64,8 +63,8 @@ public class View {
 		screen.setBounds(glass.getBounds());
 		screen.setLayout(null);
 		//Teste
-		VotingState st = new VotingState(screen);
-		st.displayCandidate(new Governador()); //Teste
+		//VotingState st = new VotingState(screen);
+		//st.displayCandidate(new Governador()); //Teste
 		
 		size = logo.getSize();
 		logo.setBounds(510, 50, size.width, size.height);
@@ -210,6 +209,7 @@ public class View {
 		reverselist.push(btnCRED);
 		reverselist.push(btnCGREEN);
 		
+		VotingState.displayCandidate(new Governador(), screen);
 		//Setando elementos no panel pela ordem de camadas
 		Display.preparePanel(pane, reverselist);
 	}

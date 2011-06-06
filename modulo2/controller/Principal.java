@@ -1,8 +1,10 @@
-package modulo2;
+package modulo2.controller;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
+import modulo2.view.*;
 
 public class Principal extends JPanel implements KeyListener, MouseListener {
 	
@@ -24,7 +26,7 @@ public class Principal extends JPanel implements KeyListener, MouseListener {
 		pane.setSize(size);
 		pane.setLayout(null);
 		
-		View.buildInterface(frame);
+		ViewMaster.buildInterface(frame);
 		
 		frame.setSize(pane.getWidth(), pane.getHeight());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

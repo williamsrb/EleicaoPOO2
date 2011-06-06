@@ -1,4 +1,4 @@
-package modulo2;
+package modulo2.view;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
