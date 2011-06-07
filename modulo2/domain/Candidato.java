@@ -139,7 +139,7 @@ public class Candidato {
 		partyName.setVerticalAlignment(JLabel.TOP);
 		partyName.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 		
-		mainPhoto = new ImagePanel(Display.pathToImageIcon(FileUpload.getDefaultPath() + this.foto).getImage());//Depende do Candidato
+		mainPhoto = new ImagePanel(Display.pathToImageIcon(FileUpload.uploadPath + this.foto).getImage());//Depende do Candidato
 		size = mainPhoto.getSize();
 		mainPhoto.setBounds(320, 10, size.width, size.height);
 		mainPhoto.setBorder(BorderFactory.createLineBorder(Color.black));

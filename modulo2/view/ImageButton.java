@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import javax.swing.ImageIcon;
 
 import modulo2.util.Display;
+import modulo2.util.FileUpload;
 
 public class ImageButton {
 	private final ImageIcon light;
@@ -11,9 +12,9 @@ public class ImageButton {
 	private final ImageIcon none;
 	
 	public ImageButton(KeyEnum key) {
-		this.light = Display.pathToImageIcon("/resources/imageeffects/" + VotingKey.getImgPrefix(key) + "_light.png");
-		this.shadow = Display.pathToImageIcon("/resources/imageeffects/" + VotingKey.getImgPrefix(key) + "_shadow.png");
-		this.none = Display.pathToImageIcon("/resources/images/" + VotingKey.getImgPrefix(key) + ".png");
+		this.light = Display.pathToImageIcon(FileUpload.effectPath + VotingKey.getImgPrefix(key) + "_light.png");
+		this.shadow = Display.pathToImageIcon(FileUpload.effectPath + VotingKey.getImgPrefix(key) + "_shadow.png");
+		this.none = Display.pathToImageIcon(FileUpload.imagePath + VotingKey.getImgPrefix(key) + ".png");
 	}
 	
 	public Dimension getSize() {

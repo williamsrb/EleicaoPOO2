@@ -1,12 +1,7 @@
 package modulo2.util;
 
 public class FileUpload {
-	private static final String defaultPath = "/resources/upload/";
-
-	/**
-	 * @return the defaultPath
-	 */
-	public static String getDefaultPath() {
-		return defaultPath;
-	}
+	public static final String uploadPath = "/resources/upload/";
+	public static final String imagePath = "/resources/images/";
+	public static final String effectPath = "/resources/imageeffects/";
 }

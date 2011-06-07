@@ -72,7 +72,7 @@ public class Governador extends Candidato {
 		vicenameValue.setVerticalAlignment(JLabel.TOP);
 		vicenameValue.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 		
-		vicePhoto = new ImagePanel(Display.pathToImageIcon(FileUpload.getDefaultPath() + this.vice_foto).getImage());//Depende do Governador
+		vicePhoto = new ImagePanel(Display.pathToImageIcon(FileUpload.uploadPath + this.vice_foto).getImage());//Depende do Governador
 		size = vicePhoto.getSize();
 		vicePhoto.setBounds(365, 175, size.width, size.height);
 		vicePhoto.setBorder(BorderFactory.createLineBorder(Color.black));

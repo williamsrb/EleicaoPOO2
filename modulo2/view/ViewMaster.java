@@ -43,10 +43,10 @@ public class ViewMaster {
 		imgCWHITE = new ImageButton(KeyEnum.CWHITE);
 		
 		//Imagens dos painéis
-		bg = new ImagePanel(Display.pathToImageIcon(FileUpload.getDefaultPath() + "caixa.png").getImage());
-		glass = new ImagePanel(Display.pathToImageIcon(FileUpload.getDefaultPath() + "tela.png").getImage());
-		logo = new ImagePanel(Display.pathToImageIcon(FileUpload.getDefaultPath() + "rotulo.png").getImage());
-		digits = new ImagePanel(Display.pathToImageIcon(FileUpload.getDefaultPath() + "painel.png").getImage());
+		bg = new ImagePanel(Display.pathToImageIcon(FileUpload.imagePath + "caixa.png").getImage());
+		glass = new ImagePanel(Display.pathToImageIcon(FileUpload.imagePath + "tela.png").getImage());
+		logo = new ImagePanel(Display.pathToImageIcon(FileUpload.imagePath + "rotulo.png").getImage());
+		digits = new ImagePanel(Display.pathToImageIcon(FileUpload.imagePath + "painel.png").getImage());
 		
 		//Painel de exibição do conteúdo da tela da urna
 		screen = new JPanel();
