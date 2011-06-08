@@ -1,6 +1,7 @@
 package modulo2.view;
 
 import java.awt.Dimension;
+
 import javax.swing.ImageIcon;
 
 import modulo2.util.Display;
@@ -12,9 +13,9 @@ public class ImageButton {
 	private final ImageIcon none;
 	
 	public ImageButton(KeyEnum key) {
-		this.light = Display.pathToImageIcon(FileUpload.effectPath + VotingKey.getImgPrefix(key) + "_light.png");
-		this.shadow = Display.pathToImageIcon(FileUpload.effectPath + VotingKey.getImgPrefix(key) + "_shadow.png");
-		this.none = Display.pathToImageIcon(FileUpload.imagePath + VotingKey.getImgPrefix(key) + ".png");
+		this.light = Display.pathToImageIcon(FileUpload.effectPath + VotingKey.getPrefix(key) + "_light.png");
+		this.shadow = Display.pathToImageIcon(FileUpload.effectPath + VotingKey.getPrefix(key) + "_shadow.png");
+		this.none = Display.pathToImageIcon(FileUpload.imagePath + VotingKey.getPrefix(key) + ".png");
 	}
 	
 	public Dimension getSize() {
