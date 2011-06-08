@@ -11,13 +11,12 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
-//import modulo2.domain.Deputado;
-import modulo2.domain.*;
-import modulo2.util.*;
+import modulo2.domain.Governador;
+import modulo2.util.Display;
+import modulo2.util.FileUpload;
 
 public class ViewMaster {
-
-	public static void buildInterface(Container pane) {
+	public static void buildInterface(Container pane, ButtonElements buttonList) {
 		Dimension size;
 		Stack<Component> reverselist = new Stack<Component>();
 		
@@ -62,9 +61,6 @@ public class ViewMaster {
 		screen.setBackground(Color.white);
 		screen.setBounds(glass.getBounds());
 		screen.setLayout(null);
-		//Teste
-		//VotingState st = new VotingState(screen);
-		//st.displayCandidate(new Governador()); //Teste
 		
 		size = logo.getSize();
 		logo.setBounds(510, 50, size.width, size.height);
@@ -195,20 +191,21 @@ public class ViewMaster {
 		reverselist.push(glass);
 		reverselist.push(logo);
 		reverselist.push(digits);
-		reverselist.push(btnD1);
-		reverselist.push(btnD2);
-		reverselist.push(btnD3);
-		reverselist.push(btnD4);
-		reverselist.push(btnD5);
-		reverselist.push(btnD6);
-		reverselist.push(btnD7);
-		reverselist.push(btnD8);
-		reverselist.push(btnD9);
-		reverselist.push(btnD0);
-		reverselist.push(btnCWHITE);
-		reverselist.push(btnCRED);
-		reverselist.push(btnCGREEN);
+		reverselist.push(buttonList.setBtnD1(btnD1));
+		reverselist.push(buttonList.setBtnD2(btnD2));
+		reverselist.push(buttonList.setBtnD3(btnD3));
+		reverselist.push(buttonList.setBtnD4(btnD4));
+		reverselist.push(buttonList.setBtnD5(btnD5));
+		reverselist.push(buttonList.setBtnD6(btnD6));
+		reverselist.push(buttonList.setBtnD7(btnD7));
+		reverselist.push(buttonList.setBtnD8(btnD8));
+		reverselist.push(buttonList.setBtnD9(btnD9));
+		reverselist.push(buttonList.setBtnD0(btnD0));
+		reverselist.push(buttonList.setBtnCWHITE(btnCWHITE));
+		reverselist.push(buttonList.setBtnCRED(btnCRED));
+		reverselist.push(buttonList.setBtnCGREEN(btnCGREEN));
 		
+		//Teste
 		VotingState.displayCandidate(new Governador(), screen);
 		//Setando elementos no panel pela ordem de camadas
 		Display.preparePanel(pane, reverselist);

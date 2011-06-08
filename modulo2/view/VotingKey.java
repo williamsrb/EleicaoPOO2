@@ -2,7 +2,7 @@ package modulo2.view;
 
 public class VotingKey {
 	
-	public static String getImgPrefix(KeyEnum key) {
+	public static String getPrefix(KeyEnum key) {
 		String result;
 		switch(key) {
 		case D0:

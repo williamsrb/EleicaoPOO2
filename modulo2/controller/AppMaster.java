@@ -10,23 +10,25 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import modulo2.view.ButtonElements;
 import modulo2.view.ViewMaster;
 
-public class Principal extends JFrame {
+public class AppMaster extends JFrame {
 	
 	private static final long serialVersionUID = 1000L;
 	private boolean eventMonitor;
+	private ButtonElements buttonList;
 	
 	public static void main(String[] args){
 		JOptionPane.showMessageDialog(null, "Intruções:\n     \u2190  Branco\n     \u2193  Cancela\n     \u2192  Confirma", "Ajuda", JOptionPane.INFORMATION_MESSAGE);
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				new Principal();
+				new AppMaster();
 			}
 		});
 	}
 
-	private Principal() {
+	private AppMaster() {
 		super("Urna Eletrônica");
 		this.eventMonitor = false;
 		start();
@@ -44,6 +46,7 @@ public class Principal extends JFrame {
 		Insets frameInsets;
 		Dimension size;
 		Container pane;
+		ButtonElements btnLst;
 		
 		pane = getContentPane();
 		pane.setFocusable(true);
@@ -79,7 +82,9 @@ public class Principal extends JFrame {
 		pane.setSize(size);
 		pane.setLayout(null);
 		
-		ViewMaster.buildInterface(this);
+		this.buttonList = new ButtonElements();
+		btnLst = this.buttonList;
+		ViewMaster.buildInterface(pane, btnLst);
 		
 		setSize(pane.getWidth(), pane.getHeight());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -87,72 +92,98 @@ public class Principal extends JFrame {
 	}
 	
 	public void keyUseEvent(KeyEvent e) {
+		ButtonElements buttonList = this.buttonList;
 		switch(e.getKeyCode()) {
 		case KeyEvent.VK_1:
 		case KeyEvent.VK_NUMPAD1:
 			//Fazer algo com dígito 1
+			buttonList.getBtnD1().doClick();
+			//Teste
 			JOptionPane.showMessageDialog(null, "1");
 			break;
 		case KeyEvent.VK_2:
 		case KeyEvent.VK_NUMPAD2:
 			//Fazer algo com dígito 2
+			buttonList.getBtnD2().doClick();
+			//Teste
 			JOptionPane.showMessageDialog(null, "2");
 			break;
 		case KeyEvent.VK_3:
 		case KeyEvent.VK_NUMPAD3:
 			//Fazer algo com dígito 3
+			buttonList.getBtnD3().doClick();
+			//Teste
 			JOptionPane.showMessageDialog(null, "3");
 			break;
 		case KeyEvent.VK_4:
 		case KeyEvent.VK_NUMPAD4:
 			//Fazer algo com dígito 4
+			buttonList.getBtnD4().doClick();
+			//Teste
 			JOptionPane.showMessageDialog(null, "4");
 			break;
 		case KeyEvent.VK_5:
 		case KeyEvent.VK_NUMPAD5:
 			//Fazer algo com dígito 5
+			buttonList.getBtnD5().doClick();
+			//Teste
 			JOptionPane.showMessageDialog(null, "5");
 			break;
 		case KeyEvent.VK_6:
 		case KeyEvent.VK_NUMPAD6:
 			//Fazer algo com dígito 6
+			buttonList.getBtnD6().doClick();
+			//Teste
 			JOptionPane.showMessageDialog(null, "6");
 			break;
 		case KeyEvent.VK_7:
 		case KeyEvent.VK_NUMPAD7:
 			//Fazer algo com dígito 7
+			buttonList.getBtnD7().doClick();
+			//Teste
 			JOptionPane.showMessageDialog(null, "7");
 			break;
 		case KeyEvent.VK_8:
 		case KeyEvent.VK_NUMPAD8:
 			//Fazer algo com dígito 8
+			buttonList.getBtnD8().doClick();
+			//Teste
 			JOptionPane.showMessageDialog(null, "8");
 			break;
 		case KeyEvent.VK_9:
 		case KeyEvent.VK_NUMPAD9:
 			//Fazer algo com dígito 9
+			buttonList.getBtnD9().doClick();
+			//Teste
 			JOptionPane.showMessageDialog(null, "9");
 			break;
 		case KeyEvent.VK_0:
 		case KeyEvent.VK_NUMPAD0:
 			//Fazer algo com dígito 0
+			buttonList.getBtnD0().doClick();
+			//Teste
 			JOptionPane.showMessageDialog(null, "0");
 			break;
 		case KeyEvent.VK_LEFT:
 			//Fazer algo com tecla "Branco"
+			buttonList.getBtnCWHITE().doClick();
+			//Teste
 			JOptionPane.showMessageDialog(null, "Branco");
 			break;
 		case KeyEvent.VK_DOWN:
 			//Fazer algo com tecla "Cancela"
+			buttonList.getBtnCRED().doClick();
+			//Teste
 			JOptionPane.showMessageDialog(null, "Cancela");
 			break;
 		case KeyEvent.VK_RIGHT:
 			//Fazer algo com tecla "Confirma"
+			buttonList.getBtnCGREEN().doClick();
+			//Teste
 			JOptionPane.showMessageDialog(null, "Confirma");
 			break;
 		default:
 			JOptionPane.showMessageDialog(null, "Entrou com: " + e.getKeyChar());
 		}
-		
 	}
 }
