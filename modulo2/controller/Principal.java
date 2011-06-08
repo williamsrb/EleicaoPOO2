@@ -15,8 +15,10 @@ import modulo2.view.ViewMaster;
 public class Principal extends JFrame {
 	
 	private static final long serialVersionUID = 1000L;
+	private boolean eventMonitor;
 	
 	public static void main(String[] args){
+		JOptionPane.showMessageDialog(null, "Intruções:\n     \u2190  Branco\n     \u2193  Cancela\n     \u2192  Confirma", "Ajuda", JOptionPane.INFORMATION_MESSAGE);
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				new Principal();
@@ -26,8 +28,16 @@ public class Principal extends JFrame {
 
 	private Principal() {
 		super("Urna Eletrônica");
-		JOptionPane.showMessageDialog(null, "Intruções:\n     \u2190  Branco\n     \u2193  Cancela\n     \u2192  Confirma", "Ajuda", JOptionPane.INFORMATION_MESSAGE);
+		this.eventMonitor = false;
 		start();
+	}
+	
+	public synchronized void eventSwitch() {
+		this.eventMonitor = !this.eventMonitor;
+	}
+	
+	public synchronized boolean getEventMonitor() {
+		return this.eventMonitor;
 	}
 
 	public void start() {
@@ -39,13 +49,25 @@ public class Principal extends JFrame {
 		pane.setFocusable(true);
 		pane.addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent e) {
-				keyPressedEvent(e);
+				if(getEventMonitor() == false) {
+					eventSwitch();
+					keyUseEvent(e);
+					eventSwitch();
+				}
 			}
 			public void keyReleased(KeyEvent e) {
-				//keyReleasedEvent(e);
+				if(getEventMonitor() == false) {
+					eventSwitch();
+					keyUseEvent(e);
+					eventSwitch();
+				}
 			}
 			public void keyTyped(KeyEvent e) {
-				//keyTypedEvent(e);
+				if(getEventMonitor() == false) {
+					eventSwitch();
+					keyUseEvent(e);
+					eventSwitch();
+				}
 			}
 		});
 		setResizable(false);
@@ -64,7 +86,7 @@ public class Principal extends JFrame {
 		setVisible(true);
 	}
 	
-	public void keyReleasedEvent(KeyEvent e) {
+	public void keyUseEvent(KeyEvent e) {
 		switch(e.getKeyCode()) {
 		case KeyEvent.VK_1:
 		case KeyEvent.VK_NUMPAD1:
@@ -133,8 +155,4 @@ public class Principal extends JFrame {
 		}
 		
 	}
-	
-	public void keyPressedEvent(KeyEvent e) {}
-
-	public void keyTypedEvent(KeyEvent e) {}
 }
