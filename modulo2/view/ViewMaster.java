@@ -20,7 +20,8 @@ import modulo2.util.FileUpload;
 import modulo2.util.KeyEnum;
 
 public class ViewMaster {
-	public static void buildInterface(Container pane, ButtonElements buttonList) {
+	//Retorna o "container" da tela da urna
+	public static Container buildInterface(Container pane, ButtonElements buttonList) {
 		Dimension size;
 		Stack<Component> reverselist = new Stack<Component>();
 		
@@ -214,73 +215,87 @@ public class ViewMaster {
 		VotingState.displayCandidate(new Governador(), screen);
 		//Setando elementos no panel pela ordem de camadas
 		Display.preparePanel(pane, reverselist);
+		return screen;
 	}
 	
 	public static void buildListeners(ButtonElements buttonList) {
 		final Container parent = buttonList.getParent();
 		buttonList.getBtnD1().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AppWorker.doButtonAction(KeyEnum.D1, parent);
+				parent.requestFocus();
+				AppWorker.getInstance().doButtonAction(KeyEnum.D1);
 			}
 		});
 		buttonList.getBtnD2().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AppWorker.doButtonAction(KeyEnum.D2, parent);
+				parent.requestFocus();
+				AppWorker.getInstance().doButtonAction(KeyEnum.D2);
 			}
 		});
 		buttonList.getBtnD3().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AppWorker.doButtonAction(KeyEnum.D3, parent);
+				parent.requestFocus();
+				AppWorker.getInstance().doButtonAction(KeyEnum.D3);
 			}
 		});
 		buttonList.getBtnD4().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AppWorker.doButtonAction(KeyEnum.D4, parent);
+				parent.requestFocus();
+				AppWorker.getInstance().doButtonAction(KeyEnum.D4);
 			}
 		});
 		buttonList.getBtnD5().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AppWorker.doButtonAction(KeyEnum.D5, parent);
+				parent.requestFocus();
+				AppWorker.getInstance().doButtonAction(KeyEnum.D5);
 			}
 		});
 		buttonList.getBtnD6().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AppWorker.doButtonAction(KeyEnum.D6, parent);
+				parent.requestFocus();
+				AppWorker.getInstance().doButtonAction(KeyEnum.D6);
 			}
 		});
 		buttonList.getBtnD7().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AppWorker.doButtonAction(KeyEnum.D7, parent);
+				parent.requestFocus();
+				AppWorker.getInstance().doButtonAction(KeyEnum.D7);
 			}
 		});
 		buttonList.getBtnD8().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AppWorker.doButtonAction(KeyEnum.D8, parent);
+				parent.requestFocus();
+				AppWorker.getInstance().doButtonAction(KeyEnum.D8);
 			}
 		});
 		buttonList.getBtnD9().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AppWorker.doButtonAction(KeyEnum.D9, parent);
+				parent.requestFocus();
+				AppWorker.getInstance().doButtonAction(KeyEnum.D9);
 			}
 		});
 		buttonList.getBtnD0().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AppWorker.doButtonAction(KeyEnum.D0, parent);
+				parent.requestFocus();
+				AppWorker.getInstance().doButtonAction(KeyEnum.D0);
 			}
 		});
 		buttonList.getBtnCWHITE().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AppWorker.doButtonAction(KeyEnum.CWHITE, parent);
+				parent.requestFocus();
+				AppWorker.getInstance().doButtonAction(KeyEnum.CWHITE);
 			}
 		});
 		buttonList.getBtnCRED().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AppWorker.doButtonAction(KeyEnum.CRED, parent);
+				parent.requestFocus();
+				AppWorker.getInstance().doButtonAction(KeyEnum.CRED);
 			}
 		});
 		buttonList.getBtnCGREEN().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AppWorker.doButtonAction(KeyEnum.CGREEN, parent);
+				parent.requestFocus();
+				AppWorker.getInstance().doButtonAction(KeyEnum.CGREEN);
 			}
 		});
 	}

@@ -20,7 +20,7 @@ public class AppMaster extends JFrame {
 	private ButtonElements buttonList;
 	
 	public static void main(String[] args){
-		JOptionPane.showMessageDialog(null, "Intruções:\n     \u2190  Branco\n     \u2193  Cancela\n     \u2192  Confirma", "Ajuda", JOptionPane.INFORMATION_MESSAGE);
+		//Deve estar bloqueado e pedir senha
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				new AppMaster();
@@ -30,6 +30,7 @@ public class AppMaster extends JFrame {
 
 	private AppMaster() {
 		super("Urna Eletrônica");
+		AppWorker.getInstance().setState(AppWorker.BLOQUEADO);
 		this.eventMonitor = false;
 		start();
 	}
@@ -48,6 +49,8 @@ public class AppMaster extends JFrame {
 		Container pane;
 		ButtonElements btnLst;
 		
+		
+		JOptionPane.showMessageDialog(null, "Intruções:\n     \u2190  Branco\n     \u2193  Cancela\n     \u2192  Confirma", "Ajuda", JOptionPane.INFORMATION_MESSAGE);
 		pane = getContentPane();
 		pane.setFocusable(true);
 		pane.addKeyListener(new KeyListener() {
@@ -85,7 +88,7 @@ public class AppMaster extends JFrame {
 		this.buttonList = new ButtonElements();
 		btnLst = this.buttonList;
 		
-		ViewMaster.buildInterface(pane, btnLst);
+		AppWorker.getInstance().setScreen(ViewMaster.buildInterface(pane, btnLst));
 		ViewMaster.buildListeners(btnLst);
 		
 		setSize(pane.getWidth(), pane.getHeight());
