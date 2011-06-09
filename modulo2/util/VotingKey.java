@@ -1,4 +1,5 @@
-package modulo2.view;
+package modulo2.util;
+
 
 public class VotingKey {
 	

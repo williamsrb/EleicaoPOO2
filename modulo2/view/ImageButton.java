@@ -6,6 +6,8 @@ import javax.swing.ImageIcon;
 
 import modulo2.util.Display;
 import modulo2.util.FileUpload;
+import modulo2.util.KeyEnum;
+import modulo2.util.VotingKey;
 
 public class ImageButton {
 	private final ImageIcon light;

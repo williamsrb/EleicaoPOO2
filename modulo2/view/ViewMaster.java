@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Stack;
 
 import javax.swing.BorderFactory;
@@ -11,9 +13,11 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
+import modulo2.controller.AppWorker;
 import modulo2.domain.Governador;
 import modulo2.util.Display;
 import modulo2.util.FileUpload;
+import modulo2.util.KeyEnum;
 
 public class ViewMaster {
 	public static void buildInterface(Container pane, ButtonElements buttonList) {
@@ -185,7 +189,8 @@ public class ViewMaster {
 		btnCGREEN.setRolloverIcon(imgCGREEN.getLight());
 		btnCGREEN.setBounds(695, 378, size.width, size.height);
 		
-		//Simulando camadas. Inferiores vêm primeiro.
+		//Simulando camadas. Inferiores vêm primeiro
+		reverselist.push(buttonList);
 		reverselist.push(bg);
 		reverselist.push(screen);
 		reverselist.push(glass);
@@ -209,5 +214,74 @@ public class ViewMaster {
 		VotingState.displayCandidate(new Governador(), screen);
 		//Setando elementos no panel pela ordem de camadas
 		Display.preparePanel(pane, reverselist);
+	}
+	
+	public static void buildListeners(ButtonElements buttonList) {
+		final Container parent = buttonList.getParent();
+		buttonList.getBtnD1().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AppWorker.doButtonAction(KeyEnum.D1, parent);
+			}
+		});
+		buttonList.getBtnD2().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AppWorker.doButtonAction(KeyEnum.D2, parent);
+			}
+		});
+		buttonList.getBtnD3().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AppWorker.doButtonAction(KeyEnum.D3, parent);
+			}
+		});
+		buttonList.getBtnD4().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AppWorker.doButtonAction(KeyEnum.D4, parent);
+			}
+		});
+		buttonList.getBtnD5().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AppWorker.doButtonAction(KeyEnum.D5, parent);
+			}
+		});
+		buttonList.getBtnD6().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AppWorker.doButtonAction(KeyEnum.D6, parent);
+			}
+		});
+		buttonList.getBtnD7().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AppWorker.doButtonAction(KeyEnum.D7, parent);
+			}
+		});
+		buttonList.getBtnD8().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AppWorker.doButtonAction(KeyEnum.D8, parent);
+			}
+		});
+		buttonList.getBtnD9().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AppWorker.doButtonAction(KeyEnum.D9, parent);
+			}
+		});
+		buttonList.getBtnD0().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AppWorker.doButtonAction(KeyEnum.D0, parent);
+			}
+		});
+		buttonList.getBtnCWHITE().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AppWorker.doButtonAction(KeyEnum.CWHITE, parent);
+			}
+		});
+		buttonList.getBtnCRED().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AppWorker.doButtonAction(KeyEnum.CRED, parent);
+			}
+		});
+		buttonList.getBtnCGREEN().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AppWorker.doButtonAction(KeyEnum.CGREEN, parent);
+			}
+		});
 	}
 }
