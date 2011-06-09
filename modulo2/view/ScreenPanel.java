@@ -1,0 +1,17 @@
+package modulo2.view;
+
+import javax.swing.JPanel;
+
+public class ScreenPanel extends JPanel {
+	private static final long serialVersionUID = 1003L;
+
+	public void clear() {
+		this.removeAll();
+		this.refresh();
+	}
+	
+	public void refresh() {
+		this.setVisible(false);
+		this.setVisible(true);
+	}
+}

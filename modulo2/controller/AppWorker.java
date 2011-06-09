@@ -1,16 +1,20 @@
 package modulo2.controller;
 
-import java.awt.Container;
-
 import javax.swing.JOptionPane;
+
+import modulo2.domain.Deputado;
+import modulo2.domain.Governador;
+import modulo2.domain.Presidente;
 
 import modulo2.util.KeyEnum;
 import modulo2.util.VotingKey;
+import modulo2.view.ScreenPanel;
+import modulo2.view.VotingState;
 
 public class AppWorker {
 	private static AppWorker singleton;
 	private int state;
-	private Container screen;
+	private ScreenPanel screen;
 	
 	public static final int BLOQUEADO = -3;
 	public static final int NULO = -2;
@@ -42,11 +46,11 @@ public class AppWorker {
 		return this.state;
 	}
 	
-	public void setScreen(Container screen) {
+	public void setScreen(ScreenPanel screen) {
 		this.screen = screen;
 	}
 	
-	public Container getScreen() {
+	public ScreenPanel getScreen() {
 		return this.screen;
 	}
 	
@@ -95,6 +99,8 @@ public class AppWorker {
 	public void actionNULO(KeyEnum key) {
 		JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action NULO", JOptionPane.INFORMATION_MESSAGE);
 		this.state = BRANCO;
+		//Teste %%%%%%%%%%%%%%%%
+		VotingState.displayCandidate(new Governador(), screen);
 	}
 	
 	public void actionBRANCO(KeyEnum key) {
@@ -105,11 +111,15 @@ public class AppWorker {
 	public void actionFIM(KeyEnum key) {
 		JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action FIM", JOptionPane.INFORMATION_MESSAGE);
 		this.state = DIGITANDO_DEPUTADO;
+		//Teste %%%%%%%%%%%%%%%%
+		screen.clear();
 	}
 	
 	public void actionDIGITANDO_DEPUTADO(KeyEnum key) {
 		JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action DIGITANDO_DEPUTADO", JOptionPane.INFORMATION_MESSAGE);
 		this.state = EXIBINDO_DEPUTADO;
+		//Teste %%%%%%%%%%%%%%%%
+		VotingState.displayCandidate(new Presidente(), screen);
 	}
 	
 	public void actionEXIBINDO_DEPUTADO(KeyEnum key) {
@@ -120,11 +130,15 @@ public class AppWorker {
 	public void actionDIGITANDO_GOVERNADOR(KeyEnum key) {
 		JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action DIGITANDO_GOVERNADOR", JOptionPane.INFORMATION_MESSAGE);
 		this.state = EXIBINDO_GOVERNADOR;
+		//Teste %%%%%%%%%%%%%%%%
+		screen.clear();
 	}
 	
 	public void actionEXIBINDO_GOVERNADOR(KeyEnum key) {
 		JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action EXIBINDO_GOVERNADOR", JOptionPane.INFORMATION_MESSAGE);
 		this.state = DIGITANDO_PRESIDENTE;
+		//Teste %%%%%%%%%%%%%%%%
+		VotingState.displayCandidate(new Deputado(), screen);
 	}
 	
 	public void actionDIGITANDO_PRESIDENTE(KeyEnum key) {
@@ -135,8 +149,8 @@ public class AppWorker {
 	public void actionEXIBINDO_PRESIDENTE(KeyEnum key) {
 		JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action EXIBINDO_PRESIDENTE", JOptionPane.INFORMATION_MESSAGE);
 		this.state = BLOQUEADO;
-		screen.removeAll();
-		screen.getParent().validateTree();
+		//Teste %%%%%%%%%%%%%%%%
+		screen.clear();
 	}
 	
 	public Object clone() throws CloneNotSupportedException {

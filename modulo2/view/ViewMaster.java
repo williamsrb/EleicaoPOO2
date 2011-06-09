@@ -10,25 +10,23 @@ import java.util.Stack;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
 import modulo2.controller.AppWorker;
-import modulo2.domain.Governador;
 import modulo2.util.Display;
 import modulo2.util.FileUpload;
 import modulo2.util.KeyEnum;
 
 public class ViewMaster {
 	//Retorna o "container" da tela da urna
-	public static Container buildInterface(Container pane, ButtonElements buttonList) {
+	public static ScreenPanel buildInterface(Container pane, ButtonElements buttonList) {
 		Dimension size;
 		Stack<Component> reverselist = new Stack<Component>();
 		
 		//Todos elementos visuais
 		JButton btnD0, btnD1, btnD2, btnD3, btnD4, btnD5, btnD6, btnD7, btnD8, btnD9, btnCGREEN, btnCRED, btnCWHITE;
 		ImagePanel bg, glass, logo, digits;
-		JPanel screen;
+		ScreenPanel screen;
 		
 		//Imagens dos botões
 		ImageButton imgD0, imgD1, imgD2, imgD3, imgD4, imgD5, imgD6, imgD7, imgD8, imgD9, imgCGREEN, imgCRED, imgCWHITE;
@@ -53,7 +51,7 @@ public class ViewMaster {
 		digits = new ImagePanel(Display.pathToImageIcon(FileUpload.imagePath + "painel.png").getImage());
 		
 		//Painel de exibição do conteúdo da tela da urna
-		screen = new JPanel();
+		screen = new ScreenPanel();
 		
 		//Dimensões e posicionamento
 		size = bg.getSize();
@@ -211,8 +209,6 @@ public class ViewMaster {
 		reverselist.push(buttonList.setBtnCRED(btnCRED));
 		reverselist.push(buttonList.setBtnCGREEN(btnCGREEN));
 		
-		//Teste
-		VotingState.displayCandidate(new Governador(), screen);
 		//Setando elementos no panel pela ordem de camadas
 		Display.preparePanel(pane, reverselist);
 		return screen;

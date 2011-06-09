@@ -3,8 +3,6 @@ package modulo2.view;
 import java.awt.Component;
 import java.util.Stack;
 
-import javax.swing.JPanel;
-
 import modulo2.domain.Deputado;
 import modulo2.domain.Governador;
 import modulo2.domain.Presidente;
@@ -12,25 +10,42 @@ import modulo2.util.Display;
 
 public class VotingState {
 	
-	public static void displayCandidate(Deputado person, JPanel screenPanel) {
+	public static void displayCandidate(Deputado person, ScreenPanel screenPanel) {
 		Stack<Component> reverselist = new Stack<Component>();
 		person.setDisplay(reverselist);
 		Display.preparePanel(screenPanel, reverselist);
+		screenPanel.refresh();
 	}
 	
-	public static void displayCandidate(Governador person, JPanel screenPanel) {
+	public static void displayCandidate(Governador person, ScreenPanel screenPanel) {
 		Stack<Component> reverselist = new Stack<Component>();
 		person.setDisplay(reverselist);
 		Display.preparePanel(screenPanel, reverselist);
+		screenPanel.refresh();
 	}
 	
-	public static void displayCandidate(Presidente person, JPanel screenPanel) {
+	public static void displayCandidate(Presidente person, ScreenPanel screenPanel) {
 		Stack<Component> reverselist = new Stack<Component>();
 		person.setDisplay(reverselist);
 		Display.preparePanel(screenPanel, reverselist);
+		screenPanel.refresh();
 	}
 	
-	public static void displayStateBlocked() {
+	public static void displayNull() {
+		/**
+		
+		Mesmo que candidato padrão, de acordo com o cargo
+		
+		- foto
+		- nome
+		- partido
+		- vice-foto (se tiver)
+		- vice-nome (se tiver)
+		+ "NÚMERO ERRADO" (regular, 1.5 vezes o tamanho normal, abaixo do número, na esquerda)
+		+ "VOTO NULO" (bold, mesmo tamanho do "Cargo", no centro horizontal da tela, logo acima da "horizontalline")
+		(Substituir o número do candidato padrão pelo que o usuário inseriu)
+		
+		*/
 	/*	Stack<Component> reverselist = new Stack<Component>();
 		JLabel title, bigMiddleMsg, bottomRightMsg;
 		JSeparator separator;
@@ -49,7 +64,20 @@ public class VotingState {
 		preparePanel(screenPanel, reverselist);*/
 	}
 	
-	public static void displayStateVoting() {
+	public static void displayBlank() {
+		/**
+		
+		Mesmo que candidato padrão, de acordo com o cargo
+		
+		- foto
+		- nome
+		- número
+		- partido
+		- vice-foto (se tiver)
+		- vice-nome (se tiver)
+		+ "VOTO EM BRANCO" (bold, 1.5 vezes o tamanho do "cargo", no centro horizontal da tela, no meio vertical)
+		
+		*/
 	/*	Stack<Component> reverselist = new Stack<Component>();
 		JLabel title, bigMiddleMsg, bottomRightMsg;
 		JSeparator separator;
@@ -68,7 +96,16 @@ public class VotingState {
 		preparePanel(pane, reverselist);*/
 	}
 	
-	public static void displayStateEnd() {
+	public static void displayEnd() {
+		/**
+		
+		Tela partindo do zero
+		
+		+ "Eleição" (mostrado da mesma forma que em "Candidato", canto superior esquerdo da tela)
+		+ "FIM" (bold, 10 vezes o tamanho da fonte do "cargo" de "Candidato", meio centro da tela)
+		+ "VOTOU" (bold, cinza, mesmo tamanho do "VOTO EM BRANCO", canto inferior direito da tela)
+		
+		*/
 	/*	Stack<Component> reverselist = new Stack<Component>();
 		JLabel title, bigMiddleMsg, bottomRightMsg;
 		JSeparator separator;
