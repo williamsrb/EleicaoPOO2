@@ -7,14 +7,15 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-/**
- * This program reads a text file line by line and print to the console. It uses
- * FileOutputStream to read the file.
- * 
- */
 public class FileManager {
-
-	private static BufferedReader getReader(String file) {
+	private String file;
+	
+	public FileManager(String file) {
+		this.file = file;
+	}
+	
+	public BufferedReader getReader() {
+		String file = this.file;
 		FileReader fIn = null;
 		BufferedReader brIn = null;
 		try {
@@ -28,7 +29,8 @@ public class FileManager {
 		return brIn;
 	}
 
-	private static BufferedWriter getWriter(String file) {
+	public BufferedWriter getWriter() {
+		String file = this.file;
 		FileWriter fIn = null;
 		BufferedWriter brIn = null;
 		try {
@@ -44,5 +46,5 @@ public class FileManager {
 		return brIn;
 	}
 	
-	
+	public static 
 }
