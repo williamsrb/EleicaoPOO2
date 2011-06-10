@@ -9,6 +9,8 @@ import java.io.IOException;
 
 public class FileManager {
 	private String file;
+	private BufferedReader reader;
+	private BufferedWriter writer;
 	
 	public FileManager(String file) {
 		this.file = file;
@@ -18,13 +20,20 @@ public class FileManager {
 		String file = this.file;
 		FileReader fIn = null;
 		BufferedReader brIn = null;
-		try {
-			fIn = new FileReader(file);
-			brIn = new BufferedReader(fIn);
-		} catch (FileNotFoundException fnfe) {
-			System.err.println(fnfe.getLocalizedMessage());
-		} catch (IllegalArgumentException iae) {
-			System.err.println(iae.getLocalizedMessage());
+		if(this.reader == null && this.writer == null) {
+			try {
+				fIn = new FileReader(file);
+				brIn = new BufferedReader(fIn);
+			} catch (FileNotFoundException fnfe) {
+				System.err.println(fnfe.getLocalizedMessage());
+			} catch (IllegalArgumentException iae) {
+				System.err.println(iae.getLocalizedMessage());
+			}
+			this.reader = brIn;
+		} else {
+			if(this.reader != null) {
+				brIn = this.reader;
+			}
 		}
 		return brIn;
 	}
@@ -32,19 +41,34 @@ public class FileManager {
 	public BufferedWriter getWriter() {
 		String file = this.file;
 		FileWriter fIn = null;
-		BufferedWriter brIn = null;
-		try {
-			fIn = new FileWriter(file);
-			brIn = new BufferedWriter(fIn);
-		} catch (FileNotFoundException fnfe) {
-			System.err.println(fnfe.getLocalizedMessage());
-		} catch (IllegalArgumentException iae) {
-			System.err.println(iae.getLocalizedMessage());
-		} catch (IOException ioe) {
-			System.err.println(ioe.getLocalizedMessage());
+		BufferedWriter bwIn = null;
+		if(this.writer == null && this.reader == null) {
+			try {
+				fIn = new FileWriter(file);
+				bwIn = new BufferedWriter(fIn);
+			} catch (FileNotFoundException fnfe) {
+				System.err.println(fnfe.getLocalizedMessage());
+			} catch (IllegalArgumentException iae) {
+				System.err.println(iae.getLocalizedMessage());
+			} catch (IOException ioe) {
+				System.err.println(ioe.getLocalizedMessage());
+			}
+			this.writer = bwIn;
+		} else {
+			if(this.writer != null) {
+				bwIn = this.writer;
+			}
 		}
-		return brIn;
+		return bwIn;
 	}
 	
+	protected void finalize() throws Throwable {
+		try {
+			this.reader.close();
+			this.writer.close();
+		} catch (IOException ioe) {
+			System.err.println("Os arquivos já estavam fechados.\n" + ioe.getLocalizedMessage());
+		}
+	}
 	//public static 
 }
