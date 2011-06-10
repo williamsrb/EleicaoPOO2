@@ -6,13 +6,17 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class ConfigManager {
-	private Map config;
+	private Map<String, String> config;
 	public ConfigManager() {
-		BufferedReader storageReader = FileManager.getReader("/resources/config/storage.cfg");
-		BufferedReader dbReader = FileManager.getReader("/resources/config/db.cfg");
-		if(storageReader != null && dbReader != null)
+		FileManager storageFile = new FileManager("/resources/config/storage.cfg");
+		FileManager dbFile = new FileManager("/resources/config/db.cfg");
+		BufferedReader storageReader = storageFile.getReader();
+		BufferedReader dbReader = dbFile.getReader();
+		if(storageReader != null && dbReader != null) {
+			
+		}
 	}
-	public Map getConfig() {
+	public Map<String, String> getConfig() {
 		return this.config;
 	}
 }
