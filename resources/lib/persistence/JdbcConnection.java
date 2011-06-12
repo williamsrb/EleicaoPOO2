@@ -1,23 +1,39 @@
 package resources.lib.persistence;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class JdbcConnection {
+	
+	private Connection connection;
 
-	public static Connection getConnection() {
-		// TODO Auto-generated method stub
-		return null;
+	public JdbcConnection(JdbcConfig config) {
+		this.connection = connect(config.getUsername(), config.getPassword(), config.getUrl(), config.getDriver());
 	}
-
-	public void connect(String string, String string2, String string3,
-			String string4) {
-		// TODO Auto-generated method stub
-		
+	public Connection getConnection() {
+		return this.connection;
 	}
-
+	
+	private Connection connect(String username, String password, String url, String driver) {
+		Connection conn = null;
+		try {
+			Class.forName(driver);
+			conn = DriverManager.getConnection(url, username, password);
+			System.err.println("Driver de conexão não encontrado!");
+        } catch (SQLException se) {
+        	System.err.println("Não foi possível estabelecer conexão com o banco: " + url + "\n" + se.getLocalizedMessage());
+        } catch (ClassNotFoundException cnfe) {
+        	System.err.println("Driver não encontrado\n" + cnfe.getLocalizedMessage());
+		}
+		return conn;
+	}
+	
 	public void disconnect() {
-		// TODO Auto-generated method stub
-		
+		try {
+			this.connection.close();
+		} catch (SQLException se) {
+			System.err.println(se.getLocalizedMessage());
+		}
 	}
-
 }

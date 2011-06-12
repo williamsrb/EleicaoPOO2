@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.Stack;
 
 import javax.swing.BorderFactory;
@@ -20,6 +21,8 @@ public class Governador extends Candidato {
 	private String vice_nome;
 	private String vice_foto;
 	
+	private static Map<Integer, Governador> all;
+	
 	//Construtor que usa gerador de id automático da classe mãe
 	private Governador(Integer number, String name, Partido partido, Cargo cargo, Date nascimento, Character sexo, String foto, String site, String vice_nome, String vice_foto) {
 		super(number, name, partido, cargo, nascimento, sexo, foto, site, true);
@@ -28,7 +31,7 @@ public class Governador extends Candidato {
 	}
 	
 	//Construtor que NÃO usa gerador de id automático da classe mãe
-	private Governador(Integer id, Integer number, String name, Partido partido, Cargo cargo, Date nascimento, Character sexo, String foto, String site, String vice_nome, String vice_foto) {
+	public Governador(Integer id, Integer number, String name, Partido partido, Cargo cargo, Date nascimento, Character sexo, String foto, String site, String vice_nome, String vice_foto) {
 		super(number, name, partido, cargo, nascimento, sexo, foto, site, false);
 		this.vice_nome = vice_nome;
 		this.vice_foto = vice_foto;
@@ -37,7 +40,7 @@ public class Governador extends Candidato {
 	
 	//Construtor usado para testes
 	public Governador() {
-		this(new Integer(-1), new Integer(23), "Maria de Testes e Silva", new Partido("PT", "Partido do Teste", 23), new Cargo(new Integer(2), "Governador"), new Date(), 'F', "teste2.jpg", "http://www.mariateste.com.br", "Joana Vice dos Testes", "vice_teste2.jpg");
+		this(new Integer(-4), new Integer(23), "Maria de Testes e Silva", new Partido("PT", "Partido do Teste", 23), new Cargo(new Integer(2), "Governador"), new Date(), 'F', "teste2.jpg", "http://www.mariateste.com.br", "Joana Vice dos Testes", "vice_teste2.jpg");
 		SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			this.nascimento = formatador.parse("01/01/2001");
@@ -82,5 +85,53 @@ public class Governador extends Candidato {
 		reverselist.add(8, vicenameLabel);//8
 		reverselist.add(9, vicenameValue);//9
 		reverselist.add(15, vicePhoto);//15
+	}
+	
+	//Métodos de controle da coleção de objetos para evitar recriação de objetos após consultas
+	
+	private static Map<Integer, Governador> getAll() {
+		return all;
+	}
+	
+	public static boolean conflicts(Governador g) {
+		boolean returnValue = false;
+		if(exists(g)) {
+			returnValue = !(all.get(g.id).numero == g.numero);
+		}
+		return returnValue;
+	}
+	
+	public static boolean exists(Governador g) {
+		return getAll().containsKey(g.id);
+	}
+	
+	public static boolean exists(Integer id) {
+		return getAll().containsKey(id);
+	}
+	
+	//Retorna um governador de mesmo id que já esteja registrado
+	public static Governador get(Governador g) {
+		Governador returnValue = null;
+		if(exists(g)) {
+			returnValue = all.get(g.id);
+		}
+		return returnValue;
+	}
+	
+	public static Governador get(Integer id) {
+		Governador returnValue = null;
+		if(exists(id)) {
+			returnValue = all.get(id);
+		}
+		return returnValue;
+	}
+	
+	public static boolean register(Governador g) {
+		boolean success = false;
+		if(!exists(g)) {
+			all.put(g.id, g);
+			success = true;
+		}
+		return success;
 	}
 }

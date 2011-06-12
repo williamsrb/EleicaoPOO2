@@ -12,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JSeparator;
 
 import resources.lib.controller.FileUpload;
-import resources.lib.controller.Sequence;
 import resources.lib.view.Display;
 import resources.lib.view.ImagePanel;
 
@@ -27,10 +26,13 @@ public class Candidato {
 	protected String foto;
 	protected String site;
 	
+	public static final int NEW = -3;
+	protected Integer lastId;
+	
 	protected Candidato(Integer number, String name, Partido partido, Cargo cargo, Date nascimento, Character sexo, String foto, String site, boolean novo) {
 		if(novo) {
-			this.id = Sequence.getNextId(this.getClass().getName());
-		}
+			this.id = Candidato.NEW; //Não teve o id setado, pois é gerado no banco de dado
+		}		
 		this.numero = number;
 		this.nome = name;
 		this.partido = partido;
@@ -39,12 +41,26 @@ public class Candidato {
 		this.sexo = sexo;
 		this.foto = foto;
 		this.site = site;
+		
+		this.lastId = Candidato.NEW;
 	}
 	
 	public Integer getId() {
 		return this.id;
 	}
 	
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
+	public int getLastId() {
+		return lastId;
+	}
+
+	public void setLastId(int lastId) {
+		this.lastId = lastId;
+	}
+
 	public Integer getNumero() {
 		return this.numero;
 	}

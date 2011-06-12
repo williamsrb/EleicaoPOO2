@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.Stack;
 
 import javax.swing.BorderFactory;
@@ -20,6 +21,8 @@ public class Presidente extends Candidato {
 	private String vice_nome;
 	private String vice_foto;
 	
+	private static Map<Integer, Presidente> all;
+	
 	//Construtor que usa gerador de id automático da classe mãe
 	private Presidente(Integer number, String name, Partido partido, Cargo cargo, Date nascimento, Character sexo, String foto, String site, String vice_nome, String vice_foto) {
 		super(number, name, partido, cargo, nascimento, sexo, foto, site, true);
@@ -28,7 +31,7 @@ public class Presidente extends Candidato {
 	}
 	
 	//Construtor que NÃO usa gerador de id automático da classe mãe
-	private Presidente(Integer id, Integer number, String name, Partido partido, Cargo cargo, Date nascimento, Character sexo, String foto, String site, String vice_nome, String vice_foto) {
+	public Presidente(Integer id, Integer number, String name, Partido partido, Cargo cargo, Date nascimento, Character sexo, String foto, String site, String vice_nome, String vice_foto) {
 		super(number, name, partido, cargo, nascimento, sexo, foto, site, false);
 		this.vice_nome = vice_nome;
 		this.vice_foto = vice_foto;
@@ -37,7 +40,7 @@ public class Presidente extends Candidato {
 	
 	//Construtor usado para testes
 	public Presidente() {
-		this(new Integer(-1), new Integer(45), "Silvia Teste e Testes", new Partido("PDT", "Partido dos Testes", 45), new Cargo(new Integer(2), "Presidente"), new Date(), 'F', "teste3.jpg", "http://www.silvia.pdt.com.br", "Testatina Testicolina", "vice_teste3.jpg");
+		this(new Integer(-4), new Integer(45), "Silvia Teste e Testes", new Partido("PDT", "Partido dos Testes", 45), new Cargo(new Integer(2), "Presidente"), new Date(), 'F', "teste3.jpg", "http://www.silvia.pdt.com.br", "Testatina Testicolina", "vice_teste3.jpg");
 		SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			this.nascimento = formatador.parse("01/01/2001");
@@ -82,5 +85,53 @@ public class Presidente extends Candidato {
 		reverselist.add(8, vicenameLabel);//8
 		reverselist.add(9, vicenameValue);//9
 		reverselist.add(15, vicePhoto);//15
+	}
+	
+	//Métodos de controle da coleção de objetos para evitar recriação de objetos após consultas
+	
+	private static Map<Integer, Presidente> getAll() {
+		return all;
+	}
+	
+	public static boolean conflicts(Presidente p) {
+		boolean returnValue = false;
+		if(exists(p)) {
+			returnValue = !(all.get(p.id).numero == p.numero);
+		}
+		return returnValue;
+	}
+	
+	public static boolean exists(Presidente p) {
+		return getAll().containsKey(p.id);
+	}
+	
+	public static boolean exists(Integer id) {
+		return getAll().containsKey(id);
+	}
+	
+	//Retorna um presidente de mesmo id que já esteja registrado
+	public static Presidente get(Presidente p) {
+		Presidente returnValue = null;
+		if(exists(p)) {
+			returnValue = all.get(p.id);
+		}
+		return returnValue;
+	}
+	
+	public static Presidente get(Integer id) {
+		Presidente returnValue = null;
+		if(exists(id)) {
+			returnValue = all.get(id);
+		}
+		return returnValue;
+	}
+	
+	public static boolean register(Presidente p) {
+		boolean success = false;
+		if(!exists(p)) {
+			all.put(p.id, p);
+			success = true;
+		}
+		return success;
 	}
 }

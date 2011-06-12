@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.Stack;
 
 import javax.swing.BorderFactory;
@@ -14,6 +15,8 @@ import javax.swing.JLabel;
 public class Deputado extends Candidato {
 	private String apelido;
 	
+	private static Map<Integer, Deputado> all;
+	
 	//Construtor que usa gerador de id automático da classe mãe
 	private Deputado(Integer number, String name, Partido partido, Cargo cargo, Date nascimento, Character sexo, String foto, String site, String apelido) {
 		super(number, name, partido, cargo, nascimento, sexo, foto, site, true);
@@ -21,7 +24,7 @@ public class Deputado extends Candidato {
 	}
 	
 	//Construtor que NÃO usa gerador de id automático da classe mãe
-	private Deputado(Integer id, Integer number, String name, Partido partido, Cargo cargo, Date nascimento, Character sexo, String foto, String site, String apelido) {
+	public Deputado(Integer id, Integer number, String name, Partido partido, Cargo cargo, Date nascimento, Character sexo, String foto, String site, String apelido) {
 		super(number, name, partido, cargo, nascimento, sexo, foto, site, false);
 		this.apelido = apelido;
 		this.id = id;
@@ -29,7 +32,7 @@ public class Deputado extends Candidato {
 	
 	//Construtor usado para testes
 	public Deputado() {
-		this(new Integer(-1), new Integer(12345), "Testentina dos Testes Testosos", new Partido("PN", "Partido do Nada", 12), new Cargo(new Integer(5), "Deputado"), new Date(), 'F', "teste1.jpg", "http://www.testezinha.com.br", "Testezinha");
+		this(new Integer(-4), new Integer(12345), "Testentina dos Testes Testosos", new Partido("PN", "Partido do Nada", 12), new Cargo(new Integer(5), "Deputado"), new Date(), 'F', "teste1.jpg", "http://www.testezinha.com.br", "Testezinha");
 		SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			this.nascimento = formatador.parse("01/01/2001");
@@ -74,5 +77,62 @@ public class Deputado extends Candidato {
 		reverselist.push(numDigit03);//15
 		reverselist.push(numDigit04);//16
 		reverselist.push(numDigit05);//17
+	}
+	
+	//Métodos de controle da coleção de objetos paa evitar recriação de objetos após consultas
+	
+	private static Map<Integer, Deputado> getAll() {
+		return all;
+	}
+	
+	public static boolean conflicts(Deputado d) {
+		boolean returnValue = false;
+		if(exists(d)) {
+			returnValue = !(all.get(d.id).numero == d.numero);
+		}
+		return returnValue;
+	}
+	
+	public static boolean exists(Deputado d) {
+		return getAll().containsKey(d.id);
+	}
+	
+	public static boolean exists(Integer id) {
+		return getAll().containsKey(id);
+	}
+	
+	//Retorna um deputado de mesmo id que já esteja registrado
+	public static Deputado get(Deputado d) {
+		Deputado returnValue = null;
+		if(exists(d)) {
+			returnValue = all.get(d.id);
+		}
+		return returnValue;
+	}
+	
+	public static Deputado get(Integer id) {
+		Deputado returnValue = null;
+		if(exists(id)) {
+			returnValue = all.get(id);
+		}
+		return returnValue;
+	}
+	
+	public static boolean register(Deputado d) {
+		boolean success = false;
+		if(!exists(d)) {
+			all.put(d.id, d);
+			success = true;
+		}
+		return success;
+	}
+	
+	public static boolean override(Deputado d) {
+		boolean success = false;
+		if(exists(d)) {
+			all.put(d.id, d);
+			success = true;
+		}
+		return success;
 	}
 }
