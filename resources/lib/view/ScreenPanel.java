@@ -1,4 +1,4 @@
-package modulo2.view;
+package resources.lib.view;
 
 import javax.swing.JPanel;
 

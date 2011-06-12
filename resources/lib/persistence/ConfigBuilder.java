@@ -1,13 +1,17 @@
-package modulo2.persistence;
+package resources.lib.persistence;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Map;
 import java.util.HashMap;
 
-public class ConfigManager {
+import resources.lib.other.Singleton;
+
+public class ConfigBuilder implements Singleton {
 	private Map<String, String> config;
-	public ConfigManager() {
+	private static ConfigBuilder singleton;
+	
+	private ConfigBuilder() {
 		FileManager storageFile = new FileManager("/resources/config/storage.cfg");
 		FileManager dbFile = new FileManager("/resources/config/db.cfg");
 		BufferedReader storageReader = storageFile.getReader();
@@ -26,6 +30,13 @@ public class ConfigManager {
 			this.genMap(dbReader, localMap);
 			this.config = localMap;
 		}
+	}
+ 
+	public static synchronized ConfigBuilder getInstance() {
+		if(singleton == null) {
+			singleton = new ConfigBuilder();
+		}
+		return singleton;
 	}
 	
 	public Map<String, String> getConfig() {
@@ -60,5 +71,9 @@ public class ConfigManager {
 				temp = this.nextUncommentedLine(reader);
 			} while(temp != null);
 		}
+	}
+	
+	public Object clone() throws CloneNotSupportedException {
+		throw new CloneNotSupportedException();
 	}
 }

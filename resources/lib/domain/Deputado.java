@@ -1,4 +1,4 @@
-package modulo2.domain;
+package resources.lib.domain;
 
 import java.awt.Color;
 import java.awt.Component;

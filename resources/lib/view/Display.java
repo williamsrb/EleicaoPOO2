@@ -1,4 +1,4 @@
-package modulo2.util;
+package resources.lib.view;
 
 import java.awt.Component;
 import java.awt.Container;

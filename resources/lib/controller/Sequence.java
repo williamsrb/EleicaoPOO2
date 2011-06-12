@@ -1,4 +1,4 @@
-package modulo2.util;
+package resources.lib.controller;
 
 public class Sequence {
 

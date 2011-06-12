@@ -2,16 +2,17 @@ package modulo2.controller;
 
 import javax.swing.JOptionPane;
 
-import modulo2.domain.Deputado;
-import modulo2.domain.Governador;
-import modulo2.domain.Presidente;
-
 import modulo2.util.KeyEnum;
 import modulo2.util.VotingKey;
-import modulo2.view.ScreenPanel;
 import modulo2.view.VotingState;
 
-public class AppWorker {
+import resources.lib.domain.Deputado;
+import resources.lib.domain.Governador;
+import resources.lib.domain.Presidente;
+import resources.lib.other.Singleton;
+import resources.lib.view.ScreenPanel;
+
+public class AppWorker implements Singleton {
 	private static AppWorker singleton;
 	private int state;
 	private ScreenPanel screen;

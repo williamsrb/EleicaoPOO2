@@ -1,6 +1,6 @@
-package modulo2.domain;
+package resources.lib.domain;
 
-import modulo2.util.Sequence;
+import resources.lib.controller.Sequence;
 
 public class Partido {
 	private Integer id;

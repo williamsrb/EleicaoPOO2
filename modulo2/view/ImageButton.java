@@ -4,10 +4,11 @@ import java.awt.Dimension;
 
 import javax.swing.ImageIcon;
 
-import modulo2.util.Display;
-import modulo2.util.FileUpload;
 import modulo2.util.KeyEnum;
 import modulo2.util.VotingKey;
+
+import resources.lib.controller.FileUpload;
+import resources.lib.view.Display;
 
 public class ImageButton {
 	private final ImageIcon light;

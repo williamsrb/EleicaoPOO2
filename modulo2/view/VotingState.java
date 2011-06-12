@@ -3,10 +3,11 @@ package modulo2.view;
 import java.awt.Component;
 import java.util.Stack;
 
-import modulo2.domain.Deputado;
-import modulo2.domain.Governador;
-import modulo2.domain.Presidente;
-import modulo2.util.Display;
+import resources.lib.domain.Deputado;
+import resources.lib.domain.Governador;
+import resources.lib.domain.Presidente;
+import resources.lib.view.Display;
+import resources.lib.view.ScreenPanel;
 
 public class VotingState {
 	

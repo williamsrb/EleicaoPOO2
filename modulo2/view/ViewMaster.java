@@ -13,9 +13,12 @@ import javax.swing.JButton;
 import javax.swing.border.BevelBorder;
 
 import modulo2.controller.AppWorker;
-import modulo2.util.Display;
-import modulo2.util.FileUpload;
 import modulo2.util.KeyEnum;
+
+import resources.lib.controller.FileUpload;
+import resources.lib.view.Display;
+import resources.lib.view.ImagePanel;
+import resources.lib.view.ScreenPanel;
 
 public class ViewMaster {
 	//Retorna o "container" da tela da urna

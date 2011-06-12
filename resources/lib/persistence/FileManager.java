@@ -1,4 +1,4 @@
-package modulo2.persistence;
+package resources.lib.persistence;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -70,5 +70,4 @@ public class FileManager {
 			System.err.println("Os arquivos já estavam fechados.\n" + ioe.getLocalizedMessage());
 		}
 	}
-	//public static 
 }

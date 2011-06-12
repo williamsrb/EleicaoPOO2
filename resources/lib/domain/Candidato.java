@@ -1,4 +1,4 @@
-package modulo2.domain;
+package resources.lib.domain;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -11,10 +11,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 
-import modulo2.util.Display;
-import modulo2.util.FileUpload;
-import modulo2.util.Sequence;
-import modulo2.view.ImagePanel;
+import resources.lib.controller.FileUpload;
+import resources.lib.controller.Sequence;
+import resources.lib.view.Display;
+import resources.lib.view.ImagePanel;
 
 public class Candidato {
 	protected Integer id;
