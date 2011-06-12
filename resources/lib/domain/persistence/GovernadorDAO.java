@@ -1,5 +1,5 @@
 package resources.lib.domain.persistence;
 
-import resources.lib.domain.Deputado;
+import resources.lib.domain.Governador;
 
-public interface DeputadoDAO extends DAO<Deputado> {}
+public interface GovernadorDAO extends DAO<Governador> {}

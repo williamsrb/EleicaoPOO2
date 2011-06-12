@@ -11,24 +11,24 @@ import java.util.List;
 
 import resources.lib.domain.Candidato;
 import resources.lib.domain.Cargo;
-import resources.lib.domain.Deputado;
+import resources.lib.domain.Presidente;
 import resources.lib.domain.Partido;
 import resources.lib.persistence.ConfigManager;
 import resources.lib.persistence.JdbcConnection;
 
-public class DeputadoDAOjdbc implements DeputadoDAO {
+public class PresidenteDAOjdbc implements PresidenteDAO {
 
-	private static DeputadoDAO instance = null;
+	private static PresidenteDAO instance = null;
 
 	// DAO de candidato eh singleton
-	public static DeputadoDAO getInstance() {
+	public static PresidenteDAO getInstance() {
 		if (instance == null) {
-			instance = new DeputadoDAOjdbc();
+			instance = new PresidenteDAOjdbc();
 		}
 		return instance;
 	}
 
-	public void salvar(Deputado obj) {
+	public void salvar(Presidente obj) {
 		JdbcConnection jconn = new JdbcConnection(ConfigManager.getJdbcConfig());
 		Connection conn = jconn.getConnection();
 		PreparedStatement ps = null;
@@ -36,16 +36,17 @@ public class DeputadoDAOjdbc implements DeputadoDAO {
 		int lastIndex = 0;
 		try {
 			if(obj.getId() == Candidato.NEW) {
-				ps = conn.prepareStatement("INSERT INTO Candidato(numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+				ps = conn.prepareStatement("INSERT INTO Candidato(numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, nome_vice, foto_vice) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			} else {
-				ps = conn.prepareStatement("UPDATE Candidato SET id=?, numero=?, nome=?, id_partido=?, id_cargo=?, nascimento=?, sexo=?, foto=?, site=?, apelido=? WHERE id=?");
+				ps = conn.prepareStatement("UPDATE Candidato SET id=?, numero=?, nome=?, id_partido=?, id_cargo=?, nascimento=?, sexo=?, foto=?, site=?, nome_vice=?, foto_vice=? WHERE id=?");
 				ps.setInt(1, obj.getId());
-				ps.setInt(11, obj.getLastId());
+				ps.setInt(12, obj.getLastId());
 				lastIndex++;
 			}
 			CandidatoJDBC.prepareStatement(ps, obj, lastIndex); //Atributos comuns de Candidato são preparados
 			//Inserir campos a partir do índice 9 + lastIndex
-			ps.setString(lastIndex + 9, obj.getApelido());
+			ps.setString(lastIndex + 9, obj.getVice_nome());
+			ps.setString(lastIndex + 10, obj.getVice_foto());
 			ps.executeUpdate();
 			if(obj.getId() == Candidato.NEW) {
 				rsID = ps.getGeneratedKeys();
@@ -62,22 +63,22 @@ public class DeputadoDAOjdbc implements DeputadoDAO {
 		}
 	}
 
-	public void excluir(Deputado obj) {
+	public void excluir(Presidente obj) {
 		CandidatoJDBC.delete(obj);
 	}
 	
-	public List<Deputado> obter() {
-		ResultSet result = CandidatoJDBC.getAll("Deputado");
-		List<Deputado> list = new ArrayList<Deputado>();
+	public List<Presidente> obter() {
+		ResultSet result = CandidatoJDBC.getAll("Presidente");
+		List<Presidente> list = new ArrayList<Presidente>();
 		try {
 			while(result.next()) {
-				Deputado d;
-				d = new Deputado(result.getInt("id"), result.getInt("numero"), result.getString("nome"), Partido.get(result.getInt("id_partido")), Cargo.get(result.getInt("id_cargo")), new Date(result.getDate("nascimento").getTime()), result.getString("sexo").charAt(0), result.getString("foto"), result.getString("site"), result.getString("apelido"));
-				list.add(d);
-				if(!Deputado.conflicts(d)) {
-					Deputado.register(d);
+				Presidente p;
+				p = new Presidente(result.getInt("id"), result.getInt("numero"), result.getString("nome"), Partido.get(result.getInt("id_partido")), Cargo.get(result.getInt("id_cargo")), new Date(result.getDate("nascimento").getTime()), result.getString("sexo").charAt(0), result.getString("foto"), result.getString("site"), result.getString("nome_vice"), result.getString("foto_vice"));
+				list.add(p);
+				if(!Presidente.conflicts(p)) {
+					Presidente.register(p);
 				} else {
-					Deputado.override(d); //Atualizar o objeto na lista global
+					Presidente.override(p); //Atualizar o objeto na lista global
 				}
 			}
 		} catch (SQLException se) {

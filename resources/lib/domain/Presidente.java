@@ -134,4 +134,13 @@ public class Presidente extends Candidato {
 		}
 		return success;
 	}
+
+	public static boolean override(Presidente p) {
+		boolean success = false;
+		if(exists(p)) {
+			all.put(p.id, p);
+			success = true;
+		}
+		return success;
+	}
 }

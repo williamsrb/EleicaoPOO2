@@ -134,4 +134,13 @@ public class Governador extends Candidato {
 		}
 		return success;
 	}
+
+	public static boolean override(Governador g) {
+		boolean success = false;
+		if(exists(g)) {
+			all.put(g.id, g);
+			success = true;
+		}
+		return success;
+	}
 }
