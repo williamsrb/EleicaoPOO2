@@ -9,17 +9,34 @@ public class Partido {
 	private Integer numero;
 	
 	public static final int NEW = -3;
+	private Integer lastId;
 	private static Map<Integer, Partido> all;
-
-	public Partido(String sigla, String nome, Integer numero) {
-		this.id = Partido.NEW;
+	
+	private Partido(String sigla, String nome, Integer numero, boolean novo) {
+		if(novo) {
+			this.id = Partido.NEW; //Não teve o id setado, pois é gerado no banco de dado
+		}
 		this.sigla = sigla;
 		this.nome = nome;
 		this.numero = numero;
-	}
-
-	public Partido() {
 		
+		this.lastId = Partido.NEW;
+	}
+	
+	//Construtor que usa gerador de id automático
+	public Partido(String sigla, String nome, Integer numero) {
+		this(sigla, nome, numero, true);
+	}
+	
+	//Construtor que NÃO usa gerador de id automático
+	public Partido(Integer id, String sigla, String nome, Integer numero) {
+		this(sigla, nome, numero, false);
+		this.id = id;
+	}
+	
+	//Construtor usado para testes
+	public Partido() {
+		this(new Integer(-4), "PN", "Partido do Nada", 12);
 	}
 	
 	public Integer getId() {
@@ -30,28 +47,24 @@ public class Partido {
 		this.id = id;
 	}
 	
+	public void setLastId(Integer lastId) {
+		this.lastId = lastId;
+	}
+
+	public Integer getLastId() {
+		return lastId;
+	}
+
 	public String getSigla() {
 		return sigla;
-	}
-	
-	public void setSigla(String sigla) {
-		this.sigla = sigla;
 	}
 	
 	public String getNome() {
 		return nome;
 	}
 	
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	
 	public Integer getNumero() {
 		return numero;
-	}
-	
-	public void setNumero(Integer numero) {
-		this.numero = numero;
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -98,6 +111,15 @@ public class Partido {
 	public static boolean register(Partido p) {
 		boolean success = false;
 		if(!exists(p)) {
+			all.put(p.id, p);
+			success = true;
+		}
+		return success;
+	}
+
+	public static boolean override(Partido p) {
+		boolean success = false;
+		if(exists(p)) {
 			all.put(p.id, p);
 			success = true;
 		}

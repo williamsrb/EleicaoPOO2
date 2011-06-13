@@ -24,7 +24,7 @@ public class Presidente extends Candidato {
 	private static Map<Integer, Presidente> all;
 	
 	//Construtor que usa gerador de id automático da classe mãe
-	private Presidente(Integer number, String name, Partido partido, Cargo cargo, Date nascimento, Character sexo, String foto, String site, String vice_nome, String vice_foto) {
+	public Presidente(Integer number, String name, Partido partido, Cargo cargo, Date nascimento, Character sexo, String foto, String site, String vice_nome, String vice_foto) {
 		super(number, name, partido, cargo, nascimento, sexo, foto, site, true);
 		this.vice_nome = vice_nome;
 		this.vice_foto = vice_foto;

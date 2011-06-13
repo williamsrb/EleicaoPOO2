@@ -18,14 +18,14 @@ import resources.lib.persistence.JdbcConnection;
 
 public class DeputadoDAOjdbc implements DeputadoDAO {
 
-	private static DeputadoDAO instance = null;
+	private static DeputadoDAO singleton;
 
 	// DAO de candidato eh singleton
-	public static DeputadoDAO getInstance() {
-		if (instance == null) {
-			instance = new DeputadoDAOjdbc();
+	public static synchronized DeputadoDAO getInstance() {
+		if(singleton == null) {
+			singleton = new DeputadoDAOjdbc();
 		}
-		return instance;
+		return singleton;
 	}
 
 	public void salvar(Deputado obj) {

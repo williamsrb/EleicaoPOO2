@@ -18,14 +18,14 @@ import resources.lib.persistence.JdbcConnection;
 
 public class PresidenteDAOjdbc implements PresidenteDAO {
 
-	private static PresidenteDAO instance = null;
+	private static PresidenteDAO singleton;
 
 	// DAO de candidato eh singleton
-	public static PresidenteDAO getInstance() {
-		if (instance == null) {
-			instance = new PresidenteDAOjdbc();
+	public static synchronized PresidenteDAO getInstance() {
+		if(singleton == null) {
+			singleton = new PresidenteDAOjdbc();
 		}
-		return instance;
+		return singleton;
 	}
 
 	public void salvar(Presidente obj) {

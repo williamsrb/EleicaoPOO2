@@ -18,14 +18,14 @@ import resources.lib.persistence.JdbcConnection;
 
 public class GovernadorDAOjdbc implements GovernadorDAO {
 
-	private static GovernadorDAO instance = null;
+	private static GovernadorDAO singleton;
 
 	// DAO de candidato eh singleton
-	public static GovernadorDAO getInstance() {
-		if (instance == null) {
-			instance = new GovernadorDAOjdbc();
+	public static synchronized GovernadorDAO getInstance() {
+		if(singleton == null) {
+			singleton = new GovernadorDAOjdbc();
 		}
-		return instance;
+		return singleton;
 	}
 
 	public void salvar(Governador obj) {

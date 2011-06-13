@@ -8,16 +8,35 @@ public class Cargo {
 	private String nome;
 	
 	public static final int NEW = -3;
+	private Integer lastId;
 	private static Map<Integer, Cargo> all;
 	
-	public Cargo(Integer digitos, String nome) {
-		this.id = Cargo.NEW;
+	//Apesar da existêcia de construtores para criar novos cargos, seria necessário remodelar o banco para aceitar os novos campos customizados
+	//dos possíveis novos cargos, além de ser necessária a criação de classes de domínio e persistência.
+	private Cargo(Integer digitos, String nome, boolean novo) {
+		if(novo) {
+			this.id = Cargo.NEW; //Não teve o id setado, pois é gerado no banco de dado
+		}
 		this.digitos = digitos;
 		this.nome = nome;
+		
+		this.lastId = Cargo.NEW;
 	}
 	
+	//Construtor que usa gerador de id automático
+	public Cargo(Integer digitos, String nome) {
+		this(digitos, nome, true);
+	}
+	
+	//Construtor que NÃO usa gerador de id automático
+	public Cargo(Integer id, Integer digitos, String nome) {
+		this(digitos, nome, false);
+		this.id = id;
+	}
+	
+	//Construtor usado para testes
 	public Cargo() {
-		
+		this(new Integer(-4), 5, "Deputado Estadual");
 	}
 	
 	public Integer getId() {
@@ -28,20 +47,20 @@ public class Cargo {
 		this.id = id;
 	}
 	
+	public void setLastId(Integer lastId) {
+		this.lastId = lastId;
+	}
+
+	public Integer getLastId() {
+		return lastId;
+	}
+
 	public Integer getDigitos() {
 		return digitos;
 	}
 	
-	public void setDigitos(Integer digitos) {
-		this.digitos = digitos;
-	}
-	
 	public String getNome() {
 		return nome;
-	}
-	
-	public void setNome(String nome) {
-		this.nome = nome;
 	}
 	
 	//Métodos de controle da coleção de objetos para evitar recriação de objetos após consultas
@@ -86,6 +105,15 @@ public class Cargo {
 	public static boolean register(Cargo c) {
 		boolean success = false;
 		if(!exists(c)) {
+			all.put(c.id, c);
+			success = true;
+		}
+		return success;
+	}
+
+	public static boolean override(Cargo c) {
+		boolean success = false;
+		if(exists(c)) {
 			all.put(c.id, c);
 			success = true;
 		}
