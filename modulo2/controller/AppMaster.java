@@ -7,9 +7,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.SwingUtilities;
 
+import modulo2.persistence.DatabaseOperations;
 import modulo2.view.ButtonElements;
 import modulo2.view.ViewMaster;
 
@@ -29,12 +33,37 @@ public class AppMaster extends JFrame {
 	}
 
 	private AppMaster() {
-		super("Urna Eletrônica");
-		AppWorker.getInstance().setState(AppWorker.BLOQUEADO);
-		this.eventMonitor = false;
-		start();
+		Object[] options = {"Relatórios", "Votar"};
+		int opt, errorCounter = 0;
+		boolean valid;
+		do {
+			valid = validatePassword();
+			if(!valid) {
+				errorCounter++;
+			}
+		} while(errorCounter < 3 && !valid);
+		if(valid) {
+			opt = JOptionPane.showOptionDialog(null, "Escolha uma opção abaixo:", "Bem-vindo!", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+			if(opt == 1) {
+				super.setTitle("Urna Eletrônica");
+				this.eventMonitor = false; //Monitor de eventos, usado para controlar as teclas
+				AppWorker.getInstance().setState(AppWorker.BLOQUEADO);
+				startVoting();
+			} else {
+				super.setTitle("Relatórios de votação");
+				startReport();
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Acesso proibido.\nSenha incorreta, três tentativas.", "Erro", JOptionPane.ERROR_MESSAGE);
+			System.exit(1);
+		}
 	}
 	
+	private void startReport() {
+		JOptionPane.showMessageDialog(null, "Reports!!!");
+		System.exit(0);
+	}
+
 	public synchronized void eventSwitch() {
 		this.eventMonitor = !this.eventMonitor;
 	}
@@ -43,12 +72,11 @@ public class AppMaster extends JFrame {
 		return this.eventMonitor;
 	}
 
-	public void start() {
+	public void startVoting() {
 		Insets frameInsets;
 		Dimension size;
 		Container pane;
 		ButtonElements btnLst;
-		
 		
 		JOptionPane.showMessageDialog(null, "Intruções:\n     \u2190  Branco\n     \u2193  Cancela\n     \u2192  Confirma", "Ajuda", JOptionPane.INFORMATION_MESSAGE);
 		pane = getContentPane();
@@ -164,5 +192,25 @@ public class AppMaster extends JFrame {
 		default:
 			JOptionPane.showMessageDialog(null, "Entrou com: " + e.getKeyChar());
 		}
+	}
+	
+	private static boolean validatePassword() {
+		JPasswordField passwdfield = new JPasswordField(10);
+		JLabel passwdlabel = new JLabel("Entre com a senha:");
+		JPanel panel = new JPanel();
+		boolean returnValue = false;
+		String passwd;
+		
+		passwdfield.setEchoChar('*');
+		panel.add(passwdlabel);
+		panel.add(passwdfield);
+		
+		JOptionPane.showMessageDialog(null, panel, "Desbloquear", JOptionPane.PLAIN_MESSAGE);
+		passwd = new String(passwdfield.getPassword());
+		
+		if(passwd.equals(DatabaseOperations.getUrnaPassword())) {
+			returnValue = true;
+		}
+		return returnValue;
 	}
 }

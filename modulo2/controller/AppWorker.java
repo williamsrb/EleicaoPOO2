@@ -6,12 +6,10 @@ import modulo2.util.KeyEnum;
 import modulo2.util.VotingKey;
 import modulo2.view.VotingState;
 
-import resources.lib.domain.Deputado;
-import resources.lib.domain.Governador;
-import resources.lib.domain.Presidente;
 import resources.lib.other.Singleton;
 import resources.lib.view.ScreenPanel;
 
+@SuppressWarnings("unused")
 public class AppWorker implements Singleton {
 	private static AppWorker singleton;
 	private int state;
@@ -93,65 +91,315 @@ public class AppWorker implements Singleton {
 	}
 	
 	public void actionBLOQUEADO(KeyEnum key) {
-		JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action BLOQUEADO", JOptionPane.INFORMATION_MESSAGE);
-		this.state = NULO;
+		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action BLOQUEADO", JOptionPane.INFORMATION_MESSAGE);
+		//this.state = NULO;
+		switch(key) {
+		case D1:
+		case D2:
+		case D3:
+		case D4:
+		case D5:
+		case D6:
+		case D7:
+		case D8:
+		case D9:
+		case D0:
+			//Ação para dígitos
+			break;
+		case CGREEN:
+			//Ação para "Confirma"
+			break;
+		case CRED:
+			//Ação para "Cancela"
+			break;
+		case CWHITE:
+			//Ação para "Branco"
+			break;
+		default:
+			System.err.println("Unknown key: " + key);
+		}
 	}
 	
 	public void actionNULO(KeyEnum key) {
-		JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action NULO", JOptionPane.INFORMATION_MESSAGE);
-		this.state = BRANCO;
-		//Teste %%%%%%%%%%%%%%%%
-		VotingState.displayCandidate(new Governador(), screen);
+		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action NULO", JOptionPane.INFORMATION_MESSAGE);
+		//this.state = BRANCO;
+		////Teste %%%%%%%%%%%%%%%%
+		//VotingState.displayCandidate(new Governador(), screen);
+		switch(key) {
+		case D1:
+		case D2:
+		case D3:
+		case D4:
+		case D5:
+		case D6:
+		case D7:
+		case D8:
+		case D9:
+		case D0:
+			//Ação para dígitos
+			break;
+		case CGREEN:
+			//Ação para "Confirma"
+			break;
+		case CRED:
+			//Ação para "Cancela"
+			break;
+		case CWHITE:
+			//Ação para "Branco"
+			break;
+		default:
+			System.err.println("Unknown key: " + key);
+		}
 	}
 	
 	public void actionBRANCO(KeyEnum key) {
-		JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action BRANCO", JOptionPane.INFORMATION_MESSAGE);
-		this.state = FIM;
+		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action BRANCO", JOptionPane.INFORMATION_MESSAGE);
+		//this.state = FIM;
+		switch(key) {
+		case D1:
+		case D2:
+		case D3:
+		case D4:
+		case D5:
+		case D6:
+		case D7:
+		case D8:
+		case D9:
+		case D0:
+			//Ação para dígitos
+			break;
+		case CGREEN:
+			//Ação para "Confirma"
+			break;
+		case CRED:
+			//Ação para "Cancela"
+			break;
+		case CWHITE:
+			//Ação para "Branco"
+			break;
+		default:
+			System.err.println("Unknown key: " + key);
+		}
 	}
 	
 	public void actionFIM(KeyEnum key) {
-		JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action FIM", JOptionPane.INFORMATION_MESSAGE);
-		this.state = DIGITANDO_DEPUTADO;
-		//Teste %%%%%%%%%%%%%%%%
-		screen.clear();
+		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action FIM", JOptionPane.INFORMATION_MESSAGE);
+		//this.state = DIGITANDO_DEPUTADO;
+		////Teste %%%%%%%%%%%%%%%%
+		//screen.clear();
+		switch(key) {
+		case D1:
+		case D2:
+		case D3:
+		case D4:
+		case D5:
+		case D6:
+		case D7:
+		case D8:
+		case D9:
+		case D0:
+			//Ação para dígitos
+			break;
+		case CGREEN:
+			//Ação para "Confirma"
+			break;
+		case CRED:
+			//Ação para "Cancela"
+			break;
+		case CWHITE:
+			//Ação para "Branco"
+			break;
+		default:
+			System.err.println("Unknown key: " + key);
+		}
 	}
 	
 	public void actionDIGITANDO_DEPUTADO(KeyEnum key) {
-		JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action DIGITANDO_DEPUTADO", JOptionPane.INFORMATION_MESSAGE);
-		this.state = EXIBINDO_DEPUTADO;
+		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action DIGITANDO_DEPUTADO", JOptionPane.INFORMATION_MESSAGE);
+		//this.state = EXIBINDO_DEPUTADO;
 		//Teste %%%%%%%%%%%%%%%%
-		VotingState.displayCandidate(new Presidente(), screen);
+		//VotingState.displayCandidate(new Presidente(), screen);
+		switch(key) {
+		case D1:
+		case D2:
+		case D3:
+		case D4:
+		case D5:
+		case D6:
+		case D7:
+		case D8:
+		case D9:
+		case D0:
+			//Ação para dígitos
+			break;
+		case CGREEN:
+			//Ação para "Confirma"
+			break;
+		case CRED:
+			//Ação para "Cancela"
+			break;
+		case CWHITE:
+			//Ação para "Branco"
+			break;
+		default:
+			System.err.println("Unknown key: " + key);
+		}
 	}
 	
 	public void actionEXIBINDO_DEPUTADO(KeyEnum key) {
-		JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action EXIBINDO_DEPUTADO", JOptionPane.INFORMATION_MESSAGE);
-		this.state = DIGITANDO_GOVERNADOR;
+		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action EXIBINDO_DEPUTADO", JOptionPane.INFORMATION_MESSAGE);
+		//this.state = DIGITANDO_GOVERNADOR;
+		switch(key) {
+		case D1:
+		case D2:
+		case D3:
+		case D4:
+		case D5:
+		case D6:
+		case D7:
+		case D8:
+		case D9:
+		case D0:
+			//Ação para dígitos
+			break;
+		case CGREEN:
+			//Ação para "Confirma"
+			break;
+		case CRED:
+			//Ação para "Cancela"
+			break;
+		case CWHITE:
+			//Ação para "Branco"
+			break;
+		default:
+			System.err.println("Unknown key: " + key);
+		}
 	}
 	
 	public void actionDIGITANDO_GOVERNADOR(KeyEnum key) {
-		JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action DIGITANDO_GOVERNADOR", JOptionPane.INFORMATION_MESSAGE);
-		this.state = EXIBINDO_GOVERNADOR;
+		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action DIGITANDO_GOVERNADOR", JOptionPane.INFORMATION_MESSAGE);
+		//this.state = EXIBINDO_GOVERNADOR;
 		//Teste %%%%%%%%%%%%%%%%
-		screen.clear();
+		//screen.clear();
+		switch(key) {
+		case D1:
+		case D2:
+		case D3:
+		case D4:
+		case D5:
+		case D6:
+		case D7:
+		case D8:
+		case D9:
+		case D0:
+			//Ação para dígitos
+			break;
+		case CGREEN:
+			//Ação para "Confirma"
+			break;
+		case CRED:
+			//Ação para "Cancela"
+			break;
+		case CWHITE:
+			//Ação para "Branco"
+			break;
+		default:
+			System.err.println("Unknown key: " + key);
+		}
 	}
 	
 	public void actionEXIBINDO_GOVERNADOR(KeyEnum key) {
-		JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action EXIBINDO_GOVERNADOR", JOptionPane.INFORMATION_MESSAGE);
-		this.state = DIGITANDO_PRESIDENTE;
+		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action EXIBINDO_GOVERNADOR", JOptionPane.INFORMATION_MESSAGE);
+		//this.state = DIGITANDO_PRESIDENTE;
 		//Teste %%%%%%%%%%%%%%%%
-		VotingState.displayCandidate(new Deputado(), screen);
+		//VotingState.displayCandidate(new Deputado(), screen);
+		switch(key) {
+		case D1:
+		case D2:
+		case D3:
+		case D4:
+		case D5:
+		case D6:
+		case D7:
+		case D8:
+		case D9:
+		case D0:
+			//Ação para dígitos
+			break;
+		case CGREEN:
+			//Ação para "Confirma"
+			break;
+		case CRED:
+			//Ação para "Cancela"
+			break;
+		case CWHITE:
+			//Ação para "Branco"
+			break;
+		default:
+			System.err.println("Unknown key: " + key);
+		}
 	}
 	
 	public void actionDIGITANDO_PRESIDENTE(KeyEnum key) {
-		JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action DIGITANDO_PRESIDENTE", JOptionPane.INFORMATION_MESSAGE);
-		this.state = EXIBINDO_PRESIDENTE;
+		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action DIGITANDO_PRESIDENTE", JOptionPane.INFORMATION_MESSAGE);
+		//this.state = EXIBINDO_PRESIDENTE;
+		switch(key) {
+		case D1:
+		case D2:
+		case D3:
+		case D4:
+		case D5:
+		case D6:
+		case D7:
+		case D8:
+		case D9:
+		case D0:
+			//Ação para dígitos
+			break;
+		case CGREEN:
+			//Ação para "Confirma"
+			break;
+		case CRED:
+			//Ação para "Cancela"
+			break;
+		case CWHITE:
+			//Ação para "Branco"
+			break;
+		default:
+			System.err.println("Unknown key: " + key);
+		}
 	}
 	
 	public void actionEXIBINDO_PRESIDENTE(KeyEnum key) {
-		JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action EXIBINDO_PRESIDENTE", JOptionPane.INFORMATION_MESSAGE);
-		this.state = BLOQUEADO;
+		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action EXIBINDO_PRESIDENTE", JOptionPane.INFORMATION_MESSAGE);
+		//this.state = BLOQUEADO;
 		//Teste %%%%%%%%%%%%%%%%
-		screen.clear();
+		//screen.clear();
+		switch(key) {
+		case D1:
+		case D2:
+		case D3:
+		case D4:
+		case D5:
+		case D6:
+		case D7:
+		case D8:
+		case D9:
+		case D0:
+			//Ação para dígitos
+			break;
+		case CGREEN:
+			//Ação para "Confirma"
+			break;
+		case CRED:
+			//Ação para "Cancela"
+			break;
+		case CWHITE:
+			//Ação para "Branco"
+			break;
+		default:
+			System.err.println("Unknown key: " + key);
+		}
 	}
 	
 	public Object clone() throws CloneNotSupportedException {
