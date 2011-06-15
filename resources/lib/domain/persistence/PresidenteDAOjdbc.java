@@ -18,7 +18,9 @@ import resources.lib.persistence.JdbcConnection;
 
 public class PresidenteDAOjdbc implements PresidenteDAO {
 
-	private static PresidenteDAO singleton;
+	private static PresidenteDAOjdbc singleton;
+	
+	private PresidenteDAOjdbc() {}
 
 	// DAO de candidato eh singleton
 	public static synchronized PresidenteDAO getInstance() {
@@ -58,6 +60,7 @@ public class PresidenteDAOjdbc implements PresidenteDAO {
 			}
 			obj.setLastId(obj.getId());
 			jconn.disconnect();
+			stock(obj);
 		} catch (Exception ex) {
 			System.err.println("Erro ao inserir a Candidato\n" + ex.getLocalizedMessage());
 		}
@@ -65,20 +68,19 @@ public class PresidenteDAOjdbc implements PresidenteDAO {
 
 	public void excluir(Presidente obj) {
 		CandidatoJDBC.delete(obj);
+		purge(obj);
 	}
 	
 	public List<Presidente> obter() {
 		ResultSet result = CandidatoJDBC.getAll("Presidente");
 		List<Presidente> list = new ArrayList<Presidente>();
 		try {
-			while(result.next()) {
-				Presidente p;
-				p = new Presidente(result.getInt("id"), result.getInt("numero"), result.getString("nome"), Partido.get(result.getInt("id_partido")), Cargo.get(result.getInt("id_cargo")), new Date(result.getDate("nascimento").getTime()), result.getString("sexo").charAt(0), result.getString("foto"), result.getString("site"), result.getString("nome_vice"), result.getString("foto_vice"));
-				list.add(p);
-				if(!Presidente.conflicts(p)) {
-					Presidente.register(p);
-				} else {
-					Presidente.override(p); //Atualizar o objeto na lista global
+			if(result != null) {
+				while(result.next()) {
+					Presidente p;
+					p = new Presidente(result.getInt("id"), result.getInt("numero"), result.getString("nome"), Partido.get(result.getInt("id_partido")), Cargo.get(result.getInt("id_cargo")), new Date(result.getDate("nascimento").getTime()), result.getString("sexo").charAt(0), result.getString("foto"), result.getString("site"), result.getString("nome_vice"), result.getString("foto_vice"));
+					list.add(p);
+					stock(p);
 				}
 			}
 		} catch (SQLException se) {
@@ -87,7 +89,16 @@ public class PresidenteDAOjdbc implements PresidenteDAO {
 		return list;
 	}
 	
+	private static void purge(Presidente obj) {
+		Presidente.unregister(obj);
+	}
+	
+	private static void stock(Presidente obj) {
+		Presidente.register(obj);
+	}
+	
 	public Object clone() throws CloneNotSupportedException {
 		throw new CloneNotSupportedException();
 	}
 }
+ 

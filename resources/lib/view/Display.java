@@ -30,3 +30,4 @@ public class Display {
 		return new ImageIcon(img).getImage();
 	}
 }
+ 

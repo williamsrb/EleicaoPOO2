@@ -16,3 +16,4 @@ public class CargoDAOfile implements CargoDAO {
 		throw new CloneNotSupportedException();
 	}
 }
+ 

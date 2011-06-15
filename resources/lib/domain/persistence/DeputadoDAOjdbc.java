@@ -18,8 +18,10 @@ import resources.lib.persistence.JdbcConnection;
 
 public class DeputadoDAOjdbc implements DeputadoDAO {
 
-	private static DeputadoDAO singleton;
-
+	private static DeputadoDAOjdbc singleton;
+	
+	private DeputadoDAOjdbc() {}
+	
 	// DAO de candidato eh singleton
 	public static synchronized DeputadoDAO getInstance() {
 		if(singleton == null) {
@@ -57,6 +59,7 @@ public class DeputadoDAOjdbc implements DeputadoDAO {
 			}
 			obj.setLastId(obj.getId());
 			jconn.disconnect();
+			stock(obj); //Atualiza a lista global
 		} catch (Exception ex) {
 			System.err.println("Erro ao inserir a Candidato\n" + ex.getLocalizedMessage());
 		}
@@ -64,20 +67,19 @@ public class DeputadoDAOjdbc implements DeputadoDAO {
 
 	public void excluir(Deputado obj) {
 		CandidatoJDBC.delete(obj);
+		purge(obj);
 	}
 	
 	public List<Deputado> obter() {
 		ResultSet result = CandidatoJDBC.getAll("Deputado");
 		List<Deputado> list = new ArrayList<Deputado>();
 		try {
-			while(result.next()) {
-				Deputado d;
-				d = new Deputado(result.getInt("id"), result.getInt("numero"), result.getString("nome"), Partido.get(result.getInt("id_partido")), Cargo.get(result.getInt("id_cargo")), new Date(result.getDate("nascimento").getTime()), result.getString("sexo").charAt(0), result.getString("foto"), result.getString("site"), result.getString("apelido"));
-				list.add(d);
-				if(!Deputado.conflicts(d)) {
-					Deputado.register(d);
-				} else {
-					Deputado.override(d); //Atualizar o objeto na lista global
+			if(result != null) {
+				while(result.next()) {
+					Deputado d;
+					d = new Deputado(result.getInt("id"), result.getInt("numero"), result.getString("nome"), Partido.get(result.getInt("id_partido")), Cargo.get(result.getInt("id_cargo")), new Date(result.getDate("nascimento").getTime()), result.getString("sexo").charAt(0), result.getString("foto"), result.getString("site"), result.getString("apelido"));
+					list.add(d);
+					stock(d);
 				}
 			}
 		} catch (SQLException se) {
@@ -86,7 +88,16 @@ public class DeputadoDAOjdbc implements DeputadoDAO {
 		return list;
 	}
 	
+	private static void purge(Deputado obj) {
+		Deputado.unregister(obj);
+	}
+	
+	private static void stock(Deputado obj) {
+		Deputado.register(obj);
+	}
+	
 	public Object clone() throws CloneNotSupportedException {
 		throw new CloneNotSupportedException();
 	}
 }
+ 

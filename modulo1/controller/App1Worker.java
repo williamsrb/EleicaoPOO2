@@ -1,4 +1,4 @@
-package modulo2.controller;
+package modulo1.controller;
 
 import javax.swing.JOptionPane;
 
@@ -10,9 +10,10 @@ import resources.lib.other.Singleton;
 import resources.lib.view.ScreenPanel;
 
 @SuppressWarnings("unused")
-public class AppWorker implements Singleton {
-	private static AppWorker singleton;
+public class App1Worker implements Singleton {
+	private static App1Worker singleton;
 	private int state;
+	private int previousState;
 	private ScreenPanel screen;
 	
 	public static final int BLOQUEADO = -3;
@@ -26,13 +27,13 @@ public class AppWorker implements Singleton {
 	public static final int DIGITANDO_PRESIDENTE = 5;
 	public static final int EXIBINDO_PRESIDENTE = 6;
 
-	private AppWorker() {
+	private App1Worker() {
 		//this.estado = DIGITANDO_DEPUTADO;
 	}
  
-	public static synchronized AppWorker getInstance() {
+	public static synchronized App1Worker getInstance() {
 		if(singleton == null) {
-			singleton = new AppWorker();
+			singleton = new App1Worker();
 		}
 		return singleton;
 	}
@@ -45,6 +46,14 @@ public class AppWorker implements Singleton {
 		return this.state;
 	}
 	
+	public int getPreviousState() {
+		return this.previousState;
+	}
+
+	public void setPreviousState(int previousState) {
+		this.previousState = previousState;
+	}
+
 	public void setScreen(ScreenPanel screen) {
 		this.screen = screen;
 	}
@@ -91,8 +100,7 @@ public class AppWorker implements Singleton {
 	}
 	
 	public void actionBLOQUEADO(KeyEnum key) {
-		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action BLOQUEADO", JOptionPane.INFORMATION_MESSAGE);
-		//this.state = NULO;
+		/*//Fazer nada
 		switch(key) {
 		case D1:
 		case D2:
@@ -118,6 +126,7 @@ public class AppWorker implements Singleton {
 		default:
 			System.err.println("Unknown key: " + key);
 		}
+		 */
 	}
 	
 	public void actionNULO(KeyEnum key) {
@@ -137,12 +146,14 @@ public class AppWorker implements Singleton {
 		case D9:
 		case D0:
 			//Ação para dígitos
+			//Fazer nada
 			break;
 		case CGREEN:
 			//Ação para "Confirma"
 			break;
 		case CRED:
 			//Ação para "Cancela"
+			rollback();
 			break;
 		case CWHITE:
 			//Ação para "Branco"
@@ -402,7 +413,11 @@ public class AppWorker implements Singleton {
 		}
 	}
 	
+	private void rollback() {
+		this.state = this.previousState;
+	}
+	
 	public Object clone() throws CloneNotSupportedException {
 		throw new CloneNotSupportedException();
 	}
-}
+} 

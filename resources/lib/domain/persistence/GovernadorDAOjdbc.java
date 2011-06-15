@@ -18,8 +18,10 @@ import resources.lib.persistence.JdbcConnection;
 
 public class GovernadorDAOjdbc implements GovernadorDAO {
 
-	private static GovernadorDAO singleton;
-
+	private static GovernadorDAOjdbc singleton;
+	
+	private GovernadorDAOjdbc() {}
+	
 	// DAO de candidato eh singleton
 	public static synchronized GovernadorDAO getInstance() {
 		if(singleton == null) {
@@ -58,6 +60,7 @@ public class GovernadorDAOjdbc implements GovernadorDAO {
 			}
 			obj.setLastId(obj.getId());
 			jconn.disconnect();
+			stock(obj);
 		} catch (Exception ex) {
 			System.err.println("Erro ao inserir a Candidato\n" + ex.getLocalizedMessage());
 		}
@@ -65,20 +68,19 @@ public class GovernadorDAOjdbc implements GovernadorDAO {
 
 	public void excluir(Governador obj) {
 		CandidatoJDBC.delete(obj);
+		purge(obj);
 	}
 	
 	public List<Governador> obter() {
 		ResultSet result = CandidatoJDBC.getAll("Governador");
 		List<Governador> list = new ArrayList<Governador>();
 		try {
-			while(result.next()) {
-				Governador g;
-				g = new Governador(result.getInt("id"), result.getInt("numero"), result.getString("nome"), Partido.get(result.getInt("id_partido")), Cargo.get(result.getInt("id_cargo")), new Date(result.getDate("nascimento").getTime()), result.getString("sexo").charAt(0), result.getString("foto"), result.getString("site"), result.getString("nome_vice"), result.getString("foto_vice"));
-				list.add(g);
-				if(!Governador.conflicts(g)) {
-					Governador.register(g);
-				} else {
-					Governador.override(g); //Atualizar o objeto na lista global
+			if(result != null) {
+				while(result.next()) {
+					Governador g;
+					g = new Governador(result.getInt("id"), result.getInt("numero"), result.getString("nome"), Partido.get(result.getInt("id_partido")), Cargo.get(result.getInt("id_cargo")), new Date(result.getDate("nascimento").getTime()), result.getString("sexo").charAt(0), result.getString("foto"), result.getString("site"), result.getString("nome_vice"), result.getString("foto_vice"));
+					list.add(g);
+					stock(g);
 				}
 			}
 		} catch (SQLException se) {
@@ -87,7 +89,16 @@ public class GovernadorDAOjdbc implements GovernadorDAO {
 		return list;
 	}
 	
+	private static void purge(Governador obj) {
+		Governador.unregister(obj);
+	}
+	
+	private static void stock(Governador obj) {
+		Governador.register(obj);
+	}
+	
 	public Object clone() throws CloneNotSupportedException {
 		throw new CloneNotSupportedException();
 	}
 }
+ 

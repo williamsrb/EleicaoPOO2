@@ -16,60 +16,75 @@ import javax.swing.SwingUtilities;
 import modulo2.persistence.DatabaseOperations;
 import modulo2.view.ButtonElements;
 import modulo2.view.ViewMaster;
+import resources.lib.domain.persistence.CargoDAO;
+import resources.lib.domain.persistence.CargoDAOjdbc;
+import resources.lib.domain.persistence.DeputadoDAO;
+import resources.lib.domain.persistence.DeputadoDAOjdbc;
+import resources.lib.domain.persistence.GovernadorDAO;
+import resources.lib.domain.persistence.GovernadorDAOjdbc;
+import resources.lib.domain.persistence.PartidoDAO;
+import resources.lib.domain.persistence.PartidoDAOjdbc;
+import resources.lib.domain.persistence.PresidenteDAO;
+import resources.lib.domain.persistence.PresidenteDAOjdbc;
+import resources.lib.persistence.ConfigManager;
+import resources.lib.persistence.JdbcConnection;
 
-public class AppMaster extends JFrame {
-	
+public class App2Master extends JFrame {
 	private static final long serialVersionUID = 1000L;
 	private boolean eventMonitor;
 	private ButtonElements buttonList;
+	private CargoDAO cargoDAO;
+	private DeputadoDAO deputadoDAO;
+	private GovernadorDAO governadorDAO;
+	private PartidoDAO partidoDAO;
+	private PresidenteDAO presidenteDAO;
 	
 	public static void main(String[] args){
 		//Deve estar bloqueado e pedir senha
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				new AppMaster();
+				new App2Master();
 			}
 		});
 	}
 
-	private AppMaster() {
+	private App2Master() {
 		Object[] options = {"Relatórios", "Votar"};
 		int opt, errorCounter = 0;
 		boolean valid;
-		do {
-			valid = validatePassword();
-			if(!valid) {
-				errorCounter++;
-			}
-		} while(errorCounter < 3 && !valid);
-		if(valid) {
-			opt = JOptionPane.showOptionDialog(null, "Escolha uma opção abaixo:", "Bem-vindo!", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
-			if(opt == 1) {
-				super.setTitle("Urna Eletrônica");
-				this.eventMonitor = false; //Monitor de eventos, usado para controlar as teclas
-				AppWorker.getInstance().setState(AppWorker.BLOQUEADO);
-				startVoting();
-			} else {
-				super.setTitle("Relatórios de votação");
-				startReport();
-			}
-		} else {
-			JOptionPane.showMessageDialog(null, "Acesso proibido.\nSenha incorreta, três tentativas.", "Erro", JOptionPane.ERROR_MESSAGE);
+		if(!this.isStorageReady()) {
+			JOptionPane.showMessageDialog(null, "Impossível usar o recurso de persistência.\nVerifique as configurações.", "Erro", JOptionPane.ERROR_MESSAGE);
 			System.exit(1);
+		} else {
+			this.makeDAOs(); //dao factory
+			this.updateResources(); //recupera todos os objetos do banco de dados
+			do {
+				valid = validatePassword();
+				if(!valid) {
+					errorCounter++;
+				}
+			} while(errorCounter < 3 && !valid);
+			if(valid) {
+				opt = JOptionPane.showOptionDialog(null, "Escolha uma opção abaixo:", "Bem-vindo!", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+				if(opt == 1) {
+					super.setTitle("Urna Eletrônica");
+					this.eventMonitor = false; //Monitor de eventos, usado para controlar as teclas
+					App2Worker.getInstance().setState(App2Worker.BLOQUEADO);
+					startVoting();
+				} else {
+					super.setTitle("Relatórios de votação");
+					startReport();
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "Acesso proibido.\nSenha incorreta, três tentativas.", "Erro", JOptionPane.ERROR_MESSAGE);
+				System.exit(1);
+			}
 		}
 	}
-	
+
 	private void startReport() {
 		JOptionPane.showMessageDialog(null, "Reports!!!");
 		System.exit(0);
-	}
-
-	public synchronized void eventSwitch() {
-		this.eventMonitor = !this.eventMonitor;
-	}
-	
-	public synchronized boolean getEventMonitor() {
-		return this.eventMonitor;
 	}
 
 	public void startVoting() {
@@ -116,7 +131,7 @@ public class AppMaster extends JFrame {
 		this.buttonList = new ButtonElements();
 		btnLst = this.buttonList;
 		
-		AppWorker.getInstance().setScreen(ViewMaster.buildInterface(pane, btnLst));
+		App2Worker.getInstance().setScreen(ViewMaster.buildInterface(pane, btnLst));
 		ViewMaster.buildListeners(btnLst);
 		
 		setSize(pane.getWidth(), pane.getHeight());
@@ -124,7 +139,11 @@ public class AppMaster extends JFrame {
 		setVisible(true);
 	}
 	
-	public void keyUseEvent(KeyEvent e) {
+	private synchronized void eventSwitch() {
+		this.eventMonitor = !this.eventMonitor;
+	}
+	
+	private void keyUseEvent(KeyEvent e) {
 		ButtonElements buttonList = this.buttonList;
 		switch(e.getKeyCode()) {
 		case KeyEvent.VK_1:
@@ -213,4 +232,67 @@ public class AppMaster extends JFrame {
 		}
 		return returnValue;
 	}
+	
+	private void makeDAOs() {
+		String stgmtd = ConfigManager.getStorageMethod();
+		if(stgmtd.equals("File")) {
+			//De acordo com as especificações, não será implementado.
+		} else {
+			//Database
+			this.cargoDAO = CargoDAOjdbc.getInstance();
+			this.deputadoDAO = DeputadoDAOjdbc.getInstance();
+			this.governadorDAO = GovernadorDAOjdbc.getInstance();
+			this.partidoDAO = PartidoDAOjdbc.getInstance();
+			this.presidenteDAO = PresidenteDAOjdbc.getInstance();
+		}
+	}
+	
+	//Atualiza a lista global de objetos
+	public void updateResources() {
+		this.cargoDAO.obter();
+		this.deputadoDAO.obter();
+		this.governadorDAO.obter();
+		this.partidoDAO.obter();
+		this.presidenteDAO.obter();
+	}
+	
+	public boolean isStorageReady() {
+		String stgmtd = ConfigManager.getStorageMethod();
+		boolean result = false;
+		if(stgmtd.equals("File")) {
+			//De acordo com as especificações, não será implementado.
+		} else {
+			result = JdbcConnection.isConnectionWorking();
+		}
+		return result;
+	}
+	
+	private synchronized boolean getEventMonitor() {
+		return this.eventMonitor;
+	}
+
+	public ButtonElements getButtonList() {
+		return this.buttonList;
+	}
+
+	public CargoDAO getCargoDAO() {
+		return this.cargoDAO;
+	}
+
+	public DeputadoDAO getDeputadoDAO() {
+		return this.deputadoDAO;
+	}
+
+	public GovernadorDAO getGovernadorDAO() {
+		return this.governadorDAO;
+	}
+
+	public PartidoDAO getPartidoDAO() {
+		return this.partidoDAO;
+	}
+
+	public PresidenteDAO getPresidenteDAO() {
+		return this.presidenteDAO;
+	}
 }
+ 

@@ -12,8 +12,8 @@ public class ConfigBuilder implements Singleton {
 	private static ConfigBuilder singleton;
 	
 	private ConfigBuilder() {
-		FileManager storageFile = new FileManager("/resources/config/storage.cfg");
-		FileManager dbFile = new FileManager("/resources/config/db.cfg");
+		FileManager storageFile = new FileManager("resources/config/storage.cfg");
+		FileManager dbFile = new FileManager("resources/config/db.cfg");
 		BufferedReader storageReader = storageFile.getReader();
 		BufferedReader dbReader = dbFile.getReader();
 		Map<String, String> localMap;
@@ -48,7 +48,7 @@ public class ConfigBuilder implements Singleton {
 		boolean got = false;
 		try {
 			while(!got && ((temp = reader.readLine()) != null)) {
-				if(temp.charAt(0) != '#') { //Se a linha não estiver comentada
+				if(temp.length() > 0 && (temp.charAt(0) != '#')) { //Se a linha não estiver comentada
 					got = true;
 					returnVal = temp;
 				}
@@ -77,3 +77,4 @@ public class ConfigBuilder implements Singleton {
 		throw new CloneNotSupportedException();
 	}
 }
+ 

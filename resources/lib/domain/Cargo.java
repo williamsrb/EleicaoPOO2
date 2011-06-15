@@ -1,5 +1,6 @@
 package resources.lib.domain;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Cargo {
@@ -66,11 +67,13 @@ public class Cargo {
 	//Métodos de controle da coleção de objetos para evitar recriação de objetos após consultas
 	
 	private static Map<Integer, Cargo> getAll() {
+		tryAndCreate();
 		return all;
 	}
 	
 	public static boolean conflicts(Cargo c) {
 		boolean returnValue = false;
+		tryAndCreate();
 		if(exists(c)) {
 			returnValue = !(all.get(c.id).nome.equals(c.nome));
 		}
@@ -78,16 +81,19 @@ public class Cargo {
 	}
 	
 	public static boolean exists(Cargo c) {
+		tryAndCreate();
 		return getAll().containsKey(c.id);
 	}
 	
 	public static boolean exists(Integer id) {
+		tryAndCreate();
 		return getAll().containsKey(id);
 	}
 	
 	//Retorna um presidente de mesmo id que já esteja registrado
 	public static Cargo get(Cargo c) {
 		Cargo returnValue = null;
+		tryAndCreate();
 		if(exists(c)) {
 			returnValue = all.get(c.id);
 		}
@@ -96,28 +102,32 @@ public class Cargo {
 	
 	public static Cargo get(Integer id) {
 		Cargo returnValue = null;
+		tryAndCreate();
 		if(exists(id)) {
 			returnValue = all.get(id);
 		}
 		return returnValue;
 	}
 	
-	public static boolean register(Cargo c) {
-		boolean success = false;
-		if(!exists(c)) {
-			all.put(c.id, c);
-			success = true;
-		}
-		return success;
-	}
-
-	public static boolean override(Cargo c) {
-		boolean success = false;
-		if(exists(c)) {
-			all.put(c.id, c);
-			success = true;
-		}
-		return success;
+	public static boolean isEmpty() {
+		tryAndCreate();
+		return all.isEmpty();
 	}
 	
+	public static void register(Cargo c) {
+		tryAndCreate();
+		all.put(c.id, c);
+	}
+	
+	public static void unregister(Cargo c) {
+		tryAndCreate();
+		all.remove(c.id);
+	}
+	
+	public static void tryAndCreate() {
+		if(all == null) {
+			all = new HashMap<Integer, Cargo>();
+		}
+	}
 }
+ 

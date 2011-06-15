@@ -20,7 +20,6 @@ public class JdbcConnection {
 		try {
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, username, password);
-			System.err.println("Driver de conexão não encontrado!");
         } catch (SQLException se) {
         	System.err.println("Não foi possível estabelecer conexão com o banco: " + url + "\n" + se.getLocalizedMessage());
         } catch (ClassNotFoundException cnfe) {
@@ -36,4 +35,16 @@ public class JdbcConnection {
 			System.err.println(se.getLocalizedMessage());
 		}
 	}
+	
+	public static boolean isConnectionWorking() {
+		JdbcConnection jconn = new JdbcConnection(ConfigManager.getJdbcConfig());
+		Connection conn = jconn.getConnection();
+		boolean result = false;
+		if(conn != null) {
+			jconn.disconnect();
+			result = true;
+		}
+		return result;
+	}
 }
+ 

@@ -1,16 +1,10 @@
 package resources.lib.domain;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
-
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
 
 public class Deputado extends Candidato {
 	private String apelido;
@@ -47,46 +41,16 @@ public class Deputado extends Candidato {
 		return this.apelido;
 	}
 	
-	/* Display */
-	public void setDisplay(Stack<Component> reverselist) {
-		JLabel numDigit03, numDigit04, numDigit05;
-		
-		numDigit03 = new JLabel(String.format("%c", this.numero.toString().charAt(2)));
-		numDigit03.setBounds(170, 145, 40, 42);
-		numDigit03.setBorder(BorderFactory.createLineBorder(Color.black));
-		numDigit03.setVerticalAlignment(JLabel.CENTER);
-		numDigit03.setHorizontalAlignment(JLabel.CENTER);
-		numDigit03.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
-		
-		numDigit04 = new JLabel(String.format("%c", this.numero.toString().charAt(3)));
-		numDigit04.setBounds(215, 145, 40, 42);
-		numDigit04.setBorder(BorderFactory.createLineBorder(Color.black));
-		numDigit04.setVerticalAlignment(JLabel.CENTER);
-		numDigit04.setHorizontalAlignment(JLabel.CENTER);
-		numDigit04.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
-		
-		numDigit05 = new JLabel(String.format("%c", this.numero.toString().charAt(4)));
-		numDigit05.setBounds(260, 145, 40, 42);
-		numDigit05.setBorder(BorderFactory.createLineBorder(Color.black));
-		numDigit05.setVerticalAlignment(JLabel.CENTER);
-		numDigit05.setHorizontalAlignment(JLabel.CENTER);
-		numDigit05.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
-		
-		super.setDisplay(reverselist);
-		
-		reverselist.push(numDigit03);//15
-		reverselist.push(numDigit04);//16
-		reverselist.push(numDigit05);//17
-	}
-	
 	//Métodos de controle da coleção de objetos paa evitar recriação de objetos após consultas
 	
 	private static Map<Integer, Deputado> getAll() {
+		tryAndCreate();
 		return all;
 	}
 	
 	public static boolean conflicts(Deputado d) {
 		boolean returnValue = false;
+		tryAndCreate();
 		if(exists(d)) {
 			returnValue = !(all.get(d.id).numero == d.numero);
 		}
@@ -94,16 +58,19 @@ public class Deputado extends Candidato {
 	}
 	
 	public static boolean exists(Deputado d) {
+		tryAndCreate();
 		return getAll().containsKey(d.id);
 	}
 	
 	public static boolean exists(Integer id) {
+		tryAndCreate();
 		return getAll().containsKey(id);
 	}
 	
 	//Retorna um deputado de mesmo id que já esteja registrado
 	public static Deputado get(Deputado d) {
 		Deputado returnValue = null;
+		tryAndCreate();
 		if(exists(d)) {
 			returnValue = all.get(d.id);
 		}
@@ -112,27 +79,32 @@ public class Deputado extends Candidato {
 	
 	public static Deputado get(Integer id) {
 		Deputado returnValue = null;
+		tryAndCreate();
 		if(exists(id)) {
 			returnValue = all.get(id);
 		}
 		return returnValue;
 	}
 	
-	public static boolean register(Deputado d) {
-		boolean success = false;
-		if(!exists(d)) {
-			all.put(d.id, d);
-			success = true;
-		}
-		return success;
+	public static boolean isEmpty() {
+		tryAndCreate();
+		return all.isEmpty();
 	}
 	
-	public static boolean override(Deputado d) {
-		boolean success = false;
-		if(exists(d)) {
-			all.put(d.id, d);
-			success = true;
+	public static void register(Deputado d) {
+		tryAndCreate();
+		all.put(d.id, d);
+	}
+	
+	public static void unregister(Deputado d) {
+		tryAndCreate();
+		all.remove(d.id);
+	}
+	
+	public static void tryAndCreate() {
+		if(all == null) {
+			all = new HashMap<Integer, Deputado>();
 		}
-		return success;
 	}
 }
+ 

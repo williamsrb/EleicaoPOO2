@@ -12,7 +12,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.border.BevelBorder;
 
-import modulo2.controller.AppWorker;
+import modulo2.controller.App2Worker;
 import modulo2.util.KeyEnum;
 
 import resources.lib.controller.FileUpload;
@@ -222,80 +222,81 @@ public class ViewMaster {
 		buttonList.getBtnD1().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parent.requestFocus();
-				AppWorker.getInstance().doButtonAction(KeyEnum.D1);
+				App2Worker.getInstance().doButtonAction(KeyEnum.D1);
 			}
 		});
 		buttonList.getBtnD2().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parent.requestFocus();
-				AppWorker.getInstance().doButtonAction(KeyEnum.D2);
+				App2Worker.getInstance().doButtonAction(KeyEnum.D2);
 			}
 		});
 		buttonList.getBtnD3().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parent.requestFocus();
-				AppWorker.getInstance().doButtonAction(KeyEnum.D3);
+				App2Worker.getInstance().doButtonAction(KeyEnum.D3);
 			}
 		});
 		buttonList.getBtnD4().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parent.requestFocus();
-				AppWorker.getInstance().doButtonAction(KeyEnum.D4);
+				App2Worker.getInstance().doButtonAction(KeyEnum.D4);
 			}
 		});
 		buttonList.getBtnD5().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parent.requestFocus();
-				AppWorker.getInstance().doButtonAction(KeyEnum.D5);
+				App2Worker.getInstance().doButtonAction(KeyEnum.D5);
 			}
 		});
 		buttonList.getBtnD6().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parent.requestFocus();
-				AppWorker.getInstance().doButtonAction(KeyEnum.D6);
+				App2Worker.getInstance().doButtonAction(KeyEnum.D6);
 			}
 		});
 		buttonList.getBtnD7().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parent.requestFocus();
-				AppWorker.getInstance().doButtonAction(KeyEnum.D7);
+				App2Worker.getInstance().doButtonAction(KeyEnum.D7);
 			}
 		});
 		buttonList.getBtnD8().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parent.requestFocus();
-				AppWorker.getInstance().doButtonAction(KeyEnum.D8);
+				App2Worker.getInstance().doButtonAction(KeyEnum.D8);
 			}
 		});
 		buttonList.getBtnD9().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parent.requestFocus();
-				AppWorker.getInstance().doButtonAction(KeyEnum.D9);
+				App2Worker.getInstance().doButtonAction(KeyEnum.D9);
 			}
 		});
 		buttonList.getBtnD0().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parent.requestFocus();
-				AppWorker.getInstance().doButtonAction(KeyEnum.D0);
+				App2Worker.getInstance().doButtonAction(KeyEnum.D0);
 			}
 		});
 		buttonList.getBtnCWHITE().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parent.requestFocus();
-				AppWorker.getInstance().doButtonAction(KeyEnum.CWHITE);
+				App2Worker.getInstance().doButtonAction(KeyEnum.CWHITE);
 			}
 		});
 		buttonList.getBtnCRED().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parent.requestFocus();
-				AppWorker.getInstance().doButtonAction(KeyEnum.CRED);
+				App2Worker.getInstance().doButtonAction(KeyEnum.CRED);
 			}
 		});
 		buttonList.getBtnCGREEN().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parent.requestFocus();
-				AppWorker.getInstance().doButtonAction(KeyEnum.CGREEN);
+				App2Worker.getInstance().doButtonAction(KeyEnum.CGREEN);
 			}
 		});
 	}
 }
+ 

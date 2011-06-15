@@ -49,14 +49,16 @@ public class CandidatoJDBC {
 		ResultSet result = null;
 		st = (Statement) result; //temp
 		try {
-			st = conn.createStatement();
-			result = st.executeQuery("SELECT * FROM Candidato WHERE id IN (" +
-					"SELECT cd.id FROM Candidato cd JOIN Cargo cg ON cd.id_cargo=cg.id" +
-					"WHERE cg.nome='" + name + "')"); //Pega pelo nome do cargo
-			jconn.disconnect();
+			if(conn != null) {
+				st = conn.createStatement();
+				result = st.executeQuery("SELECT * FROM Candidato WHERE id IN (" +
+						"SELECT cd.id FROM Candidato cd JOIN Cargo cg ON cd.id_cargo=cg.id" +
+						"WHERE cg.nome='" + name + "')"); //Pega pelo nome do cargo
+				jconn.disconnect();
+			}
 		} catch (SQLException se) {
 			System.err.println(se.getLocalizedMessage());
 		}
 		return result;
 	}
-}
+} 

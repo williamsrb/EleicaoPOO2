@@ -1,21 +1,10 @@
 package resources.lib.domain;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
-
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-
-import resources.lib.controller.FileUpload;
-import resources.lib.view.Display;
-import resources.lib.view.ImagePanel;
 
 public class Governador extends Candidato {
 	private String vice_nome;
@@ -59,42 +48,16 @@ public class Governador extends Candidato {
 		return vice_foto;
 	}
 	
-	/* Display */
-	public void setDisplay(Stack<Component> reverselist) {
-		JLabel vicenameLabel, vicenameValue;
-		ImagePanel vicePhoto;
-		Dimension size;
-		
-		vicenameLabel = new JLabel("Vice-governador:");
-		vicenameLabel.setBounds(10, 260, 130, 24);
-		vicenameLabel.setVerticalAlignment(JLabel.TOP);
-		vicenameLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
-		
-		vicenameValue = new JLabel(this.vice_nome);//Depende do Governador
-		vicenameValue.setBounds(135, 260, 230, 24);
-		vicenameValue.setVerticalAlignment(JLabel.TOP);
-		vicenameValue.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
-		
-		vicePhoto = new ImagePanel(Display.pathToImageIcon(FileUpload.uploadPath + this.vice_foto).getImage());//Depende do Governador
-		size = vicePhoto.getSize();
-		vicePhoto.setBounds(365, 175, size.width, size.height);
-		vicePhoto.setBorder(BorderFactory.createLineBorder(Color.black));
-		
-		super.setDisplay(reverselist);
-		
-		reverselist.add(8, vicenameLabel);//8
-		reverselist.add(9, vicenameValue);//9
-		reverselist.add(15, vicePhoto);//15
-	}
-	
 	//Métodos de controle da coleção de objetos para evitar recriação de objetos após consultas
 	
 	private static Map<Integer, Governador> getAll() {
+		tryAndCreate();
 		return all;
 	}
 	
 	public static boolean conflicts(Governador g) {
 		boolean returnValue = false;
+		tryAndCreate();
 		if(exists(g)) {
 			returnValue = !(all.get(g.id).numero == g.numero);
 		}
@@ -102,16 +65,19 @@ public class Governador extends Candidato {
 	}
 	
 	public static boolean exists(Governador g) {
+		tryAndCreate();
 		return getAll().containsKey(g.id);
 	}
 	
 	public static boolean exists(Integer id) {
+		tryAndCreate();
 		return getAll().containsKey(id);
 	}
 	
 	//Retorna um governador de mesmo id que já esteja registrado
 	public static Governador get(Governador g) {
 		Governador returnValue = null;
+		tryAndCreate();
 		if(exists(g)) {
 			returnValue = all.get(g.id);
 		}
@@ -120,27 +86,32 @@ public class Governador extends Candidato {
 	
 	public static Governador get(Integer id) {
 		Governador returnValue = null;
+		tryAndCreate();
 		if(exists(id)) {
 			returnValue = all.get(id);
 		}
 		return returnValue;
 	}
 	
-	public static boolean register(Governador g) {
-		boolean success = false;
-		if(!exists(g)) {
-			all.put(g.id, g);
-			success = true;
-		}
-		return success;
+	public static boolean isEmpty() {
+		tryAndCreate();
+		return all.isEmpty();
 	}
-
-	public static boolean override(Governador g) {
-		boolean success = false;
-		if(exists(g)) {
-			all.put(g.id, g);
-			success = true;
+	
+	public static void register(Governador g) {
+		tryAndCreate();
+		all.put(g.id, g);
+	}
+	
+	public static void unregister(Governador g) {
+		tryAndCreate();
+		all.remove(g.id);
+	}
+	
+	public static void tryAndCreate() {
+		if(all == null) {
+			all = new HashMap<Integer, Governador>();
 		}
-		return success;
 	}
 }
+ 

@@ -14,7 +14,9 @@ import resources.lib.persistence.JdbcConnection;
 
 public class PartidoDAOjdbc implements PartidoDAO {
 
-	private static PartidoDAO singleton;
+	private static PartidoDAOjdbc singleton;
+	
+	private PartidoDAOjdbc() {}
 
 	// DAO de candidato eh singleton
 	public static synchronized PartidoDAO getInstance() {
@@ -53,6 +55,7 @@ public class PartidoDAOjdbc implements PartidoDAO {
 			}
 			obj.setLastId(obj.getId());
 			jconn.disconnect();
+			stock(obj);
 		} catch (Exception ex) {
 			System.err.println("Erro ao inserir o Partido\n" + ex.getLocalizedMessage());
 		}
@@ -67,6 +70,7 @@ public class PartidoDAOjdbc implements PartidoDAO {
 			ps.setInt(1, obj.getId());
 			ps.executeUpdate();
 			jconn.disconnect();
+			purge(obj);
 		} catch (SQLException se) {
 			System.err.println("Erro ao apagar o Partido\n" + se.getLocalizedMessage());
 		}
@@ -76,14 +80,12 @@ public class PartidoDAOjdbc implements PartidoDAO {
 		ResultSet result = getAll();
 		List<Partido> list = new ArrayList<Partido>();
 		try {
-			while(result.next()) {
-				Partido d;
-				d = new Partido(result.getInt("id"), result.getString("sigla"), result.getString("nome"), result.getInt("numero"));
-				list.add(d);
-				if(!Partido.conflicts(d)) {
-					Partido.register(d);
-				} else {
-					Partido.override(d); //Atualizar o objeto na lista global
+			if(result != null) {
+				while(result.next()) {
+					Partido p;
+					p = new Partido(result.getInt("id"), result.getString("sigla"), result.getString("nome"), result.getInt("numero"));
+					list.add(p);
+					stock(p);
 				}
 			}
 		} catch (SQLException se) {
@@ -97,18 +99,31 @@ public class PartidoDAOjdbc implements PartidoDAO {
 		Connection conn = jconn.getConnection();
 		Statement st = null;
 		ResultSet result = null;
-		st = (Statement) result; //temp
+		st = (Statement) result;
 		try {
-			st = conn.createStatement();
-			result = st.executeQuery("SELECT * FROM Partido");
-			jconn.disconnect();
+			if(conn != null) {
+				st = conn.createStatement();
+				result = st.executeQuery("SELECT * FROM Partido");
+				jconn.disconnect();
+			}
 		} catch (SQLException se) {
 			System.err.println(se.getLocalizedMessage());
+		} catch (NullPointerException npe) {
+			System.err.println("Problema com a conexão...\n" + npe.getLocalizedMessage());
 		}
 		return result;
+	}
+	
+	private static void purge(Partido obj) {
+		Partido.unregister(obj);
+	}
+	
+	private static void stock(Partido obj) {
+		Partido.register(obj);
 	}
 	
 	public Object clone() throws CloneNotSupportedException {
 		throw new CloneNotSupportedException();
 	}
 }
+ 

@@ -14,8 +14,10 @@ import resources.lib.persistence.JdbcConnection;
 
 public class CargoDAOjdbc implements CargoDAO {
 
-	private static CargoDAO singleton;
-
+	private static CargoDAOjdbc singleton;
+	
+	private CargoDAOjdbc() {}
+	
 	// DAO de candidato eh singleton
 	public static synchronized CargoDAO getInstance() {
 		if(singleton == null) {
@@ -52,6 +54,7 @@ public class CargoDAOjdbc implements CargoDAO {
 			}
 			obj.setLastId(obj.getId());
 			jconn.disconnect();
+			stock(obj); //Atualiza a lista global
 		} catch (Exception ex) {
 			System.err.println("Erro ao inserir o Cargo\n" + ex.getLocalizedMessage());
 		}
@@ -66,6 +69,7 @@ public class CargoDAOjdbc implements CargoDAO {
 			ps.setInt(1, obj.getId());
 			ps.executeUpdate();
 			jconn.disconnect();
+			purge(obj);
 		} catch (SQLException se) {
 			System.err.println("Erro ao apagar o Cargo\n" + se.getLocalizedMessage());
 		}
@@ -75,14 +79,12 @@ public class CargoDAOjdbc implements CargoDAO {
 		ResultSet result = getAll();
 		List<Cargo> list = new ArrayList<Cargo>();
 		try {
-			while(result.next()) {
-				Cargo d;
-				d = new Cargo(result.getInt("id"), result.getInt("digitos"), result.getString("nome"));
-				list.add(d);
-				if(!Cargo.conflicts(d)) {
-					Cargo.register(d);
-				} else {
-					Cargo.override(d); //Atualizar o objeto na lista global
+			if(result != null) {
+				while(result.next()) {
+					Cargo c;
+					c = new Cargo(result.getInt("id"), result.getInt("digitos"), result.getString("nome"));
+					list.add(c);
+					stock(c);
 				}
 			}
 		} catch (SQLException se) {
@@ -98,16 +100,27 @@ public class CargoDAOjdbc implements CargoDAO {
 		ResultSet result = null;
 		st = (Statement) result; //temp
 		try {
-			st = conn.createStatement();
-			result = st.executeQuery("SELECT * FROM Cargo");
-			jconn.disconnect();
+			if(conn != null) {
+				st = conn.createStatement();
+				result = st.executeQuery("SELECT * FROM Cargo");
+				jconn.disconnect();
+			}
 		} catch (SQLException se) {
 			System.err.println(se.getLocalizedMessage());
 		}
 		return result;
 	}
 	
+	private static void purge(Cargo obj) {
+		Cargo.unregister(obj);
+	}
+	
+	private static void stock(Cargo obj) {
+		Cargo.register(obj);
+	}
+	
 	public Object clone() throws CloneNotSupportedException {
 		throw new CloneNotSupportedException();
 	}
 }
+ 

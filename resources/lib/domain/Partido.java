@@ -1,5 +1,6 @@
 package resources.lib.domain;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Partido {
@@ -72,11 +73,13 @@ public class Partido {
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	
 	private static Map<Integer, Partido> getAll() {
+		tryAndCreate();
 		return all;
 	}
 	
 	public static boolean conflicts(Partido p) {
 		boolean returnValue = false;
+		tryAndCreate();
 		if(exists(p)) {
 			returnValue = !(all.get(p.id).numero == p.numero);
 		}
@@ -84,16 +87,19 @@ public class Partido {
 	}
 	
 	public static boolean exists(Partido p) {
+		tryAndCreate();
 		return getAll().containsKey(p.id);
 	}
 	
 	public static boolean exists(Integer id) {
+		tryAndCreate();
 		return getAll().containsKey(id);
 	}
 	
 	//Retorna um partido de mesmo id que já esteja registrado
 	public static Partido get(Partido p) {
 		Partido returnValue = null;
+		tryAndCreate();
 		if(exists(p)) {
 			returnValue = all.get(p.id);
 		}
@@ -102,27 +108,32 @@ public class Partido {
 	
 	public static Partido get(Integer id) {
 		Partido returnValue = null;
+		tryAndCreate();
 		if(exists(id)) {
 			returnValue = all.get(id);
 		}
 		return returnValue;
 	}
 	
-	public static boolean register(Partido p) {
-		boolean success = false;
-		if(!exists(p)) {
-			all.put(p.id, p);
-			success = true;
-		}
-		return success;
+	public static boolean isEmpty() {
+		tryAndCreate();
+		return all.isEmpty();
 	}
-
-	public static boolean override(Partido p) {
-		boolean success = false;
-		if(exists(p)) {
-			all.put(p.id, p);
-			success = true;
+	
+	public static void register(Partido p) {
+		tryAndCreate();
+		all.put(p.id, p);
+	}
+	
+	public static void unregister(Partido p) {
+		tryAndCreate();
+		all.remove(p.id);
+	}
+	
+	public static void tryAndCreate() {
+		if(all == null) {
+			all = new HashMap<Integer, Partido>();
 		}
-		return success;
 	}
 }
+ 

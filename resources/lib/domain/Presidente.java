@@ -1,21 +1,10 @@
 package resources.lib.domain;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
-
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-
-import resources.lib.controller.FileUpload;
-import resources.lib.view.Display;
-import resources.lib.view.ImagePanel;
 
 public class Presidente extends Candidato {
 	private String vice_nome;
@@ -59,42 +48,16 @@ public class Presidente extends Candidato {
 		return vice_foto;
 	}
 	
-	/* Display */
-	public void setDisplay(Stack<Component> reverselist) {
-		JLabel vicenameLabel, vicenameValue;
-		ImagePanel vicePhoto;
-		Dimension size;
-		
-		vicenameLabel = new JLabel("Vice-presidente:");
-		vicenameLabel.setBounds(10, 260, 130, 24);
-		vicenameLabel.setVerticalAlignment(JLabel.TOP);
-		vicenameLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
-		
-		vicenameValue = new JLabel(this.vice_nome);//Depende do Presidente
-		vicenameValue.setBounds(130, 260, 230, 24);
-		vicenameValue.setVerticalAlignment(JLabel.TOP);
-		vicenameValue.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
-		
-		vicePhoto = new ImagePanel(Display.pathToImageIcon(FileUpload.uploadPath + this.vice_foto).getImage());//Depende do Presidente
-		size = vicePhoto.getSize();
-		vicePhoto.setBounds(365, 175, size.width, size.height);
-		vicePhoto.setBorder(BorderFactory.createLineBorder(Color.black));
-		
-		super.setDisplay(reverselist);
-		
-		reverselist.add(8, vicenameLabel);//8
-		reverselist.add(9, vicenameValue);//9
-		reverselist.add(15, vicePhoto);//15
-	}
-	
 	//Métodos de controle da coleção de objetos para evitar recriação de objetos após consultas
 	
 	private static Map<Integer, Presidente> getAll() {
+		tryAndCreate();
 		return all;
 	}
 	
 	public static boolean conflicts(Presidente p) {
 		boolean returnValue = false;
+		tryAndCreate();
 		if(exists(p)) {
 			returnValue = !(all.get(p.id).numero == p.numero);
 		}
@@ -102,16 +65,19 @@ public class Presidente extends Candidato {
 	}
 	
 	public static boolean exists(Presidente p) {
+		tryAndCreate();
 		return getAll().containsKey(p.id);
 	}
 	
 	public static boolean exists(Integer id) {
+		tryAndCreate();
 		return getAll().containsKey(id);
 	}
 	
 	//Retorna um presidente de mesmo id que já esteja registrado
 	public static Presidente get(Presidente p) {
 		Presidente returnValue = null;
+		tryAndCreate();
 		if(exists(p)) {
 			returnValue = all.get(p.id);
 		}
@@ -120,27 +86,32 @@ public class Presidente extends Candidato {
 	
 	public static Presidente get(Integer id) {
 		Presidente returnValue = null;
+		tryAndCreate();
 		if(exists(id)) {
 			returnValue = all.get(id);
 		}
 		return returnValue;
 	}
 	
-	public static boolean register(Presidente p) {
-		boolean success = false;
-		if(!exists(p)) {
-			all.put(p.id, p);
-			success = true;
-		}
-		return success;
+	public static boolean isEmpty() {
+		tryAndCreate();
+		return all.isEmpty();
 	}
-
-	public static boolean override(Presidente p) {
-		boolean success = false;
-		if(exists(p)) {
-			all.put(p.id, p);
-			success = true;
+	
+	public static void register(Presidente p) {
+		tryAndCreate();
+		all.put(p.id, p);
+	}
+	
+	public static void unregister(Presidente p) {
+		tryAndCreate();
+		all.remove(p.id);
+	}
+	
+	public static void tryAndCreate() {
+		if(all == null) {
+			all = new HashMap<Integer, Presidente>();
 		}
-		return success;
 	}
 }
+ 

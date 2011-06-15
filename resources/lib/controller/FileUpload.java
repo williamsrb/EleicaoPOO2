@@ -5,3 +5,4 @@ public class FileUpload {
 	public static final String imagePath = "/resources/images/";
 	public static final String effectPath = "/resources/imageeffects/";
 }
+ 

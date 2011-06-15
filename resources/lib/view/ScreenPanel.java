@@ -15,3 +15,4 @@ public class ScreenPanel extends JPanel {
 		this.setVisible(true);
 	}
 }
+ 

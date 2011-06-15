@@ -13,21 +13,24 @@ public class VotingState {
 	
 	public static void displayCandidate(Deputado person, ScreenPanel screenPanel) {
 		Stack<Component> reverselist = new Stack<Component>();
-		person.setDisplay(reverselist);
+		DeputadoView dv = new DeputadoView();
+		dv.setDisplay(reverselist, person);
 		Display.preparePanel(screenPanel, reverselist);
 		screenPanel.refresh();
 	}
 	
 	public static void displayCandidate(Governador person, ScreenPanel screenPanel) {
 		Stack<Component> reverselist = new Stack<Component>();
-		person.setDisplay(reverselist);
+		GovernadorView gv = new GovernadorView();
+		gv.setDisplay(reverselist, person);
 		Display.preparePanel(screenPanel, reverselist);
 		screenPanel.refresh();
 	}
 	
 	public static void displayCandidate(Presidente person, ScreenPanel screenPanel) {
 		Stack<Component> reverselist = new Stack<Component>();
-		person.setDisplay(reverselist);
+		PresidenteView pv = new PresidenteView();
+		pv.setDisplay(reverselist, person);
 		Display.preparePanel(screenPanel, reverselist);
 		screenPanel.refresh();
 	}
@@ -125,3 +128,4 @@ public class VotingState {
 		preparePanel(pane, reverselist);*/
 	}
 }
+ 
