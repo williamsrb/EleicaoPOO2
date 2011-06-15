@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.JPanel;
 
-public class ImagePanel extends JPanel {
+public final class ImagePanel extends JPanel {
 	private static final long serialVersionUID = 1001L;
 	private Image img;
 	
@@ -24,4 +24,3 @@ public class ImagePanel extends JPanel {
 		g.drawImage(img, 0, 0, null);
 	}
 }
- 

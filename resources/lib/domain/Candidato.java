@@ -80,4 +80,3 @@ public class Candidato {
 		return this.site;
 	}
 }
- 

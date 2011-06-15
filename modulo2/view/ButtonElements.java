@@ -3,7 +3,7 @@ package modulo2.view;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 
-public class ButtonElements extends JComponent {
+public final class ButtonElements extends JComponent {
 	private static final long serialVersionUID = 1002L;
 	private JButton btnD0;
 	private JButton btnD1;
@@ -123,4 +123,3 @@ public class ButtonElements extends JComponent {
 		return this.btnCWHITE = btnCWHITE;
 	}
 }
- 

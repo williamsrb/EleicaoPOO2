@@ -10,7 +10,7 @@ import modulo2.util.VotingKey;
 import resources.lib.controller.FileUpload;
 import resources.lib.view.Display;
 
-public class ImageButton {
+public final class ImageButton {
 	private final ImageIcon light;
 	private final ImageIcon shadow;
 	private final ImageIcon none;
@@ -37,4 +37,3 @@ public class ImageButton {
 		return none;
 	}
 }
- 

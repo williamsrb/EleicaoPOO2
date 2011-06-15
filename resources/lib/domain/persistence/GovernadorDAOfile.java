@@ -4,7 +4,7 @@ import java.util.List;
 
 import resources.lib.domain.Governador;
 
-public class GovernadorDAOfile implements GovernadorDAO {
+public final class GovernadorDAOfile implements GovernadorDAO {
 
     public void salvar(Governador obj) {}
 
@@ -16,4 +16,3 @@ public class GovernadorDAOfile implements GovernadorDAO {
 		throw new CloneNotSupportedException();
 	}
 }
- 

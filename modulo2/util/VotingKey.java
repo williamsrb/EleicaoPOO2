@@ -1,7 +1,7 @@
 package modulo2.util;
 
 
-public class VotingKey {
+public final class VotingKey {
 	
 	public static String getPrefix(KeyEnum key) {
 		String result;
@@ -51,4 +51,3 @@ public class VotingKey {
 		return result;
 	}
 }
- 

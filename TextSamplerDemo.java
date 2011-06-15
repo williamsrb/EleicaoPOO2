@@ -45,7 +45,7 @@ import java.awt.event.*;        //for action events
 import java.net.URL;
 import java.io.IOException;
 
-public class TextSamplerDemo extends JPanel
+public final class TextSamplerDemo extends JPanel
                              implements ActionListener {
     private String newline = "\n";
     protected static final String textFieldString = "JTextField";
@@ -344,4 +344,4 @@ public class TextSamplerDemo extends JPanel
             }
         });
     }
-} 
+}

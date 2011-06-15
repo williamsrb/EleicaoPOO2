@@ -6,11 +6,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Governador extends Candidato {
+public final class Governador extends Candidato {
 	private String vice_nome;
 	private String vice_foto;
 	
-	private static Map<Integer, Governador> all;
+	private static Map<Integer, Governador> all; //By ID
+	private static Map<Integer, Governador> allByNumber; //by Number
 	
 	//Construtor que usa gerador de id automático da classe mãe
 	public Governador(Integer number, String name, Partido partido, Cargo cargo, Date nascimento, Character sexo, String foto, String site, String vice_nome, String vice_foto) {
@@ -48,40 +49,44 @@ public class Governador extends Candidato {
 		return vice_foto;
 	}
 	
-	//Métodos de controle da coleção de objetos para evitar recriação de objetos após consultas
-	
-	private static Map<Integer, Governador> getAll() {
-		tryAndCreate();
-		return all;
-	}
-	
-	public static boolean conflicts(Governador g) {
+	//Métodos de controle da coleção de objetos paa evitar recriação de objetos após consultas
+	public static boolean conflicts(Governador obj) {
 		boolean returnValue = false;
 		tryAndCreate();
-		if(exists(g)) {
-			returnValue = !(all.get(g.id).numero == g.numero);
+		if(exists(obj)) {
+			returnValue = !(all.get(obj.id).numero == obj.numero);
 		}
 		return returnValue;
 	}
 	
-	public static boolean exists(Governador g) {
+	public static boolean exists(Governador obj) {
 		tryAndCreate();
-		return getAll().containsKey(g.id);
+		return (all.containsKey(obj.id) || allByNumber.containsKey(obj.numero));
 	}
 	
 	public static boolean exists(Integer id) {
 		tryAndCreate();
-		return getAll().containsKey(id);
+		return all.containsKey(id);
 	}
 	
-	//Retorna um governador de mesmo id que já esteja registrado
-	public static Governador get(Governador g) {
-		Governador returnValue = null;
+	public static boolean existsByNumber(Integer number) {
 		tryAndCreate();
-		if(exists(g)) {
-			returnValue = all.get(g.id);
+		return allByNumber.containsKey(number);
+	}
+	
+	//Retorna um deputado de mesmo id que já esteja registrado
+	public static Governador get(Governador obj) {
+		Governador returnValue1 = null;
+		Governador returnValue2 = null;
+		tryAndCreate();
+		if(exists(obj)) {
+			returnValue1 = all.get(obj.id);
+			returnValue2 = allByNumber.get(obj.numero);
+			if((returnValue1.id != returnValue2.id) || (returnValue1.numero != returnValue2.numero)) {
+				returnValue1 = returnValue2 = null;
+			}
 		}
-		return returnValue;
+		return returnValue1;
 	}
 	
 	public static Governador get(Integer id) {
@@ -93,25 +98,57 @@ public class Governador extends Candidato {
 		return returnValue;
 	}
 	
+	public static Governador getByNumber(Integer number) {
+		Governador returnValue = null;
+		tryAndCreate();
+		if(existsByNumber(number)) {
+			returnValue = allByNumber.get(number);
+		}
+		return returnValue;
+	}
+	
 	public static boolean isEmpty() {
 		tryAndCreate();
 		return all.isEmpty();
 	}
 	
-	public static void register(Governador g) {
+	public static void register(Governador obj) {
 		tryAndCreate();
-		all.put(g.id, g);
+		all.put(obj.id, obj);
+		allByNumber.put(obj.numero, obj);
 	}
 	
-	public static void unregister(Governador g) {
+	public static void unregister(Governador obj) {
 		tryAndCreate();
-		all.remove(g.id);
+		all.remove(obj.id);
+		allByNumber.remove(obj.numero);
 	}
 	
-	public static void tryAndCreate() {
+	private static void tryAndCreate() {
 		if(all == null) {
 			all = new HashMap<Integer, Governador>();
 		}
+		if(allByNumber == null) {
+			allByNumber = new HashMap<Integer, Governador>();
+		}
+	}
+	
+	public static boolean equals(Governador obj1, Governador obj2) {
+		boolean returnValue = false;
+		if((obj1.id == obj2.id) && (obj1.numero == obj2.numero)) {
+			returnValue = true;
+		}
+		return returnValue;
+	}
+	
+	public final boolean equals(Object obj) {
+		boolean returnValue = false;
+		if(obj instanceof Governador) {
+			Governador gobj = (Governador) obj;
+			if((this.id == gobj.id) && (this.numero == gobj.numero)) {
+				returnValue = true;
+			}
+		}
+		return returnValue;
 	}
 }
- 

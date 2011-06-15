@@ -16,7 +16,7 @@ import resources.lib.domain.persistence.*;
 import resources.lib.persistence.ConfigManager;
 import resources.lib.persistence.JdbcConnection;
 
-public class App1Master extends JFrame {
+public final class App1Master extends JFrame {
 	private static final long serialVersionUID = 1000L;
 	private CargoDAO cargoDAO;
 	private DeputadoDAO deputadoDAO;
@@ -158,4 +158,3 @@ public class App1Master extends JFrame {
 		return this.presidenteDAO;
 	}
 }
- 

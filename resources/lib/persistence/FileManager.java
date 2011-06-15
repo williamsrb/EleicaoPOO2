@@ -7,7 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class FileManager {
+public final class FileManager {
 	private String file;
 	private BufferedReader reader;
 	private BufferedWriter writer;
@@ -25,9 +25,9 @@ public class FileManager {
 				fIn = new FileReader(file);
 				brIn = new BufferedReader(fIn);
 			} catch (FileNotFoundException fnfe) {
-				System.err.println(fnfe.getLocalizedMessage());
+				System.err.println(resources.lib.other.Debug.getTrace(fnfe.getLocalizedMessage()));
 			} catch (IllegalArgumentException iae) {
-				System.err.println(iae.getLocalizedMessage());
+				System.err.println(resources.lib.other.Debug.getTrace(iae.getLocalizedMessage()));
 			}
 			this.reader = brIn;
 		} else {
@@ -71,4 +71,3 @@ public class FileManager {
 		}
 	}
 }
- 

@@ -20,7 +20,7 @@ import resources.lib.view.Display;
 import resources.lib.view.ImagePanel;
 import resources.lib.view.ScreenPanel;
 
-public class ViewMaster {
+public final class ViewMaster {
 	//Retorna o "container" da tela da urna
 	public static ScreenPanel buildInterface(Container pane, ButtonElements buttonList) {
 		Dimension size;
@@ -299,4 +299,3 @@ public class ViewMaster {
 		});
 	}
 }
- 

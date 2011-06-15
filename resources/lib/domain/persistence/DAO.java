@@ -9,4 +9,3 @@ public interface DAO<T> extends Singleton {
     public void excluir(T obj);
     public List<T> obter();
 }
- 

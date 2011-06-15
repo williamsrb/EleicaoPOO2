@@ -29,7 +29,7 @@ import resources.lib.domain.persistence.PresidenteDAOjdbc;
 import resources.lib.persistence.ConfigManager;
 import resources.lib.persistence.JdbcConnection;
 
-public class App2Master extends JFrame {
+public final class App2Master extends JFrame {
 	private static final long serialVersionUID = 1000L;
 	private boolean eventMonitor;
 	private ButtonElements buttonList;
@@ -295,4 +295,3 @@ public class App2Master extends JFrame {
 		return this.presidenteDAO;
 	}
 }
- 

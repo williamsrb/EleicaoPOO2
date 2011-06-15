@@ -8,7 +8,7 @@ import java.util.Stack;
 
 import javax.swing.ImageIcon;
 
-public class Display {
+public final class Display {
 	public static void preparePanel(Container pane, Stack<Component> reverselist) {
 		int listsize = reverselist.size();
 		for(int i = 0; i < listsize; i++) {
@@ -21,7 +21,7 @@ public class Display {
 		if(resource != null) {
 			return new ImageIcon(resource);
 		} else {
-			System.err.println("Arquivo não encontrado: " + path);
+			System.err.println("Arquivo de imagem não encontrado: " + path);
 			return null;
 		}
 	}
@@ -30,4 +30,3 @@ public class Display {
 		return new ImageIcon(img).getImage();
 	}
 }
- 

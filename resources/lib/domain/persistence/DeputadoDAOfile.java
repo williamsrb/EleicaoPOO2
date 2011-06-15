@@ -4,7 +4,7 @@ import java.util.List;
 
 import resources.lib.domain.Deputado;
 
-public class DeputadoDAOfile implements DeputadoDAO {
+public final class DeputadoDAOfile implements DeputadoDAO {
 
     public void salvar(Deputado obj) {}
 
@@ -16,4 +16,3 @@ public class DeputadoDAOfile implements DeputadoDAO {
 		throw new CloneNotSupportedException();
 	}
 }
- 

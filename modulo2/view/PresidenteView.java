@@ -14,7 +14,7 @@ import resources.lib.domain.Presidente;
 import resources.lib.view.Display;
 import resources.lib.view.ImagePanel;
 
-public class PresidenteView extends CandidatoView {
+public final class PresidenteView extends CandidatoView {
 	/* Display */
 	public void setDisplay(Stack<Component> reverselist, Presidente pessoa) {
 		JLabel vicenameLabel, vicenameValue;
@@ -43,4 +43,3 @@ public class PresidenteView extends CandidatoView {
 		reverselist.add(15, vicePhoto);//15
 	}
 }
- 

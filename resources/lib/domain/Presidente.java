@@ -6,11 +6,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Presidente extends Candidato {
+public final class Presidente extends Candidato {
 	private String vice_nome;
 	private String vice_foto;
 	
-	private static Map<Integer, Presidente> all;
+	private static Map<Integer, Presidente> all; //By ID
+	private static Map<Integer, Presidente> allByNumber; //by Number
 	
 	//Construtor que usa gerador de id automático da classe mãe
 	public Presidente(Integer number, String name, Partido partido, Cargo cargo, Date nascimento, Character sexo, String foto, String site, String vice_nome, String vice_foto) {
@@ -48,40 +49,44 @@ public class Presidente extends Candidato {
 		return vice_foto;
 	}
 	
-	//Métodos de controle da coleção de objetos para evitar recriação de objetos após consultas
-	
-	private static Map<Integer, Presidente> getAll() {
-		tryAndCreate();
-		return all;
-	}
-	
-	public static boolean conflicts(Presidente p) {
+	//Métodos de controle da coleção de objetos paa evitar recriação de objetos após consultas
+	public static boolean conflicts(Presidente obj) {
 		boolean returnValue = false;
 		tryAndCreate();
-		if(exists(p)) {
-			returnValue = !(all.get(p.id).numero == p.numero);
+		if(exists(obj)) {
+			returnValue = !(all.get(obj.id).numero == obj.numero);
 		}
 		return returnValue;
 	}
 	
-	public static boolean exists(Presidente p) {
+	public static boolean exists(Presidente obj) {
 		tryAndCreate();
-		return getAll().containsKey(p.id);
+		return (all.containsKey(obj.id) || allByNumber.containsKey(obj.numero));
 	}
 	
 	public static boolean exists(Integer id) {
 		tryAndCreate();
-		return getAll().containsKey(id);
+		return all.containsKey(id);
 	}
 	
-	//Retorna um presidente de mesmo id que já esteja registrado
-	public static Presidente get(Presidente p) {
-		Presidente returnValue = null;
+	public static boolean existsByNumber(Integer number) {
 		tryAndCreate();
-		if(exists(p)) {
-			returnValue = all.get(p.id);
+		return allByNumber.containsKey(number);
+	}
+	
+	//Retorna um deputado de mesmo id que já esteja registrado
+	public static Presidente get(Presidente obj) {
+		Presidente returnValue1 = null;
+		Presidente returnValue2 = null;
+		tryAndCreate();
+		if(exists(obj)) {
+			returnValue1 = all.get(obj.id);
+			returnValue2 = allByNumber.get(obj.numero);
+			if((returnValue1.id != returnValue2.id) || (returnValue1.numero != returnValue2.numero)) {
+				returnValue1 = returnValue2 = null;
+			}
 		}
-		return returnValue;
+		return returnValue1;
 	}
 	
 	public static Presidente get(Integer id) {
@@ -93,25 +98,57 @@ public class Presidente extends Candidato {
 		return returnValue;
 	}
 	
+	public static Presidente getByNumber(Integer number) {
+		Presidente returnValue = null;
+		tryAndCreate();
+		if(existsByNumber(number)) {
+			returnValue = allByNumber.get(number);
+		}
+		return returnValue;
+	}
+	
 	public static boolean isEmpty() {
 		tryAndCreate();
 		return all.isEmpty();
 	}
 	
-	public static void register(Presidente p) {
+	public static void register(Presidente obj) {
 		tryAndCreate();
-		all.put(p.id, p);
+		all.put(obj.id, obj);
+		allByNumber.put(obj.numero, obj);
 	}
 	
-	public static void unregister(Presidente p) {
+	public static void unregister(Presidente obj) {
 		tryAndCreate();
-		all.remove(p.id);
+		all.remove(obj.id);
+		allByNumber.remove(obj.numero);
 	}
 	
-	public static void tryAndCreate() {
+	private static void tryAndCreate() {
 		if(all == null) {
 			all = new HashMap<Integer, Presidente>();
 		}
+		if(allByNumber == null) {
+			allByNumber = new HashMap<Integer, Presidente>();
+		}
+	}
+	
+	public static boolean equals(Presidente obj1, Presidente obj2) {
+		boolean returnValue = false;
+		if((obj1.id == obj2.id) && (obj1.numero == obj2.numero)) {
+			returnValue = true;
+		}
+		return returnValue;
+	}
+	
+	public final boolean equals(Object obj) {
+		boolean returnValue = false;
+		if(obj instanceof Presidente) {
+			Presidente pobj = (Presidente) obj;
+			if((this.id == pobj.id) && (this.numero == pobj.numero)) {
+				returnValue = true;
+			}
+		}
+		return returnValue;
 	}
 }
- 

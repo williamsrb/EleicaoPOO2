@@ -12,7 +12,7 @@ import resources.lib.domain.Cargo;
 import resources.lib.persistence.ConfigManager;
 import resources.lib.persistence.JdbcConnection;
 
-public class CargoDAOjdbc implements CargoDAO {
+public final class CargoDAOjdbc implements CargoDAO {
 
 	private static CargoDAOjdbc singleton;
 	
@@ -34,9 +34,9 @@ public class CargoDAOjdbc implements CargoDAO {
 		int lastIndex = 0;
 		try {
 			if(obj.getId() == Cargo.NEW) {
-				ps = conn.prepareStatement("INSERT INTO Cargo(digitos, nome) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
+				ps = conn.prepareStatement("INSERT INTO \"Cargo\"(digitos, nome) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
 			} else {
-				ps = conn.prepareStatement("UPDATE Candidato SET id=?, digitos=?, nome=? WHERE id=?");
+				ps = conn.prepareStatement("UPDATE \"Cargo\" SET id=?, digitos=?, nome=? WHERE id=?");
 				ps.setInt(1, obj.getId());
 				ps.setInt(4, obj.getLastId());
 				lastIndex++;
@@ -56,7 +56,7 @@ public class CargoDAOjdbc implements CargoDAO {
 			jconn.disconnect();
 			stock(obj); //Atualiza a lista global
 		} catch (Exception ex) {
-			System.err.println("Erro ao inserir o Cargo\n" + ex.getLocalizedMessage());
+			System.err.println("Erro ao inserir o Cargo\n" + resources.lib.other.Debug.getTrace(ex.getLocalizedMessage()));
 		}
 	}
 
@@ -65,13 +65,13 @@ public class CargoDAOjdbc implements CargoDAO {
 		Connection conn = jconn.getConnection();
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement("DELETE FROM Cargo WHERE id=?");
+			ps = conn.prepareStatement("DELETE FROM \"Cargo\" WHERE id=?");
 			ps.setInt(1, obj.getId());
 			ps.executeUpdate();
 			jconn.disconnect();
 			purge(obj);
 		} catch (SQLException se) {
-			System.err.println("Erro ao apagar o Cargo\n" + se.getLocalizedMessage());
+			System.err.println("Erro ao apagar o Cargo\n" + resources.lib.other.Debug.getTrace(se.getLocalizedMessage()));
 		}
 	}
 	
@@ -88,7 +88,7 @@ public class CargoDAOjdbc implements CargoDAO {
 				}
 			}
 		} catch (SQLException se) {
-			System.err.println(se.getLocalizedMessage());
+			System.err.println(resources.lib.other.Debug.getTrace(se.getLocalizedMessage()));
 		}
 		return list;
 	}
@@ -98,15 +98,14 @@ public class CargoDAOjdbc implements CargoDAO {
 		Connection conn = jconn.getConnection();
 		Statement st = null;
 		ResultSet result = null;
-		st = (Statement) result; //temp
 		try {
 			if(conn != null) {
 				st = conn.createStatement();
-				result = st.executeQuery("SELECT * FROM Cargo");
+				result = st.executeQuery("SELECT * FROM \"Cargo\"");
 				jconn.disconnect();
 			}
 		} catch (SQLException se) {
-			System.err.println(se.getLocalizedMessage());
+			System.err.println(resources.lib.other.Debug.getTrace(se.getLocalizedMessage()));
 		}
 		return result;
 	}
@@ -123,4 +122,3 @@ public class CargoDAOjdbc implements CargoDAO {
 		throw new CloneNotSupportedException();
 	}
 }
- 

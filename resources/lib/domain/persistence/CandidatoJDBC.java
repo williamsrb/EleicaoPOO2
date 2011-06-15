@@ -11,7 +11,7 @@ import resources.lib.domain.Candidato;
 import resources.lib.persistence.ConfigManager;
 import resources.lib.persistence.JdbcConnection;
 
-public class CandidatoJDBC {
+public final class CandidatoJDBC {
 	public static void prepareStatement(PreparedStatement ps, Candidato obj, int lastIndex) throws SQLException {
 		//"INSERT INTO Candidato(numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido, nome_vice, foto_vice) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 		ps.setInt(lastIndex + 1, obj.getNumero());
@@ -33,12 +33,12 @@ public class CandidatoJDBC {
 		Connection conn = jconn.getConnection();
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement("DELETE FROM Candidato WHERE id=?");
+			ps = conn.prepareStatement("DELETE FROM \"Candidato\" WHERE id=?");
 			ps.setInt(1, obj.getId());
 			ps.executeUpdate();
 			jconn.disconnect();
 		} catch (SQLException se) {
-			System.err.println("Erro ao apagar o Candidato\n" + se.getLocalizedMessage());
+			System.err.println("Erro ao apagar o Candidato\n" + resources.lib.other.Debug.getTrace(se.getLocalizedMessage()));
 		}
 	}
 	
@@ -47,18 +47,17 @@ public class CandidatoJDBC {
 		Connection conn = jconn.getConnection();
 		Statement st = null;
 		ResultSet result = null;
-		st = (Statement) result; //temp
 		try {
 			if(conn != null) {
 				st = conn.createStatement();
-				result = st.executeQuery("SELECT * FROM Candidato WHERE id IN (" +
-						"SELECT cd.id FROM Candidato cd JOIN Cargo cg ON cd.id_cargo=cg.id" +
-						"WHERE cg.nome='" + name + "')"); //Pega pelo nome do cargo
+				result = st.executeQuery("SELECT * FROM \"Candidato\" WHERE \"Candidato\".id IN" +
+						"(SELECT \"Candidato\".id FROM \"Candidato\" JOIN \"Cargo\" ON \"Candidato\".id_cargo=\"Cargo\".id " +
+						"WHERE \"Cargo\".nome='" + name + "')"); //Pega pelo nome do cargo
 				jconn.disconnect();
 			}
 		} catch (SQLException se) {
-			System.err.println(se.getLocalizedMessage());
+			System.err.println(resources.lib.other.Debug.getTrace(se.getLocalizedMessage()));
 		}
 		return result;
 	}
-} 
+}

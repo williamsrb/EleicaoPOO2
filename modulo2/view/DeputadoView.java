@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 
 import resources.lib.domain.Deputado;
 
-public class DeputadoView extends CandidatoView {
+public final class DeputadoView extends CandidatoView {
 	/* Display */
 	public void setDisplay(Stack<Component> reverselist, Deputado pessoa) {
 		JLabel numDigit03, numDigit04, numDigit05;
@@ -43,4 +43,3 @@ public class DeputadoView extends CandidatoView {
 		reverselist.push(numDigit05);//17
 	}
 }
- 

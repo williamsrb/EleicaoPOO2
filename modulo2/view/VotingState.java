@@ -9,7 +9,7 @@ import resources.lib.domain.Presidente;
 import resources.lib.view.Display;
 import resources.lib.view.ScreenPanel;
 
-public class VotingState {
+public final class VotingState {
 	
 	public static void displayCandidate(Deputado person, ScreenPanel screenPanel) {
 		Stack<Component> reverselist = new Stack<Component>();
@@ -128,4 +128,3 @@ public class VotingState {
 		preparePanel(pane, reverselist);*/
 	}
 }
- 

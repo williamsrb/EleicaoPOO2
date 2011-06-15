@@ -1,6 +1,6 @@
 package resources.lib.persistence;
 
-public class JdbcConfig {
+public final class JdbcConfig {
 	private String username;
 	private String password;
 	private String url;
@@ -30,4 +30,3 @@ public class JdbcConfig {
 	}
 
 }
- 

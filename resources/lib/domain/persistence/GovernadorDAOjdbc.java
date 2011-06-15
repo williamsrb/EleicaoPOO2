@@ -16,7 +16,7 @@ import resources.lib.domain.Partido;
 import resources.lib.persistence.ConfigManager;
 import resources.lib.persistence.JdbcConnection;
 
-public class GovernadorDAOjdbc implements GovernadorDAO {
+public final class GovernadorDAOjdbc implements GovernadorDAO {
 
 	private static GovernadorDAOjdbc singleton;
 	
@@ -38,9 +38,9 @@ public class GovernadorDAOjdbc implements GovernadorDAO {
 		int lastIndex = 0;
 		try {
 			if(obj.getId() == Candidato.NEW) {
-				ps = conn.prepareStatement("INSERT INTO Candidato(numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, nome_vice, foto_vice) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+				ps = conn.prepareStatement("INSERT INTO \"Candidato\"(numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, nome_vice, foto_vice) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			} else {
-				ps = conn.prepareStatement("UPDATE Candidato SET id=?, numero=?, nome=?, id_partido=?, id_cargo=?, nascimento=?, sexo=?, foto=?, site=?, nome_vice=?, foto_vice=? WHERE id=?");
+				ps = conn.prepareStatement("UPDATE \"Candidato\" SET id=?, numero=?, nome=?, id_partido=?, id_cargo=?, nascimento=?, sexo=?, foto=?, site=?, nome_vice=?, foto_vice=? WHERE id=?");
 				ps.setInt(1, obj.getId());
 				ps.setInt(12, obj.getLastId());
 				lastIndex++;
@@ -62,7 +62,7 @@ public class GovernadorDAOjdbc implements GovernadorDAO {
 			jconn.disconnect();
 			stock(obj);
 		} catch (Exception ex) {
-			System.err.println("Erro ao inserir a Candidato\n" + ex.getLocalizedMessage());
+			System.err.println("Erro ao inserir a Candidato\n" + resources.lib.other.Debug.getTrace(ex.getLocalizedMessage()));
 		}
 	}
 
@@ -84,7 +84,7 @@ public class GovernadorDAOjdbc implements GovernadorDAO {
 				}
 			}
 		} catch (SQLException se) {
-			System.err.println(se.getLocalizedMessage());
+			System.err.println(resources.lib.other.Debug.getTrace(se.getLocalizedMessage()));
 		}
 		return list;
 	}
@@ -101,4 +101,3 @@ public class GovernadorDAOjdbc implements GovernadorDAO {
 		throw new CloneNotSupportedException();
 	}
 }
- 

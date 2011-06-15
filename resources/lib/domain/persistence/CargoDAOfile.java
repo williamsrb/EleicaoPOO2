@@ -4,7 +4,7 @@ import java.util.List;
 
 import resources.lib.domain.Cargo;
 
-public class CargoDAOfile implements CargoDAO {
+public final class CargoDAOfile implements CargoDAO {
 
     public void salvar(Cargo obj) {}
 
@@ -16,4 +16,3 @@ public class CargoDAOfile implements CargoDAO {
 		throw new CloneNotSupportedException();
 	}
 }
- 

@@ -10,7 +10,7 @@ import resources.lib.other.Singleton;
 import resources.lib.view.ScreenPanel;
 
 @SuppressWarnings("unused")
-public class App1Worker implements Singleton {
+public final class App1Worker implements Singleton {
 	private static App1Worker singleton;
 	private int state;
 	private int previousState;
@@ -29,9 +29,7 @@ public class App1Worker implements Singleton {
 
 	private App1Worker() {
 		//this.estado = DIGITANDO_DEPUTADO;
-	}
- 
-	public static synchronized App1Worker getInstance() {
+	}	public static synchronized App1Worker getInstance() {
 		if(singleton == null) {
 			singleton = new App1Worker();
 		}
@@ -420,4 +418,4 @@ public class App1Worker implements Singleton {
 	public Object clone() throws CloneNotSupportedException {
 		throw new CloneNotSupportedException();
 	}
-} 
+}

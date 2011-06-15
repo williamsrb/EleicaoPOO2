@@ -3,14 +3,14 @@ package resources.lib.domain;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Cargo {
+public final class Cargo {
 	private Integer id;
 	private Integer digitos;
 	private String nome;
 	
 	public static final int NEW = -3;
 	private Integer lastId;
-	private static Map<Integer, Cargo> all;
+	private static Map<Integer, Cargo> all; //By ID
 	
 	//Apesar da existêcia de construtores para criar novos cargos, seria necessário remodelar o banco para aceitar os novos campos customizados
 	//dos possíveis novos cargos, além de ser necessária a criação de classes de domínio e persistência.
@@ -64,38 +64,32 @@ public class Cargo {
 		return nome;
 	}
 	
-	//Métodos de controle da coleção de objetos para evitar recriação de objetos após consultas
-	
-	private static Map<Integer, Cargo> getAll() {
-		tryAndCreate();
-		return all;
-	}
-	
-	public static boolean conflicts(Cargo c) {
+	//Métodos de controle da coleção de objetos paa evitar recriação de objetos após consultas
+	public static boolean conflicts(Cargo obj) {
 		boolean returnValue = false;
 		tryAndCreate();
-		if(exists(c)) {
-			returnValue = !(all.get(c.id).nome.equals(c.nome));
+		if(exists(obj)) {
+			returnValue = !(all.get(obj.id).nome.equals(obj.nome));
 		}
 		return returnValue;
 	}
 	
-	public static boolean exists(Cargo c) {
+	public static boolean exists(Cargo obj) {
 		tryAndCreate();
-		return getAll().containsKey(c.id);
+		return all.containsKey(obj.id);
 	}
 	
 	public static boolean exists(Integer id) {
 		tryAndCreate();
-		return getAll().containsKey(id);
+		return all.containsKey(id);
 	}
 	
-	//Retorna um presidente de mesmo id que já esteja registrado
-	public static Cargo get(Cargo c) {
+	//Retorna um cargo de mesmo id que já esteja registrado
+	public static Cargo get(Cargo obj) {
 		Cargo returnValue = null;
 		tryAndCreate();
-		if(exists(c)) {
-			returnValue = all.get(c.id);
+		if(exists(obj)) {
+			returnValue = all.get(obj.id);
 		}
 		return returnValue;
 	}
@@ -114,20 +108,38 @@ public class Cargo {
 		return all.isEmpty();
 	}
 	
-	public static void register(Cargo c) {
+	public static void register(Cargo obj) {
 		tryAndCreate();
-		all.put(c.id, c);
+		all.put(obj.id, obj);
 	}
 	
-	public static void unregister(Cargo c) {
+	public static void unregister(Cargo obj) {
 		tryAndCreate();
-		all.remove(c.id);
+		all.remove(obj.id);
 	}
 	
-	public static void tryAndCreate() {
+	private static void tryAndCreate() {
 		if(all == null) {
 			all = new HashMap<Integer, Cargo>();
 		}
 	}
+	
+	public static boolean equals(Cargo obj1, Cargo obj2) {
+		boolean returnValue = false;
+		if((obj1.id == obj2.id) && (obj1.nome.equals(obj2.nome))) {
+			returnValue = true;
+		}
+		return returnValue;
+	}
+	
+	public final boolean equals(Object obj) {
+		boolean returnValue = false;
+		if(obj instanceof Cargo) {
+			Cargo cobj = (Cargo) obj;
+			if((this.id == cobj.id) && (this.nome.equals(cobj.nome))) {
+				returnValue = true;
+			}
+		}
+		return returnValue;
+	}
 }
- 

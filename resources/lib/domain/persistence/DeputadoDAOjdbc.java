@@ -16,7 +16,7 @@ import resources.lib.domain.Partido;
 import resources.lib.persistence.ConfigManager;
 import resources.lib.persistence.JdbcConnection;
 
-public class DeputadoDAOjdbc implements DeputadoDAO {
+public final class DeputadoDAOjdbc implements DeputadoDAO {
 
 	private static DeputadoDAOjdbc singleton;
 	
@@ -38,9 +38,9 @@ public class DeputadoDAOjdbc implements DeputadoDAO {
 		int lastIndex = 0;
 		try {
 			if(obj.getId() == Candidato.NEW) {
-				ps = conn.prepareStatement("INSERT INTO Candidato(numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+				ps = conn.prepareStatement("INSERT INTO \"Candidato\"(numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			} else {
-				ps = conn.prepareStatement("UPDATE Candidato SET id=?, numero=?, nome=?, id_partido=?, id_cargo=?, nascimento=?, sexo=?, foto=?, site=?, apelido=? WHERE id=?");
+				ps = conn.prepareStatement("UPDATE \"Candidato\" SET id=?, numero=?, nome=?, id_partido=?, id_cargo=?, nascimento=?, sexo=?, foto=?, site=?, apelido=? WHERE id=?");
 				ps.setInt(1, obj.getId());
 				ps.setInt(11, obj.getLastId());
 				lastIndex++;
@@ -61,7 +61,7 @@ public class DeputadoDAOjdbc implements DeputadoDAO {
 			jconn.disconnect();
 			stock(obj); //Atualiza a lista global
 		} catch (Exception ex) {
-			System.err.println("Erro ao inserir a Candidato\n" + ex.getLocalizedMessage());
+			System.err.println("Erro ao inserir a Candidato\n" + resources.lib.other.Debug.getTrace(ex.getLocalizedMessage()));
 		}
 	}
 
@@ -83,7 +83,7 @@ public class DeputadoDAOjdbc implements DeputadoDAO {
 				}
 			}
 		} catch (SQLException se) {
-			System.err.println(se.getLocalizedMessage());
+			System.err.println(resources.lib.other.Debug.getTrace(se.getLocalizedMessage()));
 		}
 		return list;
 	}
@@ -100,4 +100,3 @@ public class DeputadoDAOjdbc implements DeputadoDAO {
 		throw new CloneNotSupportedException();
 	}
 }
- 

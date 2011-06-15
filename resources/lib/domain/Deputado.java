@@ -6,10 +6,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Deputado extends Candidato {
+public final class Deputado extends Candidato {
 	private String apelido;
 	
-	private static Map<Integer, Deputado> all;
+	private static Map<Integer, Deputado> all; //By ID
+	private static Map<Integer, Deputado> allByNumber; //by Number
 	
 	//Construtor que usa gerador de id automático da classe mãe. Usado pelo controller para criar objetos desse tipo, em o id, que só gerado no banco de dados
 	public Deputado(Integer number, String name, Partido partido, Cargo cargo, Date nascimento, Character sexo, String foto, String site, String apelido) {
@@ -42,12 +43,6 @@ public class Deputado extends Candidato {
 	}
 	
 	//Métodos de controle da coleção de objetos paa evitar recriação de objetos após consultas
-	
-	private static Map<Integer, Deputado> getAll() {
-		tryAndCreate();
-		return all;
-	}
-	
 	public static boolean conflicts(Deputado d) {
 		boolean returnValue = false;
 		tryAndCreate();
@@ -59,22 +54,32 @@ public class Deputado extends Candidato {
 	
 	public static boolean exists(Deputado d) {
 		tryAndCreate();
-		return getAll().containsKey(d.id);
+		return (all.containsKey(d.id) || allByNumber.containsKey(d.numero));
 	}
 	
 	public static boolean exists(Integer id) {
 		tryAndCreate();
-		return getAll().containsKey(id);
+		return all.containsKey(id);
+	}
+	
+	public static boolean existsByNumber(Integer number) {
+		tryAndCreate();
+		return allByNumber.containsKey(number);
 	}
 	
 	//Retorna um deputado de mesmo id que já esteja registrado
 	public static Deputado get(Deputado d) {
-		Deputado returnValue = null;
+		Deputado returnValue1 = null;
+		Deputado returnValue2 = null;
 		tryAndCreate();
 		if(exists(d)) {
-			returnValue = all.get(d.id);
+			returnValue1 = all.get(d.id);
+			returnValue2 = allByNumber.get(d.numero);
+			if((returnValue1.id != returnValue2.id) || (returnValue1.numero != returnValue2.numero)) {
+				returnValue1 = returnValue2 = null;
+			}
 		}
-		return returnValue;
+		return returnValue1;
 	}
 	
 	public static Deputado get(Integer id) {
@@ -86,25 +91,57 @@ public class Deputado extends Candidato {
 		return returnValue;
 	}
 	
+	public static Deputado getByNumber(Integer number) {
+		Deputado returnValue = null;
+		tryAndCreate();
+		if(existsByNumber(number)) {
+			returnValue = allByNumber.get(number);
+		}
+		return returnValue;
+	}
+	
 	public static boolean isEmpty() {
 		tryAndCreate();
 		return all.isEmpty();
 	}
 	
-	public static void register(Deputado d) {
+	public static void register(Deputado obj) {
 		tryAndCreate();
-		all.put(d.id, d);
+		all.put(obj.id, obj);
+		allByNumber.put(obj.numero, obj);
 	}
 	
-	public static void unregister(Deputado d) {
+	public static void unregister(Deputado obj) {
 		tryAndCreate();
-		all.remove(d.id);
+		all.remove(obj.id);
+		allByNumber.remove(obj.numero);
 	}
 	
-	public static void tryAndCreate() {
+	private static void tryAndCreate() {
 		if(all == null) {
 			all = new HashMap<Integer, Deputado>();
 		}
+		if(allByNumber == null) {
+			allByNumber = new HashMap<Integer, Deputado>();
+		}
+	}
+	
+	public static boolean equals(Deputado obj1, Deputado obj2) {
+		boolean returnValue = false;
+		if((obj1.id == obj2.id) && (obj1.numero == obj2.numero)) {
+			returnValue = true;
+		}
+		return returnValue;
+	}
+	
+	public final boolean equals(Object obj) {
+		boolean returnValue = false;
+		if(obj instanceof Deputado) {
+			Deputado dobj = (Deputado) obj;
+			if((this.id == dobj.id) && (this.numero == dobj.numero)) {
+				returnValue = true;
+			}
+		}
+		return returnValue;
 	}
 }
- 

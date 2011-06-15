@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class JdbcConnection {
+public final class JdbcConnection {
 	
 	private Connection connection;
 
@@ -21,9 +21,9 @@ public class JdbcConnection {
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, username, password);
         } catch (SQLException se) {
-        	System.err.println("Não foi possível estabelecer conexão com o banco: " + url + "\n" + se.getLocalizedMessage());
+        	System.err.println("Não foi possível estabelecer conexão com o banco: " + url + "\n" + resources.lib.other.Debug.getTrace(se.getLocalizedMessage()));
         } catch (ClassNotFoundException cnfe) {
-        	System.err.println("Driver não encontrado\n" + cnfe.getLocalizedMessage());
+        	System.err.println("Driver não encontrado\n" + resources.lib.other.Debug.getTrace(cnfe.getLocalizedMessage()));
 		}
 		return conn;
 	}
@@ -32,7 +32,7 @@ public class JdbcConnection {
 		try {
 			this.connection.close();
 		} catch (SQLException se) {
-			System.err.println(se.getLocalizedMessage());
+			System.err.println(resources.lib.other.Debug.getTrace(se.getLocalizedMessage()));
 		}
 	}
 	
@@ -47,4 +47,3 @@ public class JdbcConnection {
 		return result;
 	}
 }
- 

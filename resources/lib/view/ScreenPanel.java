@@ -2,7 +2,7 @@ package resources.lib.view;
 
 import javax.swing.JPanel;
 
-public class ScreenPanel extends JPanel {
+public final class ScreenPanel extends JPanel {
 	private static final long serialVersionUID = 1003L;
 
 	public void clear() {
@@ -15,4 +15,3 @@ public class ScreenPanel extends JPanel {
 		this.setVisible(true);
 	}
 }
- 

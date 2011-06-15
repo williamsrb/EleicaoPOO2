@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import resources.lib.other.Singleton;
 
-public class ConfigBuilder implements Singleton {
+public final class ConfigBuilder implements Singleton {
 	private Map<String, String> config;
 	private static ConfigBuilder singleton;
 	
@@ -22,7 +22,7 @@ public class ConfigBuilder implements Singleton {
 				storageReader.close();
 				dbReader.close();
 			} catch(Exception e) {
-				System.err.println(e.getLocalizedMessage());
+				System.err.println(resources.lib.other.Debug.getTrace(e.getLocalizedMessage()));
 			}
 		} else {
 			localMap = new HashMap<String, String>();
@@ -30,9 +30,7 @@ public class ConfigBuilder implements Singleton {
 			this.genMap(dbReader, localMap);
 			this.config = localMap;
 		}
-	}
- 
-	public static synchronized ConfigBuilder getInstance() {
+	}	public static synchronized ConfigBuilder getInstance() {
 		if(singleton == null) {
 			singleton = new ConfigBuilder();
 		}
@@ -54,7 +52,7 @@ public class ConfigBuilder implements Singleton {
 				}
 			}
 		} catch(IOException ioe2) {
-			System.err.println(ioe2.getLocalizedMessage());
+			System.err.println(resources.lib.other.Debug.getTrace(ioe2.getLocalizedMessage()));
 		}
 		return returnVal;
 	}
@@ -77,4 +75,3 @@ public class ConfigBuilder implements Singleton {
 		throw new CloneNotSupportedException();
 	}
 }
- 

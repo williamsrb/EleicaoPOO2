@@ -3,7 +3,7 @@ package resources.lib.domain;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Partido {
+public final class Partido {
 	private Integer id;
 	private String sigla;
 	private String nome;
@@ -11,7 +11,8 @@ public class Partido {
 	
 	public static final int NEW = -3;
 	private Integer lastId;
-	private static Map<Integer, Partido> all;
+	private static Map<Integer, Partido> all; //By ID
+	private static Map<Integer, Partido> allByNumber; //by Number
 	
 	private Partido(String sigla, String nome, Integer numero, boolean novo) {
 		if(novo) {
@@ -68,42 +69,44 @@ public class Partido {
 		return numero;
 	}
 	
-	//////////////////////////////////////////////////////////////////////////////////////////////
-	// Métodos de controle da coleção de objetos para evitar recriação de objetos após consultas//
-	//////////////////////////////////////////////////////////////////////////////////////////////
-	
-	private static Map<Integer, Partido> getAll() {
-		tryAndCreate();
-		return all;
-	}
-	
-	public static boolean conflicts(Partido p) {
+	//Métodos de controle da coleção de objetos paa evitar recriação de objetos após consultas
+	public static boolean conflicts(Partido obj) {
 		boolean returnValue = false;
 		tryAndCreate();
-		if(exists(p)) {
-			returnValue = !(all.get(p.id).numero == p.numero);
+		if(exists(obj)) {
+			returnValue = !(all.get(obj.id).numero == obj.numero);
 		}
 		return returnValue;
 	}
 	
-	public static boolean exists(Partido p) {
+	public static boolean exists(Partido obj) {
 		tryAndCreate();
-		return getAll().containsKey(p.id);
+		return (all.containsKey(obj.id) || allByNumber.containsKey(obj.numero));
 	}
 	
 	public static boolean exists(Integer id) {
 		tryAndCreate();
-		return getAll().containsKey(id);
+		return all.containsKey(id);
 	}
 	
-	//Retorna um partido de mesmo id que já esteja registrado
-	public static Partido get(Partido p) {
-		Partido returnValue = null;
+	public static boolean existsByNumber(Integer number) {
 		tryAndCreate();
-		if(exists(p)) {
-			returnValue = all.get(p.id);
+		return allByNumber.containsKey(number);
+	}
+	
+	//Retorna um deputado de mesmo id que já esteja registrado
+	public static Partido get(Partido obj) {
+		Partido returnValue1 = null;
+		Partido returnValue2 = null;
+		tryAndCreate();
+		if(exists(obj)) {
+			returnValue1 = all.get(obj.id);
+			returnValue2 = allByNumber.get(obj.numero);
+			if((returnValue1.id != returnValue2.id) || (returnValue1.numero != returnValue2.numero)) {
+				returnValue1 = returnValue2 = null;
+			}
 		}
-		return returnValue;
+		return returnValue1;
 	}
 	
 	public static Partido get(Integer id) {
@@ -115,25 +118,57 @@ public class Partido {
 		return returnValue;
 	}
 	
+	public static Partido getByNumber(Integer number) {
+		Partido returnValue = null;
+		tryAndCreate();
+		if(existsByNumber(number)) {
+			returnValue = allByNumber.get(number);
+		}
+		return returnValue;
+	}
+	
 	public static boolean isEmpty() {
 		tryAndCreate();
 		return all.isEmpty();
 	}
 	
-	public static void register(Partido p) {
+	public static void register(Partido obj) {
 		tryAndCreate();
-		all.put(p.id, p);
+		all.put(obj.id, obj);
+		allByNumber.put(obj.numero, obj);
 	}
 	
-	public static void unregister(Partido p) {
+	public static void unregister(Partido obj) {
 		tryAndCreate();
-		all.remove(p.id);
+		all.remove(obj.id);
+		allByNumber.remove(obj.numero);
 	}
 	
-	public static void tryAndCreate() {
+	private static void tryAndCreate() {
 		if(all == null) {
 			all = new HashMap<Integer, Partido>();
 		}
+		if(allByNumber == null) {
+			allByNumber = new HashMap<Integer, Partido>();
+		}
+	}
+	
+	public static boolean equals(Partido obj1, Partido obj2) {
+		boolean returnValue = false;
+		if((obj1.id == obj2.id) && (obj1.numero == obj2.numero)) {
+			returnValue = true;
+		}
+		return returnValue;
+	}
+	
+	public final boolean equals(Object obj) {
+		boolean returnValue = false;
+		if(obj instanceof Partido) {
+			Partido pobj = (Partido) obj;
+			if((this.id == pobj.id) && (this.numero == pobj.numero)) {
+				returnValue = true;
+			}
+		}
+		return returnValue;
 	}
 }
- 

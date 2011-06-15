@@ -4,7 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
 
-public class ConfigManager {
+public final class ConfigManager {
 	public static String getStorageMethod() {
 		String storMtd;
 		storMtd = ConfigBuilder.getInstance().getConfig().get("Persistence");
@@ -41,7 +41,7 @@ public class ConfigManager {
 		try {
 			fileUri = new URI(ConfigBuilder.getInstance().getConfig().get("Persistence"));
 		} catch (URISyntaxException use) {
-			System.err.println(use.getLocalizedMessage());
+			System.err.println(resources.lib.other.Debug.getTrace(use.getLocalizedMessage()));
 		}
 		if(fileUri == null) {
 			System.err.println("Não foi possível encontrar configuração de arquivo.\nDesabilitando persistência.");
@@ -49,4 +49,3 @@ public class ConfigManager {
 		return fileUri;
 	}
 }
- 

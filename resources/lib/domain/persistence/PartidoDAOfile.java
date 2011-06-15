@@ -4,7 +4,7 @@ import java.util.List;
 
 import resources.lib.domain.Partido;
 
-public class PartidoDAOfile implements PartidoDAO {
+public final class PartidoDAOfile implements PartidoDAO {
 
     public void salvar(Partido obj) {}
 
@@ -16,4 +16,3 @@ public class PartidoDAOfile implements PartidoDAO {
 		throw new CloneNotSupportedException();
 	}
 }
- 

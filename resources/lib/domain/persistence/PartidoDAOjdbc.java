@@ -12,7 +12,7 @@ import resources.lib.domain.Partido;
 import resources.lib.persistence.ConfigManager;
 import resources.lib.persistence.JdbcConnection;
 
-public class PartidoDAOjdbc implements PartidoDAO {
+public final class PartidoDAOjdbc implements PartidoDAO {
 
 	private static PartidoDAOjdbc singleton;
 	
@@ -34,9 +34,9 @@ public class PartidoDAOjdbc implements PartidoDAO {
 		int lastIndex = 0;
 		try {
 			if(obj.getId() == Partido.NEW) {
-				ps = conn.prepareStatement("INSERT INTO Partido(sigla, nome, numero) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+				ps = conn.prepareStatement("INSERT INTO \"Partido\"(sigla, nome, numero) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			} else {
-				ps = conn.prepareStatement("UPDATE Candidato SET id=?, sigla=?, nome=?, numero=? WHERE id=?");
+				ps = conn.prepareStatement("UPDATE \"Partido\" SET id=?, sigla=?, nome=?, numero=? WHERE id=?");
 				ps.setInt(1, obj.getId());
 				ps.setInt(5, obj.getLastId());
 				lastIndex++;
@@ -57,7 +57,7 @@ public class PartidoDAOjdbc implements PartidoDAO {
 			jconn.disconnect();
 			stock(obj);
 		} catch (Exception ex) {
-			System.err.println("Erro ao inserir o Partido\n" + ex.getLocalizedMessage());
+			System.err.println("Erro ao inserir o Partido\n" + resources.lib.other.Debug.getTrace(ex.getLocalizedMessage()));
 		}
 	}
 
@@ -66,13 +66,13 @@ public class PartidoDAOjdbc implements PartidoDAO {
 		Connection conn = jconn.getConnection();
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement("DELETE FROM Partido WHERE id=?");
+			ps = conn.prepareStatement("DELETE FROM \"Partido\" WHERE id=?");
 			ps.setInt(1, obj.getId());
 			ps.executeUpdate();
 			jconn.disconnect();
 			purge(obj);
 		} catch (SQLException se) {
-			System.err.println("Erro ao apagar o Partido\n" + se.getLocalizedMessage());
+			System.err.println("Erro ao apagar o Partido\n" + resources.lib.other.Debug.getTrace(se.getLocalizedMessage()));
 		}
 	}
 	
@@ -89,7 +89,7 @@ public class PartidoDAOjdbc implements PartidoDAO {
 				}
 			}
 		} catch (SQLException se) {
-			System.err.println(se.getLocalizedMessage());
+			System.err.println(resources.lib.other.Debug.getTrace(se.getLocalizedMessage()));
 		}
 		return list;
 	}
@@ -99,17 +99,16 @@ public class PartidoDAOjdbc implements PartidoDAO {
 		Connection conn = jconn.getConnection();
 		Statement st = null;
 		ResultSet result = null;
-		st = (Statement) result;
 		try {
 			if(conn != null) {
 				st = conn.createStatement();
-				result = st.executeQuery("SELECT * FROM Partido");
+				result = st.executeQuery("SELECT * FROM \"Partido\"");
 				jconn.disconnect();
 			}
 		} catch (SQLException se) {
-			System.err.println(se.getLocalizedMessage());
+			System.err.println(resources.lib.other.Debug.getTrace(se.getLocalizedMessage()));
 		} catch (NullPointerException npe) {
-			System.err.println("Problema com a conexão...\n" + npe.getLocalizedMessage());
+			System.err.println("Problema com a conexão...\n" + resources.lib.other.Debug.getTrace(npe.getLocalizedMessage()));
 		}
 		return result;
 	}
@@ -126,4 +125,3 @@ public class PartidoDAOjdbc implements PartidoDAO {
 		throw new CloneNotSupportedException();
 	}
 }
- 

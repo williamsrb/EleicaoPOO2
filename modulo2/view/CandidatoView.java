@@ -122,4 +122,3 @@ public class CandidatoView {
 		reverselist.push(numDigit02);//14
 	}
 }
- 

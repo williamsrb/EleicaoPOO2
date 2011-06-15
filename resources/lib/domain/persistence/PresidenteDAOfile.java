@@ -4,7 +4,7 @@ import java.util.List;
 
 import resources.lib.domain.Presidente;
 
-public class PresidenteDAOfile implements PresidenteDAO {
+public final class PresidenteDAOfile implements PresidenteDAO {
 
     public void salvar(Presidente obj) {}
 
@@ -16,4 +16,3 @@ public class PresidenteDAOfile implements PresidenteDAO {
 		throw new CloneNotSupportedException();
 	}
 }
- 

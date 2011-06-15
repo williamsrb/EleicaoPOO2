@@ -1,20 +1,22 @@
 package modulo2.controller;
 
-import javax.swing.JOptionPane;
+import java.util.HashMap;
+import java.util.Map;
 
 import modulo2.util.KeyEnum;
-import modulo2.util.VotingKey;
-import modulo2.view.VotingState;
-
+import resources.lib.domain.Deputado;
+import resources.lib.domain.Governador;
+import resources.lib.domain.Presidente;
 import resources.lib.other.Singleton;
 import resources.lib.view.ScreenPanel;
 
-@SuppressWarnings("unused")
-public class App2Worker implements Singleton {
+public final class App2Worker implements Singleton {
 	private static App2Worker singleton;
 	private int state;
 	private int previousState;
+	private String enteredNums;
 	private ScreenPanel screen;
+	private Map<String, String> votes;
 	
 	public static final int BLOQUEADO = -3;
 	public static final int NULO = -2;
@@ -29,21 +31,26 @@ public class App2Worker implements Singleton {
 
 	private App2Worker() {
 		//this.estado = DIGITANDO_DEPUTADO;
-	}
- 
-	public static synchronized App2Worker getInstance() {
+		votes = new HashMap<String, String>();
+		Deputado d = new Deputado();
+		Governador g = new Governador();
+		Presidente p = new Presidente();
+		votes.put("deputado", "" + d.getNumero());
+		votes.put("governdor", "" + g.getNumero());
+		votes.put("presidente", "" + p.getNumero());
+	}	public static synchronized App2Worker getInstance() {
 		if(singleton == null) {
 			singleton = new App2Worker();
 		}
 		return singleton;
 	}
 	
-	public void setState(int state) {
-		this.state = state;
-	}
-	
 	public int getState() {
 		return this.state;
+	}
+	
+	public void setState(int state) {
+		this.state = state;
 	}
 	
 	public int getPreviousState() {
@@ -54,12 +61,20 @@ public class App2Worker implements Singleton {
 		this.previousState = previousState;
 	}
 
-	public void setScreen(ScreenPanel screen) {
-		this.screen = screen;
+	public String getEnteredNums() {
+		return this.enteredNums;
+	}
+	
+	public void setEnteredNums(String enteredNums) {
+		this.enteredNums = enteredNums;
 	}
 	
 	public ScreenPanel getScreen() {
 		return this.screen;
+	}
+
+	public void setScreen(ScreenPanel screen) {
+		this.screen = screen;
 	}
 	
 	public void doButtonAction(KeyEnum key) {
@@ -420,4 +435,4 @@ public class App2Worker implements Singleton {
 	public Object clone() throws CloneNotSupportedException {
 		throw new CloneNotSupportedException();
 	}
-} 
+}
