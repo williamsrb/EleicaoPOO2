@@ -16,16 +16,7 @@ import javax.swing.SwingUtilities;
 import modulo2.persistence.DatabaseOperations;
 import modulo2.view.ButtonElements;
 import modulo2.view.ViewMaster;
-import resources.lib.domain.persistence.CargoDAO;
-import resources.lib.domain.persistence.CargoDAOjdbc;
-import resources.lib.domain.persistence.DeputadoDAO;
-import resources.lib.domain.persistence.DeputadoDAOjdbc;
-import resources.lib.domain.persistence.GovernadorDAO;
-import resources.lib.domain.persistence.GovernadorDAOjdbc;
-import resources.lib.domain.persistence.PartidoDAO;
-import resources.lib.domain.persistence.PartidoDAOjdbc;
-import resources.lib.domain.persistence.PresidenteDAO;
-import resources.lib.domain.persistence.PresidenteDAOjdbc;
+import resources.lib.domain.persistence.*;
 import resources.lib.persistence.ConfigManager;
 import resources.lib.persistence.JdbcConnection;
 
@@ -57,7 +48,7 @@ public final class App2Master extends JFrame {
 			System.exit(1);
 		} else {
 			this.makeDAOs(); //dao factory
-			this.updateResources(); //recupera todos os objetos do banco de dados
+			this.updateResources(); //recupera todos os objetos do "storage" padrão
 			do {
 				valid = validatePassword();
 				if(!valid) {
@@ -69,7 +60,7 @@ public final class App2Master extends JFrame {
 				if(opt == 1) {
 					super.setTitle("Urna Eletrônica");
 					this.eventMonitor = false; //Monitor de eventos, usado para controlar as teclas
-					App2Worker.getInstance().setState(App2Worker.BLOQUEADO);
+					App2Worker.getInstance(); //Para inicializar internamente
 					startVoting();
 				} else {
 					super.setTitle("Relatórios de votação");
@@ -87,7 +78,7 @@ public final class App2Master extends JFrame {
 		System.exit(0);
 	}
 
-	public void startVoting() {
+	private void startVoting() {
 		Insets frameInsets;
 		Dimension size;
 		Container pane;
@@ -131,7 +122,8 @@ public final class App2Master extends JFrame {
 		this.buttonList = new ButtonElements();
 		btnLst = this.buttonList;
 		
-		App2Worker.getInstance().setScreen(ViewMaster.buildInterface(pane, btnLst));
+		App2Worker.setScreen(ViewMaster.buildInterface(pane, btnLst));
+		App2Worker.getInstance(); //Rodando o construtor pela primeira vez
 		ViewMaster.buildListeners(btnLst);
 		
 		setSize(pane.getWidth(), pane.getHeight());
@@ -248,7 +240,7 @@ public final class App2Master extends JFrame {
 	}
 	
 	//Atualiza a lista global de objetos
-	public void updateResources() {
+	private void updateResources() {
 		this.cargoDAO.obter();
 		this.deputadoDAO.obter();
 		this.governadorDAO.obter();
@@ -256,7 +248,7 @@ public final class App2Master extends JFrame {
 		this.presidenteDAO.obter();
 	}
 	
-	public boolean isStorageReady() {
+	private boolean isStorageReady() {
 		String stgmtd = ConfigManager.getStorageMethod();
 		boolean result = false;
 		if(stgmtd.equals("File")) {
@@ -271,27 +263,27 @@ public final class App2Master extends JFrame {
 		return this.eventMonitor;
 	}
 
-	public ButtonElements getButtonList() {
+	private ButtonElements getButtonList() {
 		return this.buttonList;
 	}
 
-	public CargoDAO getCargoDAO() {
+	private CargoDAO getCargoDAO() {
 		return this.cargoDAO;
 	}
 
-	public DeputadoDAO getDeputadoDAO() {
+	private DeputadoDAO getDeputadoDAO() {
 		return this.deputadoDAO;
 	}
 
-	public GovernadorDAO getGovernadorDAO() {
+	private GovernadorDAO getGovernadorDAO() {
 		return this.governadorDAO;
 	}
 
-	public PartidoDAO getPartidoDAO() {
+	private PartidoDAO getPartidoDAO() {
 		return this.partidoDAO;
 	}
 
-	public PresidenteDAO getPresidenteDAO() {
+	private PresidenteDAO getPresidenteDAO() {
 		return this.presidenteDAO;
 	}
 }

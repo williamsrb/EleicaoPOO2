@@ -26,7 +26,7 @@ public final class Partido {
 	}
 	
 	//Construtor que usa gerador de id automático
-	public Partido(String sigla, String nome, Integer numero) {
+	Partido(String sigla, String nome, Integer numero) {
 		this(sigla, nome, numero, true);
 	}
 	

@@ -12,11 +12,11 @@ public final class FileManager {
 	private BufferedReader reader;
 	private BufferedWriter writer;
 	
-	public FileManager(String file) {
+	FileManager(String file) {
 		this.file = file;
 	}
 	
-	public BufferedReader getReader() {
+	BufferedReader getReader() {
 		String file = this.file;
 		FileReader fIn = null;
 		BufferedReader brIn = null;
@@ -38,7 +38,7 @@ public final class FileManager {
 		return brIn;
 	}
 
-	public BufferedWriter getWriter() {
+	private BufferedWriter getWriter() {
 		String file = this.file;
 		FileWriter fIn = null;
 		BufferedWriter bwIn = null;

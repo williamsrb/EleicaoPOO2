@@ -14,7 +14,7 @@ public final class Governador extends Candidato {
 	private static Map<Integer, Governador> allByNumber; //by Number
 	
 	//Construtor que usa gerador de id automático da classe mãe
-	public Governador(Integer number, String name, Partido partido, Cargo cargo, Date nascimento, Character sexo, String foto, String site, String vice_nome, String vice_foto) {
+	private Governador(Integer number, String name, Partido partido, Cargo cargo, Date nascimento, Character sexo, String foto, String site, String vice_nome, String vice_foto) {
 		super(number, name, partido, cargo, nascimento, sexo, foto, site, true);
 		this.vice_nome = vice_nome;
 		this.vice_foto = vice_foto;
@@ -30,7 +30,11 @@ public final class Governador extends Candidato {
 	
 	//Construtor usado para testes
 	public Governador() {
-		this(new Integer(-4), new Integer(23), "Maria de Testes e Silva", new Partido("PT", "Partido do Teste", 23), new Cargo(new Integer(2), "Governador"), new Date(), 'F', "teste2.jpg", "http://www.mariateste.com.br", "Joana Vice dos Testes", "vice_teste2.jpg");
+		this(new Integer(23));
+	}
+	
+	public Governador(Integer number) {
+		this(new Integer(-4), number, "Maria de Testes e Silva", new Partido("PT", "Partido do Teste", 23), new Cargo(new Integer(2), "Governador"), new Date(), 'F', "teste2.jpg", "http://www.mariateste.com.br", "Joana Vice dos Testes", "vice_teste2.jpg");
 		SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			this.nascimento = formatador.parse("01/01/2001");

@@ -15,25 +15,25 @@ public final class ImageButton {
 	private final ImageIcon shadow;
 	private final ImageIcon none;
 	
-	public ImageButton(KeyEnum key) {
+	ImageButton(KeyEnum key) {
 		this.light = Display.pathToImageIcon(FileUpload.effectPath + VotingKey.getPrefix(key) + "_light.png");
 		this.shadow = Display.pathToImageIcon(FileUpload.effectPath + VotingKey.getPrefix(key) + "_shadow.png");
 		this.none = Display.pathToImageIcon(FileUpload.imagePath + VotingKey.getPrefix(key) + ".png");
 	}
 	
-	public Dimension getSize() {
+	Dimension getSize() {
 		return new Dimension(none.getIconWidth(), none.getIconHeight());
 	}
 	
-	public ImageIcon getLight() {
+	ImageIcon getLight() {
 		return light;
 	}
 
-	public ImageIcon getShadow() {
+	ImageIcon getShadow() {
 		return shadow;
 	}
 
-	public ImageIcon getNone() {
+	ImageIcon getNone() {
 		return none;
 	}
 }

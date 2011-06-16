@@ -30,14 +30,14 @@ public final class ConfigBuilder implements Singleton {
 			this.genMap(dbReader, localMap);
 			this.config = localMap;
 		}
-	}	public static synchronized ConfigBuilder getInstance() {
+	}	static synchronized ConfigBuilder getInstance() {
 		if(singleton == null) {
 			singleton = new ConfigBuilder();
 		}
 		return singleton;
 	}
 	
-	public Map<String, String> getConfig() {
+	Map<String, String> getConfig() {
 		return this.config;
 	}
 	

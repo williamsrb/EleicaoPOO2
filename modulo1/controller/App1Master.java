@@ -119,7 +119,7 @@ public final class App1Master extends JFrame {
 	}
 	
 	//Atualiza a lista global de objetos
-	public void updateResources() {
+	private void updateResources() {
 		this.cargoDAO.obter();
 		this.deputadoDAO.obter();
 		this.governadorDAO.obter();
@@ -127,7 +127,7 @@ public final class App1Master extends JFrame {
 		this.presidenteDAO.obter();
 	}
 	
-	public boolean isStorageReady() {
+	private boolean isStorageReady() {
 		String stgmtd = ConfigManager.getStorageMethod();
 		boolean result = false;
 		if(stgmtd.equals("File")) {
@@ -138,23 +138,23 @@ public final class App1Master extends JFrame {
 		return result;
 	}
 	
-	public CargoDAO getCargoDAO() {
+	private CargoDAO getCargoDAO() {
 		return this.cargoDAO;
 	}
 	
-	public DeputadoDAO getDeputadoDAO() {
+	private DeputadoDAO getDeputadoDAO() {
 		return this.deputadoDAO;
 	}
 	
-	public GovernadorDAO getGovernadorDAO() {
+	private GovernadorDAO getGovernadorDAO() {
 		return this.governadorDAO;
 	}
 	
-	public PartidoDAO getPartidoDAO() {
+	private PartidoDAO getPartidoDAO() {
 		return this.partidoDAO;
 	}
 	
-	public PresidenteDAO getPresidenteDAO() {
+	private PresidenteDAO getPresidenteDAO() {
 		return this.presidenteDAO;
 	}
 }

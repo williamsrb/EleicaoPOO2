@@ -36,7 +36,7 @@ public final class ConfigManager {
 		return conf;
 	}
 	
-	public static URI getFileConfig() {
+	private static URI getFileConfig() {
 		URI fileUri = null;
 		try {
 			fileUri = new URI(ConfigBuilder.getInstance().getConfig().get("Persistence"));

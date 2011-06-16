@@ -25,7 +25,7 @@ public final class Cargo {
 	}
 	
 	//Construtor que usa gerador de id automático
-	public Cargo(Integer digitos, String nome) {
+	Cargo(Integer digitos, String nome) {
 		this(digitos, nome, true);
 	}
 	

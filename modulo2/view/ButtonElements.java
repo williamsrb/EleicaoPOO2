@@ -71,55 +71,55 @@ public final class ButtonElements extends JComponent {
 		return this.btnCWHITE;
 	}
 
-	public JButton setBtnD0(JButton btnD0) {
+	JButton setBtnD0(JButton btnD0) {
 		return this.btnD0 = btnD0;
 	}
 
-	public JButton setBtnD1(JButton btnD1) {
+	JButton setBtnD1(JButton btnD1) {
 		return this.btnD1 = btnD1;
 	}
 
-	public JButton setBtnD2(JButton btnD2) {
+	JButton setBtnD2(JButton btnD2) {
 		return this.btnD2 = btnD2;
 	}
 
-	public JButton setBtnD3(JButton btnD3) {
+	JButton setBtnD3(JButton btnD3) {
 		return this.btnD3 = btnD3;
 	}
 
-	public JButton setBtnD4(JButton btnD4) {
+	JButton setBtnD4(JButton btnD4) {
 		return this.btnD4 = btnD4;
 	}
 
-	public JButton setBtnD5(JButton btnD5) {
+	JButton setBtnD5(JButton btnD5) {
 		return this.btnD5 = btnD5;
 	}
 
-	public JButton setBtnD6(JButton btnD6) {
+	JButton setBtnD6(JButton btnD6) {
 		return this.btnD6 = btnD6;
 	}
 
-	public JButton setBtnD7(JButton btnD7) {
+	JButton setBtnD7(JButton btnD7) {
 		return this.btnD7 = btnD7;
 	}
 
-	public JButton setBtnD8(JButton btnD8) {
+	JButton setBtnD8(JButton btnD8) {
 		return this.btnD8 = btnD8;
 	}
 
-	public JButton setBtnD9(JButton btnD9) {
+	JButton setBtnD9(JButton btnD9) {
 		return this.btnD9 = btnD9;
 	}
 
-	public JButton setBtnCGREEN(JButton btnCGREEN) {
+	JButton setBtnCGREEN(JButton btnCGREEN) {
 		return this.btnCGREEN = btnCGREEN;
 	}
 
-	public JButton setBtnCRED(JButton btnCRED) {
+	JButton setBtnCRED(JButton btnCRED) {
 		return this.btnCRED = btnCRED;
 	}
 
-	public JButton setBtnCWHITE(JButton btnCWHITE) {
+	JButton setBtnCWHITE(JButton btnCWHITE) {
 		return this.btnCWHITE = btnCWHITE;
 	}
 }

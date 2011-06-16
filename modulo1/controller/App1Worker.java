@@ -16,51 +16,51 @@ public final class App1Worker implements Singleton {
 	private int previousState;
 	private ScreenPanel screen;
 	
-	public static final int BLOQUEADO = -3;
-	public static final int NULO = -2;
-	public static final int BRANCO = -1;
-	public static final int FIM = 0;
-	public static final int DIGITANDO_DEPUTADO = 1;
-	public static final int EXIBINDO_DEPUTADO = 2;
-	public static final int DIGITANDO_GOVERNADOR = 3;
-	public static final int EXIBINDO_GOVERNADOR = 4;
-	public static final int DIGITANDO_PRESIDENTE = 5;
-	public static final int EXIBINDO_PRESIDENTE = 6;
+	private static final int BLOQUEADO = -3;
+	private static final int NULO = -2;
+	private static final int BRANCO = -1;
+	private static final int FIM = 0;
+	private static final int DIGITANDO_DEPUTADO = 1;
+	private static final int EXIBINDO_DEPUTADO = 2;
+	private static final int DIGITANDO_GOVERNADOR = 3;
+	private static final int EXIBINDO_GOVERNADOR = 4;
+	private static final int DIGITANDO_PRESIDENTE = 5;
+	private static final int EXIBINDO_PRESIDENTE = 6;
 
 	private App1Worker() {
 		//this.estado = DIGITANDO_DEPUTADO;
-	}	public static synchronized App1Worker getInstance() {
+	}	private static synchronized App1Worker getInstance() {
 		if(singleton == null) {
 			singleton = new App1Worker();
 		}
 		return singleton;
 	}
 	
-	public void setState(int state) {
+	private void setState(int state) {
 		this.state = state;
 	}
 	
-	public int getState() {
+	private int getState() {
 		return this.state;
 	}
 	
-	public int getPreviousState() {
+	private int getPreviousState() {
 		return this.previousState;
 	}
 
-	public void setPreviousState(int previousState) {
+	private void setPreviousState(int previousState) {
 		this.previousState = previousState;
 	}
 
-	public void setScreen(ScreenPanel screen) {
+	private void setScreen(ScreenPanel screen) {
 		this.screen = screen;
 	}
 	
-	public ScreenPanel getScreen() {
+	private ScreenPanel getScreen() {
 		return this.screen;
 	}
 	
-	public void doButtonAction(KeyEnum key) {
+	private void doButtonAction(KeyEnum key) {
 		switch(this.state) {
 		case BLOQUEADO:
 			this.actionBLOQUEADO(key);
@@ -97,7 +97,7 @@ public final class App1Worker implements Singleton {
 		}
 	}
 	
-	public void actionBLOQUEADO(KeyEnum key) {
+	private void actionBLOQUEADO(KeyEnum key) {
 		/*//Fazer nada
 		switch(key) {
 		case D1:
@@ -127,7 +127,7 @@ public final class App1Worker implements Singleton {
 		 */
 	}
 	
-	public void actionNULO(KeyEnum key) {
+	private void actionNULO(KeyEnum key) {
 		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action NULO", JOptionPane.INFORMATION_MESSAGE);
 		//this.state = BRANCO;
 		////Teste %%%%%%%%%%%%%%%%
@@ -161,7 +161,7 @@ public final class App1Worker implements Singleton {
 		}
 	}
 	
-	public void actionBRANCO(KeyEnum key) {
+	private void actionBRANCO(KeyEnum key) {
 		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action BRANCO", JOptionPane.INFORMATION_MESSAGE);
 		//this.state = FIM;
 		switch(key) {
@@ -191,7 +191,7 @@ public final class App1Worker implements Singleton {
 		}
 	}
 	
-	public void actionFIM(KeyEnum key) {
+	private void actionFIM(KeyEnum key) {
 		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action FIM", JOptionPane.INFORMATION_MESSAGE);
 		//this.state = DIGITANDO_DEPUTADO;
 		////Teste %%%%%%%%%%%%%%%%
@@ -223,7 +223,7 @@ public final class App1Worker implements Singleton {
 		}
 	}
 	
-	public void actionDIGITANDO_DEPUTADO(KeyEnum key) {
+	private void actionDIGITANDO_DEPUTADO(KeyEnum key) {
 		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action DIGITANDO_DEPUTADO", JOptionPane.INFORMATION_MESSAGE);
 		//this.state = EXIBINDO_DEPUTADO;
 		//Teste %%%%%%%%%%%%%%%%
@@ -255,7 +255,7 @@ public final class App1Worker implements Singleton {
 		}
 	}
 	
-	public void actionEXIBINDO_DEPUTADO(KeyEnum key) {
+	private void actionEXIBINDO_DEPUTADO(KeyEnum key) {
 		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action EXIBINDO_DEPUTADO", JOptionPane.INFORMATION_MESSAGE);
 		//this.state = DIGITANDO_GOVERNADOR;
 		switch(key) {
@@ -285,7 +285,7 @@ public final class App1Worker implements Singleton {
 		}
 	}
 	
-	public void actionDIGITANDO_GOVERNADOR(KeyEnum key) {
+	private void actionDIGITANDO_GOVERNADOR(KeyEnum key) {
 		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action DIGITANDO_GOVERNADOR", JOptionPane.INFORMATION_MESSAGE);
 		//this.state = EXIBINDO_GOVERNADOR;
 		//Teste %%%%%%%%%%%%%%%%
@@ -317,7 +317,7 @@ public final class App1Worker implements Singleton {
 		}
 	}
 	
-	public void actionEXIBINDO_GOVERNADOR(KeyEnum key) {
+	private void actionEXIBINDO_GOVERNADOR(KeyEnum key) {
 		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action EXIBINDO_GOVERNADOR", JOptionPane.INFORMATION_MESSAGE);
 		//this.state = DIGITANDO_PRESIDENTE;
 		//Teste %%%%%%%%%%%%%%%%
@@ -349,7 +349,7 @@ public final class App1Worker implements Singleton {
 		}
 	}
 	
-	public void actionDIGITANDO_PRESIDENTE(KeyEnum key) {
+	private void actionDIGITANDO_PRESIDENTE(KeyEnum key) {
 		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action DIGITANDO_PRESIDENTE", JOptionPane.INFORMATION_MESSAGE);
 		//this.state = EXIBINDO_PRESIDENTE;
 		switch(key) {
@@ -379,7 +379,7 @@ public final class App1Worker implements Singleton {
 		}
 	}
 	
-	public void actionEXIBINDO_PRESIDENTE(KeyEnum key) {
+	private void actionEXIBINDO_PRESIDENTE(KeyEnum key) {
 		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action EXIBINDO_PRESIDENTE", JOptionPane.INFORMATION_MESSAGE);
 		//this.state = BLOQUEADO;
 		//Teste %%%%%%%%%%%%%%%%

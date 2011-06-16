@@ -1,8 +1,15 @@
 package modulo2.view;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.util.Stack;
 
+import javax.swing.JLabel;
+import javax.swing.JSeparator;
+
+import resources.lib.domain.Candidato;
 import resources.lib.domain.Deputado;
 import resources.lib.domain.Governador;
 import resources.lib.domain.Presidente;
@@ -10,11 +17,17 @@ import resources.lib.view.Display;
 import resources.lib.view.ScreenPanel;
 
 public final class VotingState {
+	private static JLabel numDigit01;
+	private static JLabel numDigit02;
+	private static JLabel numDigit03;
+	private static JLabel numDigit04;
+	private static JLabel numDigit05;
 	
 	public static void displayCandidate(Deputado person, ScreenPanel screenPanel) {
 		Stack<Component> reverselist = new Stack<Component>();
 		DeputadoView dv = new DeputadoView();
 		dv.setDisplay(reverselist, person);
+		screenPanel.clear();
 		Display.preparePanel(screenPanel, reverselist);
 		screenPanel.refresh();
 	}
@@ -23,6 +36,7 @@ public final class VotingState {
 		Stack<Component> reverselist = new Stack<Component>();
 		GovernadorView gv = new GovernadorView();
 		gv.setDisplay(reverselist, person);
+		screenPanel.clear();
 		Display.preparePanel(screenPanel, reverselist);
 		screenPanel.refresh();
 	}
@@ -31,100 +45,222 @@ public final class VotingState {
 		Stack<Component> reverselist = new Stack<Component>();
 		PresidenteView pv = new PresidenteView();
 		pv.setDisplay(reverselist, person);
+		screenPanel.clear();
 		Display.preparePanel(screenPanel, reverselist);
 		screenPanel.refresh();
 	}
 	
-	public static void displayNull() {
-		/**
-		
-		Mesmo que candidato padrão, de acordo com o cargo
-		
-		- foto
-		- nome
-		- partido
-		- vice-foto (se tiver)
-		- vice-nome (se tiver)
-		+ "NÚMERO ERRADO" (regular, 1.5 vezes o tamanho normal, abaixo do número, na esquerda)
-		+ "VOTO NULO" (bold, mesmo tamanho do "Cargo", no centro horizontal da tela, logo acima da "horizontalline")
-		(Substituir o número do candidato padrão pelo que o usuário inseriu)
-		
-		*/
-	/*	Stack<Component> reverselist = new Stack<Component>();
-		JLabel title, bigMiddleMsg, bottomRightMsg;
-		JSeparator separator;
-		
-		title = new JLabel("Eleições");
-		title.setLocation(0, 0);
-		title.setSize(90, 90);
-		separator = new JSeparator(SwingConstants.HORIZONTAL);
-		separator.setLocation(0, 90);
-		separator.setSize(screenPanel.getSize());
-		//texto.setBorder(BorderFactory.createLineBorder(Color.red));
-		
-		//Setando elementos no panel pela ordem de camadas
-		reverselist.push(title);
-		reverselist.push(separator);
-		preparePanel(screenPanel, reverselist);*/
+	public static void preDisplayCandidate(Deputado person, ScreenPanel screenPanel) {
+		Stack<Component> reverselist;
+		DeputadoView dv;
+		person = null;
+		reverselist = new Stack<Component>();
+		dv = new DeputadoView();
+		dv.setPreDisplay(reverselist);
+		numDigit01 = dv.getNumDigit01();
+		numDigit02 = dv.getNumDigit02();
+		numDigit03 = dv.getNumDigit03();
+		numDigit04 = dv.getNumDigit04();
+		numDigit05 = dv.getNumDigit05();
+		screenPanel.clear();
+		Display.preparePanel(screenPanel, reverselist);
+		screenPanel.refresh();
 	}
 	
-	public static void displayBlank() {
-		/**
-		
-		Mesmo que candidato padrão, de acordo com o cargo
-		
-		- foto
-		- nome
-		- número
-		- partido
-		- vice-foto (se tiver)
-		- vice-nome (se tiver)
-		+ "VOTO EM BRANCO" (bold, 1.5 vezes o tamanho do "cargo", no centro horizontal da tela, no meio vertical)
-		
-		*/
-	/*	Stack<Component> reverselist = new Stack<Component>();
-		JLabel title, bigMiddleMsg, bottomRightMsg;
-		JSeparator separator;
-		
-		title = new JLabel("Eleições");
-		title.setLocation(0, 0);
-		title.setSize(90, 90);
-		separator = new JSeparator(SwingConstants.HORIZONTAL);
-		separator.setLocation(0, 90);
-		separator.setSize(pane.getSize());
-		//texto.setBorder(BorderFactory.createLineBorder(Color.red));
-		
-		//Setando elementos no panel pela ordem de camadas
-		reverselist.push(title);
-		reverselist.push(separator);
-		preparePanel(pane, reverselist);*/
+	public static void preDisplayCandidate(Governador person, ScreenPanel screenPanel) {
+		Stack<Component> reverselist;
+		GovernadorView gv;
+		person = null;
+		reverselist = new Stack<Component>();
+		gv = new GovernadorView();
+		gv.setPreDisplay(reverselist);
+		numDigit01 = gv.getNumDigit01();
+		numDigit02 = gv.getNumDigit02();
+		screenPanel.clear();
+		Display.preparePanel(screenPanel, reverselist);
+		screenPanel.refresh();
 	}
 	
-	public static void displayEnd() {
-		/**
+	public static void preDisplayCandidate(Presidente person, ScreenPanel screenPanel) {
+		Stack<Component> reverselist;
+		PresidenteView pv;
+		person = null;
+		reverselist = new Stack<Component>();
+		pv = new PresidenteView();
+		pv.setPreDisplay(reverselist);
+		numDigit01 = pv.getNumDigit01();
+		numDigit02 = pv.getNumDigit02();
+		screenPanel.clear();
+		Display.preparePanel(screenPanel, reverselist);
+		screenPanel.refresh();
+	}
+	
+	public static void displayStart(ScreenPanel screenPanel) {
+		Stack<Component> reverselist = new Stack<Component>();
+		JLabel msg1, msg2;
 		
-		Tela partindo do zero
+		msg1 = new JLabel("Pressione qualquer");
+		msg1.setBounds(75, 170, 305, 42);
+		msg1.setVerticalAlignment(JLabel.TOP);
+		msg1.setHorizontalAlignment(JLabel.CENTER);
+		msg1.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
 		
-		+ "Eleição" (mostrado da mesma forma que em "Candidato", canto superior esquerdo da tela)
-		+ "FIM" (bold, 10 vezes o tamanho da fonte do "cargo" de "Candidato", meio centro da tela)
-		+ "VOTOU" (bold, cinza, mesmo tamanho do "VOTO EM BRANCO", canto inferior direito da tela)
+		msg2 = new JLabel("tecla para iniciar");
+		msg2.setBounds(75, 200, 305, 42);
+		msg2.setVerticalAlignment(JLabel.TOP);
+		msg2.setHorizontalAlignment(JLabel.CENTER);
+		msg2.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
 		
-		*/
-	/*	Stack<Component> reverselist = new Stack<Component>();
-		JLabel title, bigMiddleMsg, bottomRightMsg;
-		JSeparator separator;
+		//Setando elementos no panel pela ordem de camadas
+		reverselist.push(msg1);
+		reverselist.push(msg2);
+		screenPanel.clear();
+		Display.preparePanel(screenPanel, reverselist);
+		screenPanel.refresh();
+	}
+	
+	//Serve para todos os cargos, exceto Deputado
+	public static void displayNull(Candidato pessoa, ScreenPanel screenPanel) {
+		Stack<Component> reverselist;
+		CandidatoView cv;
+		reverselist = new Stack<Component>();
+		cv = new CandidatoView();
+		cv.setDisplayNull(reverselist, pessoa);
+		screenPanel.clear();
+		Display.preparePanel(screenPanel, reverselist);
+		screenPanel.refresh();
+	}
+	
+	public static void displayNull(Deputado pessoa, ScreenPanel screenPanel) {
+		Stack<Component> reverselist;
+		DeputadoView cv;
+		reverselist = new Stack<Component>();
+		cv = new DeputadoView();
+		cv.setDisplayNull(reverselist, pessoa);
+		screenPanel.clear();
+		Display.preparePanel(screenPanel, reverselist);
+		screenPanel.refresh();
+	}
+	
+	public static void displayBlank(Candidato pessoa, ScreenPanel screenPanel) {
+		JLabel title, textTop, textBottom, greenInstruction, redInstruction;
+		JLabel post, msg1;
+		JSeparator horizLine;
+		Stack<Component> reverselist = new Stack<Component>();
 		
-		title = new JLabel("Eleições");
-		title.setLocation(0, 0);
-		title.setSize(90, 90);
-		separator = new JSeparator(SwingConstants.HORIZONTAL);
-		separator.setLocation(0, 90);
-		separator.setSize(pane.getSize());
-		//texto.setBorder(BorderFactory.createLineBorder(Color.red));
+		title = new JLabel("ELEIÇÃO");
+		title.setBounds(10, 10, 70, 24);
+		title.setVerticalAlignment(JLabel.TOP);
+		title.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
+		
+		textTop = new JLabel("SEU VOTO PARA");
+		textTop.setBounds(15, 33, 170, 28);
+		textTop.setVerticalAlignment(JLabel.TOP);
+		textTop.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
+		
+		post = new JLabel(pessoa.getCargo().getNome().toUpperCase());
+		post.setBounds(20, 75, 305, 42);
+		post.setVerticalAlignment(JLabel.TOP);
+		post.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 25));
+		
+		msg1 = new JLabel("VOTO EM BRANCO");
+		msg1.setBounds(40, 150, 370, 70);
+		msg1.setVerticalAlignment(JLabel.TOP);
+		msg1.setHorizontalAlignment(JLabel.CENTER);
+		msg1.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 35));
+		
+		horizLine = new JSeparator(JSeparator.HORIZONTAL);
+		horizLine.setLocation(0, 320);
+		//horizLine.setSize(pane.getSize());
+		horizLine.setSize(new Dimension(450, 4));
+		horizLine.setBackground(new Color(120, 120, 120));
+		horizLine.setForeground(new Color(220, 220, 220));
+		
+		textBottom = new JLabel("Aperte a tecla:");
+		textBottom.setBounds(10, 330, 120, 24);
+		textBottom.setVerticalAlignment(JLabel.TOP);
+		textBottom.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
+		
+		greenInstruction = new JLabel("VERDE para CONFIRMAR este voto");
+		greenInstruction.setBounds(20, 350, 220, 24);
+		greenInstruction.setVerticalAlignment(JLabel.TOP);
+		greenInstruction.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
+		
+		redInstruction = new JLabel("VERMELHO para REINICIAR este voto");
+		redInstruction.setBounds(20, 370, 230, 24);
+		redInstruction.setVerticalAlignment(JLabel.TOP);
+		redInstruction.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
+		
+		reverselist.push(title);//0
+		reverselist.push(textTop);//1
+		reverselist.push(post);//2
+		reverselist.push(msg1);//3
+		reverselist.push(horizLine);//4
+		reverselist.push(textBottom);//5
+		reverselist.push(greenInstruction);//6
+		reverselist.push(redInstruction);//7
+		
+		screenPanel.clear();
+		Display.preparePanel(screenPanel, reverselist);
+		screenPanel.refresh();
+	}
+	
+	public static void displayEnd(ScreenPanel screenPanel) {
+		Stack<Component> reverselist = new Stack<Component>();
+		JLabel title, msg1, msg2;
+		
+		title = new JLabel("VOTOU");
+		title.setBounds(10, 10, 70, 24);
+		title.setVerticalAlignment(JLabel.TOP);
+		title.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
+		title.setForeground(Color.GRAY);
+		
+		msg1 = new JLabel("FIM");
+		msg1.setBounds(65, 160, 305, 70);
+		msg1.setVerticalAlignment(JLabel.TOP);
+		msg1.setHorizontalAlignment(JLabel.CENTER);
+		msg1.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 70));
+		
+		msg2 = new JLabel("Pressione qualquer tecla para terminar");
+		msg2.setBounds(150, 370, 305, 42);
+		msg2.setVerticalAlignment(JLabel.TOP);
+		msg2.setHorizontalAlignment(JLabel.CENTER);
+		msg2.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
 		
 		//Setando elementos no panel pela ordem de camadas
 		reverselist.push(title);
-		reverselist.push(separator);
-		preparePanel(pane, reverselist);*/
+		reverselist.push(msg1);
+		reverselist.push(msg2);
+		screenPanel.clear();
+		Display.preparePanel(screenPanel, reverselist);
+		screenPanel.refresh();
+	}
+
+	public static JLabel getNumDigit01() {
+		return numDigit01;
+	}
+
+	public static JLabel getNumDigit02() {
+		return numDigit02;
+	}
+
+	public static JLabel getNumDigit03() {
+		return numDigit03;
+	}
+
+	public static JLabel getNumDigit04() {
+		return numDigit04;
+	}
+
+	public static JLabel getNumDigit05() {
+		return numDigit05;
+	}
+	
+	public static void cleanNumDigits() {
+		numDigit01.setText(null);
+		numDigit02.setText(null);
+		numDigit03.setText(null);
+		numDigit04.setText(null);
+		numDigit05.setText(null);
 	}
 }

@@ -26,7 +26,7 @@ public final class Display {
 		}
 	}
 	
-	public static Image urlToImage(URL img) {
+	private static Image urlToImage(URL img) {
 		return new ImageIcon(img).getImage();
 	}
 }

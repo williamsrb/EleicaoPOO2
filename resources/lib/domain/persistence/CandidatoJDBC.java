@@ -12,7 +12,7 @@ import resources.lib.persistence.ConfigManager;
 import resources.lib.persistence.JdbcConnection;
 
 public final class CandidatoJDBC {
-	public static void prepareStatement(PreparedStatement ps, Candidato obj, int lastIndex) throws SQLException {
+	static void prepareStatement(PreparedStatement ps, Candidato obj, int lastIndex) throws SQLException {
 		//"INSERT INTO Candidato(numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido, nome_vice, foto_vice) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 		ps.setInt(lastIndex + 1, obj.getNumero());
 		ps.setString(lastIndex + 2, obj.getNome());
@@ -28,7 +28,7 @@ public final class CandidatoJDBC {
 		}
 	}
 	
-	public static void delete(Candidato obj) {
+	static void delete(Candidato obj) {
 		JdbcConnection jconn = new JdbcConnection(ConfigManager.getJdbcConfig());
 		Connection conn = jconn.getConnection();
 		PreparedStatement ps = null;
@@ -42,7 +42,7 @@ public final class CandidatoJDBC {
 		}
 	}
 	
-	public static ResultSet getAll(String name) {
+	static ResultSet getAll(String name) {
 		JdbcConnection jconn = new JdbcConnection(ConfigManager.getJdbcConfig());
 		Connection conn = jconn.getConnection();
 		Statement st = null;
