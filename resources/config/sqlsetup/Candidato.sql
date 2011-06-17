@@ -91,13 +91,13 @@ INSERT INTO "Candidato" (id, numero, nome, id_partido, id_cargo, nascimento, sex
 INSERT INTO "Candidato" (id, numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido, nome_vice, foto_vice) VALUES (5, 59456, 'Sad Dark Tears', 2, 1, '1970-01-01', 'M', 'empty.jpg', NULL, 'Pulsos Desfigurados', NULL, NULL);
 INSERT INTO "Candidato" (id, numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido, nome_vice, foto_vice) VALUES (6, 31456, 'Mandado Pedido', 3, 1, '1970-01-01', 'M', 'empty.jpg', NULL, 'Coméquié', NULL, NULL);
 --governadores de teste
-INSERT INTO "Candidato" (id, numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido, nome_vice, foto_vice) VALUES (7, 78, 'Darth Vader', 1, 2, '1970-01-01', 'M', 'empty.jpg', NULL, NULL, 'Severus Snape', 'empty.jpg');
-INSERT INTO "Candidato" (id, numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido, nome_vice, foto_vice) VALUES (8, 59, 'Smeagol Gollum', 2, 2, '1970-01-01', 'M', 'empty.jpg', NULL, NULL, 'Sauron de Mordor', 'empty.jpg');
-INSERT INTO "Candidato" (id, numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido, nome_vice, foto_vice) VALUES (9, 31, 'Zangado de Neve', 3, 2, '1970-01-01', 'M', 'empty.jpg', NULL, NULL, 'Rumpelstinsky', 'empty.jpg');
+INSERT INTO "Candidato" (id, numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido, nome_vice, foto_vice) VALUES (7, 78, 'Darth Vader', 1, 2, '1970-01-01', 'M', 'empty.jpg', NULL, NULL, 'Severus Snape', 'mini_empty.jpg');
+INSERT INTO "Candidato" (id, numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido, nome_vice, foto_vice) VALUES (8, 59, 'Smeagol Gollum', 2, 2, '1970-01-01', 'M', 'empty.jpg', NULL, NULL, 'Sauron de Mordor', 'mini_empty.jpg');
+INSERT INTO "Candidato" (id, numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido, nome_vice, foto_vice) VALUES (9, 31, 'Zangado de Neve', 3, 2, '1970-01-01', 'M', 'empty.jpg', NULL, NULL, 'Rumpelstinsky', 'mini_empty.jpg');
 --presidentes de teste
-INSERT INTO "Candidato" (id, numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido, nome_vice, foto_vice) VALUES (10, 78, 'Ele', 1, 3, '1970-01-01', 'F', 'empty.jpg', NULL, NULL, 'Bundifora', 'empty.jpg');
-INSERT INTO "Candidato" (id, numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido, nome_vice, foto_vice) VALUES (11, 59, 'FUUUUUUUUUU', 2, 3, '1970-01-01', 'M', 'empty.jpg', NULL, NULL, 'Troll', 'empty.jpg');
-INSERT INTO "Candidato" (id, numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido, nome_vice, foto_vice) VALUES (12, 31, 'Mario', 3, 3, '1970-01-01', 'M', 'empty.jpg', NULL, NULL, 'King Koopa', 'empty.jpg');
+INSERT INTO "Candidato" (id, numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido, nome_vice, foto_vice) VALUES (10, 78, 'Ele', 1, 3, '1970-01-01', 'F', 'empty.jpg', NULL, NULL, 'Bundifora', 'mini_empty.jpg');
+INSERT INTO "Candidato" (id, numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido, nome_vice, foto_vice) VALUES (11, 59, 'FUUUUUUUUUU', 2, 3, '1970-01-01', 'M', 'empty.jpg', NULL, NULL, 'Troll', 'mini_empty.jpg');
+INSERT INTO "Candidato" (id, numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido, nome_vice, foto_vice) VALUES (12, 31, 'Mario', 3, 3, '1970-01-01', 'M', 'empty.jpg', NULL, NULL, 'King Koopa', 'mini_empty.jpg');
 
 
 ALTER TABLE ONLY "Candidato"

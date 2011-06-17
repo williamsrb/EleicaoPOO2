@@ -65,7 +65,7 @@ public final class PresidenteView extends CandidatoView {
 		vicePhoto.setBounds(365, 175, size.width, size.height);
 		vicePhoto.setBorder(BorderFactory.createLineBorder(Color.black));
 		
-		super.setDisplay(reverselist, pessoa);
+		super.setPreDisplay(reverselist, pessoa);
 		
 		reverselist.add(8, vicenameLabel);//8
 		reverselist.add(9, vicenameValue);//9

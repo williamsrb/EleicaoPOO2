@@ -3,13 +3,13 @@ package modulo2.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import modulo2.util.KeyEnum;
 import modulo2.util.VotingKey;
 import modulo2.view.VotingState;
-import resources.lib.domain.Deputado;
-import resources.lib.domain.Presidente;
+import resources.lib.domain.*;
 import resources.lib.other.Singleton;
 import resources.lib.view.ScreenPanel;
 
@@ -18,6 +18,7 @@ public final class App2Worker implements Singleton {
 	private static ScreenPanel screen;
 	private int state;
 	private int previousState;
+	private int nextState;
 	private String enteredNums;
 	private Map<String, String> votes;
 	
@@ -65,8 +66,14 @@ public final class App2Worker implements Singleton {
 	}
 	
 	private void changeState(int state) {
+		//this.enteredNums = "";
 		this.previousState = this.state;
 		this.state = state;
+	}
+	
+	private void changeState(int state, int nextState) {
+		this.changeState(state);
+		this.nextState = nextState;
 	}
 	
 	private int getPreviousState() {
@@ -131,6 +138,7 @@ public final class App2Worker implements Singleton {
 	}
 	
 	private void actionINICIO(KeyEnum key) {
+		JOptionPane.showMessageDialog(null, "action INICIO - key " + key.toString());
 		//Deve-se pressionar qualquer tecla para iniciar a votação
 		if(key != KeyEnum.BACK) {
 			Deputado person = null;
@@ -142,6 +150,7 @@ public final class App2Worker implements Singleton {
 	}
 	
 	private void actionDIGITANDO_DEPUTADO(KeyEnum key) {
+		JOptionPane.showMessageDialog(null, "action DIGITANDO_DEPUTADO - key " + key.toString());
 		switch(key) {
 		case ENTER:
 			//Entrar
@@ -164,27 +173,54 @@ public final class App2Worker implements Singleton {
 		case D0:
 			//Ação para dígitos
 			int tam = this.enteredNums.length();
+			JLabel digitBlock;
 			if(tam < 5) {
 				String part = VotingKey.getPrefix(key);
 				this.enteredNums += part;
 				if(tam < 1) {
-					VotingState.getNumDigit01().setText(part);
+					digitBlock = VotingState.getNumDigit01();
+					if(digitBlock != null) {
+						digitBlock.setText(part);
+					} else {
+						System.err.println("preDisplay deve ser usado antes");
+					}
 				} else if(tam < 2) {
-					VotingState.getNumDigit02().setText(part);
+					digitBlock = VotingState.getNumDigit02();
+					if(digitBlock != null) {
+						digitBlock.setText(part);
+					} else {
+						System.err.println("preDisplay deve ser usado antes");
+					}
 				} else if(tam < 3) {
-					VotingState.getNumDigit03().setText(part);
+					digitBlock = VotingState.getNumDigit03();
+					if(digitBlock != null) {
+						digitBlock.setText(part);
+					} else {
+						System.err.println("preDisplay deve ser usado antes");
+					}
 				} else if(tam < 4) {
-					VotingState.getNumDigit04().setText(part);
+					digitBlock = VotingState.getNumDigit04();
+					if(digitBlock != null) {
+						digitBlock.setText(part);
+					} else {
+						System.err.println("preDisplay deve ser usado antes");
+					}
 				} else {
-					VotingState.getNumDigit05().setText(part);
+					digitBlock = VotingState.getNumDigit05();
+					if(digitBlock != null) {
+						digitBlock.setText(part);
+					} else {
+						System.err.println("preDisplay deve ser usado antes");
+					}
 					int num = Integer.parseInt(this.enteredNums);
 					if(Deputado.existsByNumber(num)) {
 						VotingState.displayCandidate(Deputado.getByNumber(num), screen);
-						this.changeState(EXIBINDO_DEPUTADO);
+						//this.changeState(EXIBINDO_DEPUTADO);
 					} else {
 						VotingState.displayNull(new Deputado(num), screen);
-						this.changeState(NULO);
+						//this.changeState(NULO, DIGITANDO_GOVERNADOR);
 					}
+					this.changeState(EXIBINDO_DEPUTADO);
 				}
 				screen.refresh();
 			}
@@ -195,34 +231,30 @@ public final class App2Worker implements Singleton {
 			break;
 		case CRED:
 			//Ação para "Cancela"
-			this.enteredNums = "";
 			VotingState.cleanNumDigits();
 			this.rollback(KeyEnum.ENTER);
 			break;
 		case CWHITE:
 			//Ação para "Branco"
-			this.enteredNums = "";
 			VotingState.displayBlank(new Deputado(), screen);
-			this.changeState(BRANCO);
+			//this.changeState(BRANCO, DIGITANDO_GOVERNADOR);
+			this.changeState(EXIBINDO_DEPUTADO);
 			break;
 		default:
 			System.err.println("Unknown key: " + key);
 		}
 	}
 	
-	private void actionEXIBINDO_DEPUTADO(KeyEnum key) {
-		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action EXIBINDO_DEPUTADO", JOptionPane.INFORMATION_MESSAGE);
-		//this.state = DIGITANDO_GOVERNADOR;
-		//displayBlank(Candidato pessoa, ScreenPanel screenPanel)
-		
-		//VotingState.displayEnd(screen);
-		//VotingState.displayNull(new Presidente(), screen);
-		//this.previousState = this.state;
-		//this.state = NULO;
-		
+	private void actionEXIBINDO_DEPUTADO(KeyEnum key) {	
+		JOptionPane.showMessageDialog(null, "action EXIBINDO_DEPUTADO - key " + key.toString());
 		switch(key) {
+		case ENTER:
+			//Entrar
+			//Impossível reentrar
+			break;
 		case BACK:
 			//Voltar
+			//Impossível voltar
 			break;
 		case D1:
 		case D2:
@@ -240,15 +272,19 @@ public final class App2Worker implements Singleton {
 		case CGREEN:
 			//Ação para "Confirma"
 			votes.put("deputado", this.enteredNums);
+			Governador person = null;
+			VotingState.preDisplayCandidate(person, screen);
+			this.changeState(DIGITANDO_GOVERNADOR);
+			this.enteredNums = "";
 			break;
 		case CRED:
 			//Ação para "Cancela"
-			this.enteredNums = "";
 			VotingState.cleanNumDigits();
 			this.rollback(KeyEnum.BACK);
 			break;
 		case CWHITE:
 			//Ação para "Branco"
+			//É necessáro "Cancela"r para votar em branco
 			break;
 		default:
 			System.err.println("Unknown key: " + key);
@@ -256,13 +292,16 @@ public final class App2Worker implements Singleton {
 	}
 	
 	private void actionDIGITANDO_GOVERNADOR(KeyEnum key) {
-		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action DIGITANDO_GOVERNADOR", JOptionPane.INFORMATION_MESSAGE);
-		//this.state = EXIBINDO_GOVERNADOR;
-		//Teste %%%%%%%%%%%%%%%%
-		//screen.clear();
+		JOptionPane.showMessageDialog(null, "action DIGITANDO_GOVERNADOR - key " + key.toString());
 		switch(key) {
+		case ENTER:
+			//Entrar
+			Governador person = null;
+			VotingState.preDisplayCandidate(person, screen);
+			break;
 		case BACK:
 			//Voltar
+			this.rollback(KeyEnum.ENTER);
 			break;
 		case D1:
 		case D2:
@@ -275,15 +314,41 @@ public final class App2Worker implements Singleton {
 		case D9:
 		case D0:
 			//Ação para dígitos
+			int tam = this.enteredNums.length();
+			if(tam < 2) {
+				String part = VotingKey.getPrefix(key);
+				this.enteredNums += part;
+				if(tam < 1) {
+					VotingState.getNumDigit01().setText(part);
+				} else {
+					VotingState.getNumDigit02().setText(part);
+					int num = Integer.parseInt(this.enteredNums);
+					if(Deputado.existsByNumber(num)) {
+						VotingState.displayCandidate(Governador.getByNumber(num), screen);
+						//this.changeState(EXIBINDO_GOVERNADOR);
+					} else {
+						VotingState.displayNull(new Governador(num), screen);
+						//this.changeState(NULO, DIGITANDO_PRESIDENTE);
+					}
+					this.changeState(EXIBINDO_GOVERNADOR);
+				}
+				screen.refresh();
+			}
 			break;
 		case CGREEN:
 			//Ação para "Confirma"
+			//Nada, ainda está digitando os números
 			break;
 		case CRED:
 			//Ação para "Cancela"
+			VotingState.cleanNumDigits();
+			this.rollback(KeyEnum.ENTER);
 			break;
 		case CWHITE:
 			//Ação para "Branco"
+			VotingState.displayBlank(new Governador(), screen);
+			//this.changeState(BRANCO, DIGITANDO_PRESIDENTE);
+			this.changeState(EXIBINDO_GOVERNADOR);
 			break;
 		default:
 			System.err.println("Unknown key: " + key);
@@ -291,13 +356,15 @@ public final class App2Worker implements Singleton {
 	}
 	
 	private void actionEXIBINDO_GOVERNADOR(KeyEnum key) {
-		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action EXIBINDO_GOVERNADOR", JOptionPane.INFORMATION_MESSAGE);
-		//this.state = DIGITANDO_PRESIDENTE;
-		//Teste %%%%%%%%%%%%%%%%
-		//VotingState.displayCandidate(new Deputado(), screen);
+		JOptionPane.showMessageDialog(null, "action EXIBINDO_GOVERNADOR - key " + key.toString());
 		switch(key) {
+		case ENTER:
+			//Entrar
+			//Impossível reentrar
+			break;
 		case BACK:
 			//Voltar
+			//Impossível voltar
 			break;
 		case D1:
 		case D2:
@@ -310,15 +377,23 @@ public final class App2Worker implements Singleton {
 		case D9:
 		case D0:
 			//Ação para dígitos
+			//Nada
 			break;
 		case CGREEN:
 			//Ação para "Confirma"
+			votes.put("governador", this.enteredNums);
+			Presidente person = null;
+			VotingState.preDisplayCandidate(person, screen);
+			this.changeState(DIGITANDO_PRESIDENTE);
 			break;
 		case CRED:
 			//Ação para "Cancela"
+			VotingState.cleanNumDigits();
+			this.rollback(KeyEnum.BACK);
 			break;
 		case CWHITE:
 			//Ação para "Branco"
+			//É necessáro "Cancela"r para votar em branco
 			break;
 		default:
 			System.err.println("Unknown key: " + key);
@@ -326,11 +401,16 @@ public final class App2Worker implements Singleton {
 	}
 	
 	private void actionDIGITANDO_PRESIDENTE(KeyEnum key) {
-		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action DIGITANDO_PRESIDENTE", JOptionPane.INFORMATION_MESSAGE);
-		//this.state = EXIBINDO_PRESIDENTE;
+		JOptionPane.showMessageDialog(null, "action DIGITANDO_PRESIDENTE - key " + key.toString());
 		switch(key) {
+		case ENTER:
+			//Entrar
+			Presidente person = null;
+			VotingState.preDisplayCandidate(person, screen);
+			break;
 		case BACK:
 			//Voltar
+			this.rollback(KeyEnum.ENTER);
 			break;
 		case D1:
 		case D2:
@@ -343,15 +423,41 @@ public final class App2Worker implements Singleton {
 		case D9:
 		case D0:
 			//Ação para dígitos
+			int tam = this.enteredNums.length();
+			if(tam < 2) {
+				String part = VotingKey.getPrefix(key);
+				this.enteredNums += part;
+				if(tam < 1) {
+					VotingState.getNumDigit01().setText(part);
+				} else {
+					VotingState.getNumDigit02().setText(part);
+					int num = Integer.parseInt(this.enteredNums);
+					if(Deputado.existsByNumber(num)) {
+						VotingState.displayCandidate(Presidente.getByNumber(num), screen);
+						//this.changeState(EXIBINDO_PRESIDENTE);
+					} else {
+						VotingState.displayNull(new Presidente(num), screen);
+						//this.changeState(NULO, FIM);
+					}
+					this.changeState(EXIBINDO_PRESIDENTE);
+				}
+				screen.refresh();
+			}
 			break;
 		case CGREEN:
 			//Ação para "Confirma"
+			//Nada, ainda está digitando os números
 			break;
 		case CRED:
 			//Ação para "Cancela"
+			VotingState.cleanNumDigits();
+			this.rollback(KeyEnum.ENTER);
 			break;
 		case CWHITE:
 			//Ação para "Branco"
+			VotingState.displayBlank(new Presidente(), screen);
+			//this.changeState(BRANCO, FIM);
+			this.changeState(EXIBINDO_PRESIDENTE);
 			break;
 		default:
 			System.err.println("Unknown key: " + key);
@@ -359,13 +465,15 @@ public final class App2Worker implements Singleton {
 	}
 	
 	private void actionEXIBINDO_PRESIDENTE(KeyEnum key) {
-		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action EXIBINDO_PRESIDENTE", JOptionPane.INFORMATION_MESSAGE);
-		//this.state = BLOQUEADO;
-		//Teste %%%%%%%%%%%%%%%%
-		//screen.clear();
+		JOptionPane.showMessageDialog(null, "action EXIBINDO_PRESIDENTE - key " + key.toString());
 		switch(key) {
+		case ENTER:
+			//Entrar
+			//Impossível reentrar
+			break;
 		case BACK:
 			//Voltar
+			//Impossível voltar
 			break;
 		case D1:
 		case D2:
@@ -378,15 +486,24 @@ public final class App2Worker implements Singleton {
 		case D9:
 		case D0:
 			//Ação para dígitos
+			//Nada
 			break;
 		case CGREEN:
 			//Ação para "Confirma"
+			votes.put("presidente", this.enteredNums);
+			VotingState.displayEnd(screen);
+			//Commitar no banco ################################################################
+			JOptionPane.showMessageDialog(null, "Commitando: deputado=" + votes.get("deputado") + " governador=" + votes.get("governador") + " presidente=" + votes.get("presidente"));
+			this.changeState(FIM);
 			break;
 		case CRED:
 			//Ação para "Cancela"
+			VotingState.cleanNumDigits();
+			this.rollback(KeyEnum.BACK);
 			break;
 		case CWHITE:
 			//Ação para "Branco"
+			//É necessáro "Cancela"r para votar em branco
 			break;
 		default:
 			System.err.println("Unknown key: " + key);
@@ -394,13 +511,14 @@ public final class App2Worker implements Singleton {
 	}
 	
 	private void actionNULO(KeyEnum key) {
-		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action NULO", JOptionPane.INFORMATION_MESSAGE);
-		//this.state = BRANCO;
-		////Teste %%%%%%%%%%%%%%%%
-		//VotingState.displayCandidate(new Governador(), screen);
 		switch(key) {
+		case ENTER:
+			//Entrar
+			//Impossível reentrar
+			break;
 		case BACK:
 			//Voltar
+			//Impossível voltar
 			break;
 		case D1:
 		case D2:
@@ -413,19 +531,35 @@ public final class App2Worker implements Singleton {
 		case D9:
 		case D0:
 			//Ação para dígitos
-			//Fazer nada
+			//Nada
 			break;
 		case CGREEN:
 			//Ação para "Confirma"
+			String statename = getStateName(this.previousState);
+			String pieces[];
+			pieces = statename.split("_"); //O previousState de um "NULO" é sempre um estado com "_" no meio
+			votes.put(pieces[1].toLowerCase(), this.enteredNums);
+			switch(this.nextState) {
+			case DIGITANDO_GOVERNADOR:
+				
+				break;
+			case DIGITANDO_PRESIDENTE:
+				break;
+			case FIM:
+				VotingState.displayEnd(screen);
+				//Commitar no banco ################################################################
+				this.changeState(FIM);
+				break;
+			}
 			break;
 		case CRED:
 			//Ação para "Cancela"
-			this.enteredNums = "";
 			VotingState.cleanNumDigits();
-			rollback(KeyEnum.BACK);
+			this.rollback(KeyEnum.BACK);
 			break;
 		case CWHITE:
 			//Ação para "Branco"
+			//É necessáro "Cancela"r para votar em branco
 			break;
 		default:
 			System.err.println("Unknown key: " + key);
@@ -466,6 +600,7 @@ public final class App2Worker implements Singleton {
 	}
 	
 	private void actionFIM(KeyEnum key) {
+		JOptionPane.showMessageDialog(null, "action EXIBINDO_PRESIDENTE - key " + key.toString());
 		//JOptionPane.showMessageDialog(null, VotingKey.getPrefix(key), "action FIM", JOptionPane.INFORMATION_MESSAGE);
 		//this.state = DIGITANDO_DEPUTADO;
 		////Teste %%%%%%%%%%%%%%%%
@@ -505,8 +640,35 @@ public final class App2Worker implements Singleton {
 		}*/
 	}
 	
+	private String getStateName(int state) {
+		switch(state) {
+		case INICIO:
+			return "INICIO";
+		case NULO:
+			return "NULO";
+		case BRANCO:
+			return "BRANCO";
+		case FIM:
+			return "FIM";
+		case DIGITANDO_DEPUTADO:
+			return "DIGITANDO_DEPUTADO";
+		case EXIBINDO_DEPUTADO:
+			return "EXIBINDO_DEPUTADO";
+		case DIGITANDO_GOVERNADOR:
+			return "DIGITANDO_GOVERNADOR";
+		case EXIBINDO_GOVERNADOR:
+			return "EXIBINDO_GOVERNADOR";
+		case DIGITANDO_PRESIDENTE:
+			return "DIGITANDO_PRESIDENTE";
+		case EXIBINDO_PRESIDENTE:
+			return "EXIBINDO_PRESIDENTE";
+		default:
+			return "";
+		}
+	}
+	
 	private void rollback(KeyEnum backORenter) {
-		this.state = this.previousState;
+		changeState(this.previousState);
 		if(backORenter != KeyEnum.BACK) {
 			doButtonAction(KeyEnum.ENTER);
 		} else {
