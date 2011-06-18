@@ -73,7 +73,7 @@ CREATE SEQUENCE "Candidato_id_seq"
 
 
 ALTER SEQUENCE "Candidato_id_seq" OWNED BY "Candidato".id;
-
+GRANT ALL ON TABLE "Candidato_id_seq" TO PUBLIC;
 
 SELECT pg_catalog.setval('"Candidato_id_seq"', 1, false);
 

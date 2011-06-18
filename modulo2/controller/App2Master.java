@@ -5,6 +5,12 @@ import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,6 +20,7 @@ import javax.swing.JPasswordField;
 import javax.swing.SwingUtilities;
 
 import modulo2.persistence.DatabaseOperations;
+import modulo2.persistence.FileOperations;
 import modulo2.view.ButtonElements;
 import modulo2.view.ViewMaster;
 import resources.lib.domain.persistence.*;
@@ -24,6 +31,7 @@ public final class App2Master extends JFrame {
 	private static final long serialVersionUID = 1000L;
 	private boolean eventMonitor;
 	private ButtonElements buttonList;
+	private List<Map<String, String>> votes;
 	private CargoDAO cargoDAO;
 	private DeputadoDAO deputadoDAO;
 	private GovernadorDAO governadorDAO;
@@ -84,7 +92,7 @@ public final class App2Master extends JFrame {
 		Container pane;
 		ButtonElements btnLst;
 		
-		JOptionPane.showMessageDialog(null, "Intruções:\n     \u2190  Branco\n     \u2193  Cancela\n     \u2192  Confirma", "Ajuda", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, "Intruções de teclado:\n     \u2190  Branco\n     \u2193  Cancela\n     \u2192  Confirma", "Ajuda", JOptionPane.INFORMATION_MESSAGE);
 		pane = getContentPane();
 		pane.setFocusable(true);
 		pane.addKeyListener(new KeyListener() {
@@ -96,11 +104,11 @@ public final class App2Master extends JFrame {
 				}
 			}
 			public void keyReleased(KeyEvent e) {
-				if(getEventMonitor() == false) {
+				/*if(getEventMonitor() == false) {
 					eventSwitch();
 					keyUseEvent(e);
 					eventSwitch();
-				}
+				}*/
 			}
 			public void keyTyped(KeyEvent e) {
 				if(getEventMonitor() == false) {
@@ -121,13 +129,24 @@ public final class App2Master extends JFrame {
 		
 		this.buttonList = new ButtonElements();
 		btnLst = this.buttonList;
+		this.votes = new ArrayList<Map<String, String>>();
 		
 		App2Worker.setScreen(ViewMaster.buildInterface(pane, btnLst));
+		App2Worker.setWindow(this);
 		App2Worker.getInstance(); //Rodando o construtor pela primeira vez
 		ViewMaster.buildListeners(btnLst);
 		
 		setSize(pane.getWidth(), pane.getHeight());
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent evt) {
+				FileOperations.writeVotingResults(votes);
+				DatabaseOperations.writeVotingResults(votes);
+				System.exit(0);
+			}
+		});
+		
 		setVisible(true);
 	}
 	
@@ -201,7 +220,7 @@ public final class App2Master extends JFrame {
 			buttonList.getBtnCGREEN().doClick();
 			break;
 		default:
-			JOptionPane.showMessageDialog(null, "Entrou com: " + e.getKeyChar());
+			//JOptionPane.showMessageDialog(null, "Entrou com: " + e.getKeyChar());
 		}
 	}
 	
@@ -241,11 +260,12 @@ public final class App2Master extends JFrame {
 	
 	//Atualiza a lista global de objetos
 	private void updateResources() {
+		//A ordem de carregamento importa MUITO
 		this.cargoDAO.obter();
-		this.deputadoDAO.obter();
-		this.governadorDAO.obter();
 		this.partidoDAO.obter();
 		this.presidenteDAO.obter();
+		this.governadorDAO.obter();
+		this.deputadoDAO.obter();
 	}
 	
 	private boolean isStorageReady() {
@@ -285,5 +305,9 @@ public final class App2Master extends JFrame {
 
 	private PresidenteDAO getPresidenteDAO() {
 		return this.presidenteDAO;
+	}
+
+	public List<Map<String, String>> getVotes() {
+		return votes;
 	}
 }

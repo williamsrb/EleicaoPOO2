@@ -148,4 +148,18 @@ public final class Deputado extends Candidato {
 		}
 		return returnValue;
 	}
+	
+	public String toString() {
+		//Integer id
+		//Integer number
+		//String name
+		//Partido partido
+		//Cargo cargo
+		//Date nascimento
+		//Character sexo
+		//String foto
+		//String site
+		//String apelido
+		return String.format("Id:%s Numero:%s Nome:%s Partido:%s Cargo:%s Nascimento:%s Sexo:%s Foto:%s Site:%s Apelido:%s", this.id.toString(), this.numero.toString(), this.nome, this.partido.getId().toString(), this.cargo.getId().toString(), this.nascimento.toString(), this.sexo.toString(), this.foto, this.site, this.apelido);
+	}
 }

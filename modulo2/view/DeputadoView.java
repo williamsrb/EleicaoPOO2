@@ -19,21 +19,21 @@ public final class DeputadoView extends CandidatoView {
 	public void setDisplay(Stack<Component> reverselist, Deputado pessoa) {
 		JLabel numDigit03, numDigit04, numDigit05;
 		
-		numDigit03 = new JLabel(String.format("%c", pessoa.getNumero().toString().charAt(2)));
+		numDigit03 = new JLabel(String.format("%c", String.format("%0" + pessoa.getCargo().getDigitos().toString() + "d", pessoa.getNumero()).charAt(2)));
 		numDigit03.setBounds(170, 145, 40, 42);
 		numDigit03.setBorder(BorderFactory.createLineBorder(Color.black));
 		numDigit03.setVerticalAlignment(JLabel.CENTER);
 		numDigit03.setHorizontalAlignment(JLabel.CENTER);
 		numDigit03.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
 		
-		numDigit04 = new JLabel(String.format("%c", pessoa.getNumero().toString().charAt(3)));
+		numDigit04 = new JLabel(String.format("%c", String.format("%0" + pessoa.getCargo().getDigitos().toString() + "d", pessoa.getNumero()).charAt(3)));
 		numDigit04.setBounds(215, 145, 40, 42);
 		numDigit04.setBorder(BorderFactory.createLineBorder(Color.black));
 		numDigit04.setVerticalAlignment(JLabel.CENTER);
 		numDigit04.setHorizontalAlignment(JLabel.CENTER);
 		numDigit04.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
 		
-		numDigit05 = new JLabel(String.format("%c", pessoa.getNumero().toString().charAt(4)));
+		numDigit05 = new JLabel(String.format("%c", String.format("%0" + pessoa.getCargo().getDigitos().toString() + "d", pessoa.getNumero()).charAt(4)));
 		numDigit05.setBounds(260, 145, 40, 42);
 		numDigit05.setBorder(BorderFactory.createLineBorder(Color.black));
 		numDigit05.setVerticalAlignment(JLabel.CENTER);
@@ -86,21 +86,21 @@ public final class DeputadoView extends CandidatoView {
 	public void setDisplayNull(Stack<Component> reverselist, Deputado pessoa) {
 		JLabel numDigit03, numDigit04, numDigit05;
 		
-		numDigit03 = new JLabel(String.format("%c", pessoa.getNumero().toString().charAt(2)));
+		numDigit03 = new JLabel(String.format("%c", String.format("%0" + pessoa.getCargo().getDigitos().toString() + "d", pessoa.getNumero()).charAt(2)));
 		numDigit03.setBounds(170, 145, 40, 42);
 		numDigit03.setBorder(BorderFactory.createLineBorder(Color.black));
 		numDigit03.setVerticalAlignment(JLabel.CENTER);
 		numDigit03.setHorizontalAlignment(JLabel.CENTER);
 		numDigit03.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
 		
-		numDigit04 = new JLabel(String.format("%c", pessoa.getNumero().toString().charAt(3)));
+		numDigit04 = new JLabel(String.format("%c", String.format("%0" + pessoa.getCargo().getDigitos().toString() + "d", pessoa.getNumero()).charAt(3)));
 		numDigit04.setBounds(215, 145, 40, 42);
 		numDigit04.setBorder(BorderFactory.createLineBorder(Color.black));
 		numDigit04.setVerticalAlignment(JLabel.CENTER);
 		numDigit04.setHorizontalAlignment(JLabel.CENTER);
 		numDigit04.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
 		
-		numDigit05 = new JLabel(String.format("%c", pessoa.getNumero().toString().charAt(4)));
+		numDigit05 = new JLabel(String.format("%c", String.format("%0" + pessoa.getCargo().getDigitos().toString() + "d", pessoa.getNumero()).charAt(4)));
 		numDigit05.setBounds(260, 145, 40, 42);
 		numDigit05.setBorder(BorderFactory.createLineBorder(Color.black));
 		numDigit05.setVerticalAlignment(JLabel.CENTER);

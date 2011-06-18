@@ -1,3 +1,7 @@
 # Lines starting with '#' are considered comments.
 # Ignore (generated) class files.
 *.class
+Imagens da Tela/
+Imagens da Tela/*
+urna*.txt
+build.xml

@@ -121,9 +121,9 @@ public final class App1Master extends JFrame {
 	//Atualiza a lista global de objetos
 	private void updateResources() {
 		this.cargoDAO.obter();
+		this.partidoDAO.obter();
 		this.deputadoDAO.obter();
 		this.governadorDAO.obter();
-		this.partidoDAO.obter();
 		this.presidenteDAO.obter();
 	}
 	

@@ -47,14 +47,14 @@ public class CandidatoView {
 		numLabel.setVerticalAlignment(JLabel.TOP);
 		numLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
 		
-		numDigit01 = new JLabel(String.format("%c", pessoa.getNumero().toString().charAt(0)));//Depende do Candidato
+		numDigit01 = new JLabel(String.format("%c", String.format("%0" + pessoa.getCargo().getDigitos().toString() + "d", pessoa.getNumero()).charAt(0)));//Depende do Candidato
 		numDigit01.setBounds(80, 145, 40, 42);
 		numDigit01.setBorder(BorderFactory.createLineBorder(Color.black));
 		numDigit01.setVerticalAlignment(JLabel.CENTER);
 		numDigit01.setHorizontalAlignment(JLabel.CENTER);
 		numDigit01.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
 		
-		numDigit02 = new JLabel(String.format("%c", pessoa.getNumero().toString().charAt(1)));//Depende do Candidato
+		numDigit02 = new JLabel(String.format("%c", String.format("%0" + pessoa.getCargo().getDigitos().toString() + "d", pessoa.getNumero()).charAt(1)));//Depende do Candidato
 		numDigit02.setBounds(125, 145, 40, 42);
 		numDigit02.setBorder(BorderFactory.createLineBorder(Color.black));
 		numDigit02.setVerticalAlignment(JLabel.CENTER);
@@ -258,14 +258,14 @@ public class CandidatoView {
 		numLabel.setVerticalAlignment(JLabel.TOP);
 		numLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
 		
-		numDigit01 = new JLabel(String.format("%c", pessoa.getNumero().toString().charAt(0)));//Depende do Candidato
+		numDigit01 = new JLabel(String.format("%c", String.format("%0" + pessoa.getCargo().getDigitos().toString() + "d", pessoa.getNumero()).charAt(0)));//Depende do Candidato
 		numDigit01.setBounds(80, 145, 40, 42);
 		numDigit01.setBorder(BorderFactory.createLineBorder(Color.black));
 		numDigit01.setVerticalAlignment(JLabel.CENTER);
 		numDigit01.setHorizontalAlignment(JLabel.CENTER);
 		numDigit01.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
 		
-		numDigit02 = new JLabel(String.format("%c", pessoa.getNumero().toString().charAt(1)));//Depende do Candidato
+		numDigit02 = new JLabel(String.format("%c", String.format("%0" + pessoa.getCargo().getDigitos().toString() + "d", pessoa.getNumero()).charAt(1)));//Depende do Candidato
 		numDigit02.setBounds(125, 145, 40, 42);
 		numDigit02.setBorder(BorderFactory.createLineBorder(Color.black));
 		numDigit02.setVerticalAlignment(JLabel.CENTER);

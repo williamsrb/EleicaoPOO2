@@ -12,11 +12,11 @@ public final class FileManager {
 	private BufferedReader reader;
 	private BufferedWriter writer;
 	
-	FileManager(String file) {
+	public FileManager(String file) {
 		this.file = file;
 	}
 	
-	BufferedReader getReader() {
+	public BufferedReader getReader() {
 		String file = this.file;
 		FileReader fIn = null;
 		BufferedReader brIn = null;
@@ -38,13 +38,13 @@ public final class FileManager {
 		return brIn;
 	}
 
-	private BufferedWriter getWriter() {
+	public BufferedWriter getWriter() {
 		String file = this.file;
 		FileWriter fIn = null;
 		BufferedWriter bwIn = null;
 		if(this.writer == null && this.reader == null) {
 			try {
-				fIn = new FileWriter(file);
+				fIn = new FileWriter(file, true);
 				bwIn = new BufferedWriter(fIn);
 			} catch (FileNotFoundException fnfe) {
 				System.err.println(fnfe.getLocalizedMessage());
@@ -60,6 +60,22 @@ public final class FileManager {
 			}
 		}
 		return bwIn;
+	}
+	
+	public static String nextUncommentedLine(BufferedReader reader) {
+		String temp = null, returnVal = null;
+		boolean got = false;
+		try {
+			while(!got && ((temp = reader.readLine()) != null)) {
+				if(temp.length() > 0 && (temp.charAt(0) != '#')) { //Se a linha não estiver comentada
+					got = true;
+					returnVal = temp;
+				}
+			}
+		} catch(IOException ioe2) {
+			System.err.println(resources.lib.other.Debug.getTrace(ioe2.getLocalizedMessage()));
+		}
+		return returnVal;
 	}
 	
 	protected void finalize() throws Throwable {

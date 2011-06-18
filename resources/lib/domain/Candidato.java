@@ -13,6 +13,7 @@ public class Candidato {
 	protected String foto;
 	protected String site;
 	
+	public static final int NONE = -4;
 	public static final int NEW = -3;
 	protected Integer lastId;
 	

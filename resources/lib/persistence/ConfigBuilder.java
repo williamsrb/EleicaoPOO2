@@ -26,8 +26,8 @@ public final class ConfigBuilder implements Singleton {
 			}
 		} else {
 			localMap = new HashMap<String, String>();
-			this.genMap(storageReader, localMap);
-			this.genMap(dbReader, localMap);
+			genMap(storageReader, localMap);
+			genMap(dbReader, localMap);
 			this.config = localMap;
 		}
 	}	static synchronized ConfigBuilder getInstance() {
@@ -37,38 +37,22 @@ public final class ConfigBuilder implements Singleton {
 		return singleton;
 	}
 	
-	Map<String, String> getConfig() {
-		return this.config;
-	}
-	
-	private String nextUncommentedLine(BufferedReader reader) {
-		String temp = null, returnVal = null;
-		boolean got = false;
-		try {
-			while(!got && ((temp = reader.readLine()) != null)) {
-				if(temp.length() > 0 && (temp.charAt(0) != '#')) { //Se a linha não estiver comentada
-					got = true;
-					returnVal = temp;
-				}
-			}
-		} catch(IOException ioe2) {
-			System.err.println(resources.lib.other.Debug.getTrace(ioe2.getLocalizedMessage()));
-		}
-		return returnVal;
-	}
-	
-	private void genMap(BufferedReader reader, Map<String, String> map) {
+	public static void genMap(BufferedReader reader, Map<String, String> map) {
 		String temp, tempArray[];
-		temp = this.nextUncommentedLine(reader);
+		temp = FileManager.nextUncommentedLine(reader);
 		if(temp != null) {
 			do {
 				tempArray = temp.split("\t");
 				if(tempArray.length == 2) {
 					map.put(tempArray[0], tempArray[1]);
 				}
-				temp = this.nextUncommentedLine(reader);
+				temp = FileManager.nextUncommentedLine(reader);
 			} while(temp != null);
 		}
+	}
+	
+	Map<String, String> getConfig() {
+		return this.config;
 	}
 	
 	public Object clone() throws CloneNotSupportedException {

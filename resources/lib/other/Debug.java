@@ -1,6 +1,6 @@
 package resources.lib.other;
 
-public final class Debug {
+public final class Debug<T> {
 	public static String getTrace(String msg) {
 		String trace = "";
 		if(msg.length() > 0) {
@@ -11,6 +11,7 @@ public final class Debug {
 		" method: " + new Throwable().getStackTrace()[1].getMethodName() +
 		" line: " + new Throwable().getStackTrace()[1].getLineNumber()
 		) + "\n";
+		
 		return trace;
 	}
 }

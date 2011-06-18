@@ -257,15 +257,10 @@ public final class VotingState {
 	}
 	
 	public static void cleanNumDigits() {
-		if(numDigit01 != null)
-			numDigit01.setText(null);
-		if(numDigit02 != null)
-			numDigit02.setText(null);
-		if(numDigit03 != null)
-			numDigit03.setText(null);
-		if(numDigit04 != null)
-			numDigit04.setText(null);
-		if(numDigit05 != null)
-			numDigit05.setText(null);
+		if(numDigit01 != null) numDigit01.setText(null);
+		if(numDigit02 != null) numDigit02.setText(null);
+		if(numDigit03 != null) numDigit03.setText(null);
+		if(numDigit04 != null) numDigit04.setText(null);
+		if(numDigit05 != null) numDigit05.setText(null);
 	}
 }

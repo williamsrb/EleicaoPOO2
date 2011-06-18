@@ -41,7 +41,7 @@ CREATE SEQUENCE "Partido_id_seq"
 
 
 ALTER SEQUENCE "Partido_id_seq" OWNED BY "Partido".id;
-
+GRANT ALL ON TABLE "Partido_id_seq" TO PUBLIC;
 
 SELECT pg_catalog.setval('"Partido_id_seq"', 1, false);
 

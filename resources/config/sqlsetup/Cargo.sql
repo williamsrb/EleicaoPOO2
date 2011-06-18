@@ -37,7 +37,7 @@ CREATE SEQUENCE "Cargo_id_seq"
 
 
 ALTER SEQUENCE "Cargo_id_seq" OWNED BY "Cargo".id;
-
+GRANT ALL ON TABLE "Cargo_id_seq" TO PUBLIC;
 
 SELECT pg_catalog.setval('"Cargo_id_seq"', 1, false);
 
