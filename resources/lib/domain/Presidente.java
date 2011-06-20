@@ -2,9 +2,13 @@ package resources.lib.domain;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import resources.lib.other.ArrayCaster;
 
 public final class Presidente extends Candidato {
 	private String vice_nome;
@@ -54,6 +58,16 @@ public final class Presidente extends Candidato {
 	}
 	
 	//Métodos de controle da coleção de objetos paa evitar recriação de objetos após consultas
+	public static List<Presidente> getAll() {
+		List<Presidente> list = new ArrayList<Presidente>();
+		Integer index[] = ArrayCaster.objectCastInteger(all.keySet().toArray());
+		int i, size = index.length;
+		for(i = 0; i < size; i++) {
+			list.add(all.get(index[i]));
+		}
+		return list;
+	}
+	
 	public static boolean conflicts(Presidente obj) {
 		boolean returnValue = false;
 		tryAndCreate();
@@ -120,12 +134,14 @@ public final class Presidente extends Candidato {
 		tryAndCreate();
 		all.put(obj.id, obj);
 		allByNumber.put(obj.numero, obj);
+		Candidato.register(obj);
 	}
 	
 	public static void unregister(Presidente obj) {
 		tryAndCreate();
 		all.remove(obj.id);
 		allByNumber.remove(obj.numero);
+		Candidato.unregister(obj);
 	}
 	
 	private static void tryAndCreate() {

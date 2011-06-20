@@ -1,7 +1,11 @@
 package resources.lib.domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import resources.lib.other.ArrayCaster;
 
 public final class Partido {
 	private Integer id;
@@ -13,6 +17,8 @@ public final class Partido {
 	private Integer lastId;
 	private static Map<Integer, Partido> all; //By ID
 	private static Map<Integer, Partido> allByNumber; //by Number
+	private static Map<String, Partido> allByAcronym; //by Acronym
+	private static Map<String, Partido> allByName; //by Name
 	
 	private Partido(String sigla, String nome, Integer numero, boolean novo) {
 		if(novo) {
@@ -70,6 +76,16 @@ public final class Partido {
 	}
 	
 	//Métodos de controle da coleção de objetos paa evitar recriação de objetos após consultas
+	public static List<Partido> getAll() {
+		List<Partido> list = new ArrayList<Partido>();
+		Integer index[] = ArrayCaster.objectCastInteger(all.keySet().toArray());
+		int i, size = index.length;
+		for(i = 0; i < size; i++) {
+			list.add(all.get(index[i]));
+		}
+		return list;
+	}
+	
 	public static boolean conflicts(Partido obj) {
 		boolean returnValue = false;
 		tryAndCreate();
@@ -92,6 +108,16 @@ public final class Partido {
 	public static boolean existsByNumber(Integer number) {
 		tryAndCreate();
 		return allByNumber.containsKey(number);
+	}
+	
+	public static boolean existsByAcronym(String acronym) {
+		tryAndCreate();
+		return allByAcronym.containsKey(acronym);
+	}
+	
+	public static boolean existsByName(String name) {
+		tryAndCreate();
+		return allByName.containsKey(name);
 	}
 	
 	//Retorna um deputado de mesmo id que já esteja registrado
@@ -127,6 +153,24 @@ public final class Partido {
 		return returnValue;
 	}
 	
+	public static Partido getByAcronym(String acronym) {
+		Partido returnValue = null;
+		tryAndCreate();
+		if(existsByAcronym(acronym)) {
+			returnValue = allByAcronym.get(acronym);
+		}
+		return returnValue;
+	}
+	
+	public static Partido getByName(String name) {
+		Partido returnValue = null;
+		tryAndCreate();
+		if(existsByName(name)) {
+			returnValue = allByName.get(name);
+		}
+		return returnValue;
+	}
+	
 	public static boolean isEmpty() {
 		tryAndCreate();
 		return all.isEmpty();
@@ -136,29 +180,34 @@ public final class Partido {
 		tryAndCreate();
 		all.put(obj.id, obj);
 		allByNumber.put(obj.numero, obj);
+		allByAcronym.put(obj.sigla, obj);
+		allByName.put(obj.nome, obj);
 	}
 	
 	public static void unregister(Partido obj) {
 		tryAndCreate();
 		all.remove(obj.id);
 		allByNumber.remove(obj.numero);
+		allByAcronym.remove(obj.sigla);
+		allByName.remove(obj.nome);
 	}
 	
 	private static void tryAndCreate() {
 		if(all == null) {
 			all = new HashMap<Integer, Partido>();
 		}
+		
 		if(allByNumber == null) {
 			allByNumber = new HashMap<Integer, Partido>();
 		}
-	}
-	
-	public static boolean equals(Partido obj1, Partido obj2) {
-		boolean returnValue = false;
-		if((obj1.id == obj2.id) && (obj1.numero == obj2.numero)) {
-			returnValue = true;
+		
+		if(allByAcronym == null) {
+			allByAcronym = new HashMap<String, Partido>();
 		}
-		return returnValue;
+		
+		if(allByName == null) {
+			allByName = new HashMap<String, Partido>();
+		}
 	}
 	
 	public final boolean equals(Object obj) {
@@ -170,5 +219,9 @@ public final class Partido {
 			}
 		}
 		return returnValue;
+	}
+	
+	public String toString() {
+		return String.format("%s\t%s\t%s\t%s", this.id.toString(), this.sigla, this.nome, this.numero.toString());
 	}
 }

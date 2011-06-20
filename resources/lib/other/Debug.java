@@ -1,6 +1,6 @@
 package resources.lib.other;
 
-public final class Debug<T> {
+public final class Debug {
 	public static String getTrace(String msg) {
 		String trace = "";
 		if(msg.length() > 0) {

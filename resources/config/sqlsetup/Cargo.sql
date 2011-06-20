@@ -27,7 +27,7 @@ COMMENT ON COLUMN "Cargo".digitos IS 'Quantidade de dígitos';
 
 COMMENT ON COLUMN "Cargo".nome IS 'Descrição do cargo';
 
--- auto-increment start
+
 CREATE SEQUENCE "Cargo_id_seq"
     START WITH 1
     INCREMENT BY 1
@@ -43,11 +43,9 @@ SELECT pg_catalog.setval('"Cargo_id_seq"', 1, false);
 
 
 ALTER TABLE "Cargo" ALTER COLUMN id SET DEFAULT nextval('"Cargo_id_seq"'::regclass);
--- auto-increment end
 
-INSERT INTO "Cargo" (id, digitos, nome) VALUES (-1, -1, 'Nulo');
-INSERT INTO "Cargo" (id, digitos, nome) VALUES (0, 0, 'Branco');
-INSERT INTO "Cargo" (id, digitos, nome) VALUES (1, 5, 'Deputado Estadual');
+
+INSERT INTO "Cargo" (id, digitos, nome) VALUES (1, 5, 'Deputado');
 INSERT INTO "Cargo" (id, digitos, nome) VALUES (2, 2, 'Governador');
 INSERT INTO "Cargo" (id, digitos, nome) VALUES (3, 2, 'Presidente');
 

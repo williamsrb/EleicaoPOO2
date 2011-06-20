@@ -63,7 +63,7 @@ COMMENT ON COLUMN "Candidato".nome_vice IS '[Presidente/Governador] Nome do vice
 
 COMMENT ON COLUMN "Candidato".foto_vice IS '[Presidente/Governador] Caminho relativo até  foto do vice';
 
--- auto-increment start
+
 CREATE SEQUENCE "Candidato_id_seq"
     START WITH 1
     INCREMENT BY 1
@@ -77,12 +77,9 @@ GRANT ALL ON TABLE "Candidato_id_seq" TO PUBLIC;
 
 SELECT pg_catalog.setval('"Candidato_id_seq"', 1, false);
 
-
 ALTER TABLE "Candidato" ALTER COLUMN id SET DEFAULT nextval('"Candidato_id_seq"'::regclass);
--- auto-increment end
 
-INSERT INTO "Candidato" (id, numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido, nome_vice, foto_vice) VALUES (-1, -1, 'Nulo', -1, -1, '1970-01-01', 'U', 'empty.jpg', NULL, NULL, NULL, NULL);
-INSERT INTO "Candidato" (id, numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido, nome_vice, foto_vice) VALUES (0, 0, 'Branco', 0, 0, '1970-01-01', 'U', 'empty.jpg', NULL, NULL, NULL, NULL);
+
 --deputados de teste
 INSERT INTO "Candidato" (id, numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido, nome_vice, foto_vice) VALUES (1, 78123, 'Astra Dork', 1, 1, '1970-01-01', 'F', 'empty.jpg', NULL, 'Adok', NULL, NULL);
 INSERT INTO "Candidato" (id, numero, nome, id_partido, id_cargo, nascimento, sexo, foto, site, apelido, nome_vice, foto_vice) VALUES (2, 59123, 'Miguxa Gatinha', 2, 1, '1970-01-01', 'F', 'empty.jpg', NULL, 'Meega', NULL, NULL);

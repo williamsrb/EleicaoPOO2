@@ -2,9 +2,13 @@ package resources.lib.domain;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import resources.lib.other.ArrayCaster;
 
 public final class Deputado extends Candidato {
 	private String apelido;
@@ -47,6 +51,16 @@ public final class Deputado extends Candidato {
 	}
 	
 	//Métodos de controle da coleção de objetos paa evitar recriação de objetos após consultas
+	public static List<Deputado> getAll() {
+		List<Deputado> list = new ArrayList<Deputado>();
+		Integer index[] = ArrayCaster.objectCastInteger(all.keySet().toArray());
+		int i, size = index.length;
+		for(i = 0; i < size; i++) {
+			list.add(all.get(index[i]));
+		}
+		return list;
+	}
+	
 	public static boolean conflicts(Deputado d) {
 		boolean returnValue = false;
 		tryAndCreate();
@@ -113,12 +127,14 @@ public final class Deputado extends Candidato {
 		tryAndCreate();
 		all.put(obj.id, obj);
 		allByNumber.put(obj.numero, obj);
+		Candidato.register(obj);
 	}
 	
 	public static void unregister(Deputado obj) {
 		tryAndCreate();
 		all.remove(obj.id);
 		allByNumber.remove(obj.numero);
+		Candidato.unregister(obj);
 	}
 	
 	private static void tryAndCreate() {
@@ -147,19 +163,5 @@ public final class Deputado extends Candidato {
 			}
 		}
 		return returnValue;
-	}
-	
-	public String toString() {
-		//Integer id
-		//Integer number
-		//String name
-		//Partido partido
-		//Cargo cargo
-		//Date nascimento
-		//Character sexo
-		//String foto
-		//String site
-		//String apelido
-		return String.format("Id:%s Numero:%s Nome:%s Partido:%s Cargo:%s Nascimento:%s Sexo:%s Foto:%s Site:%s Apelido:%s", this.id.toString(), this.numero.toString(), this.nome, this.partido.getId().toString(), this.cargo.getId().toString(), this.nascimento.toString(), this.sexo.toString(), this.foto, this.site, this.apelido);
 	}
 }

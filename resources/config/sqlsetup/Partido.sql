@@ -49,8 +49,6 @@ SELECT pg_catalog.setval('"Partido_id_seq"', 1, false);
 ALTER TABLE "Partido" ALTER COLUMN id SET DEFAULT nextval('"Partido_id_seq"'::regclass);
 
 --partidos de teste
-INSERT INTO "Partido" (id, sigla, nome, numero) VALUES (-1, 'NULO', 'Nulo', -1);
-INSERT INTO "Partido" (id, sigla, nome, numero) VALUES (0, 'BRANCO', 'Branco', 0);
 INSERT INTO "Partido" (id, sigla, nome, numero) VALUES (1, 'PMN', 'Partido Muito Nerd', 78);
 INSERT INTO "Partido" (id, sigla, nome, numero) VALUES (2, 'PXK', 'Partido Xuntos Konkistamos', 59);
 INSERT INTO "Partido" (id, sigla, nome, numero) VALUES (3, 'PR', 'Partido Repartido', 31);
