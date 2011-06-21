@@ -41,8 +41,6 @@ public class Validator {
 	private static int age(int year, int month, int day) {
 		Calendar born = new GregorianCalendar(year, month-1, day);
 		Calendar now = new GregorianCalendar();
-		System.out.println("\nNow: " + DateString.dateToString(now.getTime()));
-		System.out.println("Born: " + DateString.dateToString(born.getTime()));
 		int age = now.get(Calendar.YEAR) - born.get(Calendar.YEAR);
 		if(born.get(Calendar.MONTH) > now.get(Calendar.MONTH)) {
 			age--;
