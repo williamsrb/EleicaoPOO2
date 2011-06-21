@@ -18,4 +18,16 @@ public final class App1Worker {
 	public static void deletePartido(int id) {
 		JOptionPane.showMessageDialog(null, "deletePartido!");
 	}
+
+	public static void insertCandidato(Map<String, Component> inputs) {
+		JOptionPane.showMessageDialog(null, "insertCandidato!");
+	}
+	
+	public static void updateCandidato(Map<String, Component> inputs) {
+		JOptionPane.showMessageDialog(null, "insertCandidato!");
+	}
+	
+	public static void deleteCandidato(int id) {
+		JOptionPane.showMessageDialog(null, "deleteCandidato!");
+	}
 }

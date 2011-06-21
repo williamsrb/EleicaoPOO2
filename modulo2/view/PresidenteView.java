@@ -9,7 +9,7 @@ import java.util.Stack;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
-import resources.lib.controller.FileUpload;
+import resources.lib.controller.DefaultFiles;
 import resources.lib.domain.Presidente;
 import resources.lib.view.Display;
 import resources.lib.view.ImagePanel;
@@ -31,7 +31,7 @@ public final class PresidenteView extends CandidatoView {
 		vicenameValue.setVerticalAlignment(JLabel.TOP);
 		vicenameValue.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 		
-		vicePhoto = new ImagePanel(Display.pathToImageIcon(FileUpload.uploadPath + pessoa.getVice_foto()).getImage());//Depende do Presidente
+		vicePhoto = new ImagePanel(Display.pathToImageIcon(DefaultFiles.uploadPath + pessoa.getVice_foto()).getImage());//Depende do Presidente
 		size = vicePhoto.getSize();
 		vicePhoto.setBounds(365, 175, size.width, size.height);
 		vicePhoto.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -60,7 +60,7 @@ public final class PresidenteView extends CandidatoView {
 		vicenameValue.setVerticalAlignment(JLabel.TOP);
 		vicenameValue.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 		
-		vicePhoto = new ImagePanel(Display.pathToImageIcon(FileUpload.uploadPath + "mini_transparent.png").getImage());//Em branco
+		vicePhoto = new ImagePanel(Display.pathToImageIcon(DefaultFiles.uploadPath + "mini_transparent.png").getImage());//Em branco
 		size = vicePhoto.getSize();
 		vicePhoto.setBounds(365, 175, size.width, size.height);
 		vicePhoto.setBorder(BorderFactory.createLineBorder(Color.black));

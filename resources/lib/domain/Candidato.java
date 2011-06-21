@@ -90,6 +90,10 @@ public class Candidato {
 	}
 	
 	public String toString() {
+		return this.nome;
+	}
+	
+	public String toString(boolean tabbed) {
 		return String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s", this.id.toString(), this.numero.toString(), this.nome, this.partido.getId().toString(), this.cargo.getId().toString(), DateString.dateToString(this.nascimento), this.sexo.toString(), this.foto, (this.site == null ? "-" : this.site));
 	}
 	

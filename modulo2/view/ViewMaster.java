@@ -15,7 +15,7 @@ import javax.swing.border.BevelBorder;
 import modulo2.controller.App2Worker;
 import modulo2.util.KeyEnum;
 
-import resources.lib.controller.FileUpload;
+import resources.lib.controller.DefaultFiles;
 import resources.lib.view.Display;
 import resources.lib.view.ImagePanel;
 import resources.lib.view.ScreenPanel;
@@ -48,10 +48,10 @@ public final class ViewMaster {
 		imgCWHITE = new ImageButton(KeyEnum.CWHITE);
 		
 		//Imagens dos painéis
-		bg = new ImagePanel(Display.pathToImageIcon(FileUpload.imagePath + "caixa.png").getImage());
-		glass = new ImagePanel(Display.pathToImageIcon(FileUpload.imagePath + "tela.png").getImage());
-		logo = new ImagePanel(Display.pathToImageIcon(FileUpload.imagePath + "rotulo.png").getImage());
-		digits = new ImagePanel(Display.pathToImageIcon(FileUpload.imagePath + "painel.png").getImage());
+		bg = new ImagePanel(Display.pathToImageIcon(DefaultFiles.imagePath + "caixa.png").getImage());
+		glass = new ImagePanel(Display.pathToImageIcon(DefaultFiles.imagePath + "tela.png").getImage());
+		logo = new ImagePanel(Display.pathToImageIcon(DefaultFiles.imagePath + "rotulo.png").getImage());
+		digits = new ImagePanel(Display.pathToImageIcon(DefaultFiles.imagePath + "painel.png").getImage());
 		
 		//Painel de exibição do conteúdo da tela da urna
 		screen = new ScreenPanel();

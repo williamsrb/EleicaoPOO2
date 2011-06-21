@@ -43,7 +43,7 @@ public class PartidoView extends ViewMaster {
 		int i, size = array.length;
 		String[][] dataTable = new String[size][];
 		for(i = 0; i < size; i++) {
-			dataTable[i] = array[i].toString().split("\t");
+			dataTable[i] = array[i].toString(true).split("\t");
 		}
 		tablemodel = new DefaultTableModel(dataTable, columnNames);
 		return tablemodel;
@@ -95,7 +95,8 @@ public class PartidoView extends ViewMaster {
 				String inputText = sigla_input.getText();
 				if(inputText.isEmpty() || Partido.existsByAcronym(inputText)) {
 					Display.setErrorInputBorder(sigla_input);
-					JOptionPane.showMessageDialog(null, "Essa sigla já existe ou está vazia.", "Erro no campo \"Sigla\"", JOptionPane.ERROR_MESSAGE);
+					sigla_input.setToolTipText("Essa sigla já existe ou está vazia.");
+					//JOptionPane.showMessageDialog(null, "Essa sigla já existe ou está vazia.", "Erro no campo \"Sigla\"", JOptionPane.ERROR_MESSAGE);
 					setInputError(2);
 				} else {
 					Display.setSuccessInputBorder(sigla_input);
@@ -117,7 +118,8 @@ public class PartidoView extends ViewMaster {
 				String inputText = nome_input.getText();
 				if(inputText.isEmpty() || Partido.existsByName(inputText)) {
 					Display.setErrorInputBorder(nome_input);
-					JOptionPane.showMessageDialog(null, "Esse nome já existe ou está vazio.", "Erro no campo \"Nome\"", JOptionPane.ERROR_MESSAGE);
+					nome_input.setToolTipText("Esse nome já existe ou está vazio.");
+					//JOptionPane.showMessageDialog(null, "Esse nome já existe ou está vazio.", "Erro no campo \"Nome\"", JOptionPane.ERROR_MESSAGE);
 					setInputError(4);
 				} else {
 					Display.setSuccessInputBorder(nome_input);
@@ -139,7 +141,8 @@ public class PartidoView extends ViewMaster {
 				String inputText = numero_input.getText();
 				if(inputText.isEmpty() || Partido.existsByNumber(Integer.parseInt(inputText))) {
 					Display.setErrorInputBorder(numero_input);
-					JOptionPane.showMessageDialog(null, "Esse número já existe ou está vazio.", "Erro no campo \"Número\"", JOptionPane.ERROR_MESSAGE);
+					numero_input.setToolTipText("Esse número já existe ou está vazio.");
+					//JOptionPane.showMessageDialog(null, "Esse número já existe ou está vazio.", "Erro no campo \"Número\"", JOptionPane.ERROR_MESSAGE);
 					setInputError(8);
 				} else {
 					Display.setSuccessInputBorder(numero_input);
@@ -215,7 +218,8 @@ public class PartidoView extends ViewMaster {
 					Display.setInactiveInputBorder(sigla_input);
 				} else if(inputText.isEmpty() || Partido.existsByAcronym(inputText)) {
 					Display.setErrorInputBorder(sigla_input);
-					JOptionPane.showMessageDialog(null, "Essa sigla já existe ou está vazia.", "Erro no campo \"Sigla\"", JOptionPane.ERROR_MESSAGE);
+					sigla_input.setToolTipText("Essa sigla já existe ou está vazia.");
+					//JOptionPane.showMessageDialog(null, "Essa sigla já existe ou está vazia.", "Erro no campo \"Sigla\"", JOptionPane.ERROR_MESSAGE);
 					setInputError(2);
 				} else {
 					Display.setSuccessInputBorder(sigla_input);
@@ -239,7 +243,8 @@ public class PartidoView extends ViewMaster {
 					Display.setInactiveInputBorder(nome_input);
 				} else if(inputText.isEmpty() || Partido.existsByName(inputText)) {
 					Display.setErrorInputBorder(nome_input);
-					JOptionPane.showMessageDialog(null, "Esse nome já existe ou está vazio.", "Erro no campo \"Nome\"", JOptionPane.ERROR_MESSAGE);
+					nome_input.setToolTipText("Esse nome já existe ou está vazio.");
+					//JOptionPane.showMessageDialog(null, "Esse nome já existe ou está vazio.", "Erro no campo \"Nome\"", JOptionPane.ERROR_MESSAGE);
 					setInputError(4);
 				} else {
 					Display.setSuccessInputBorder(nome_input);
@@ -263,6 +268,8 @@ public class PartidoView extends ViewMaster {
 					Display.setInactiveInputBorder(numero_input);
 				} else if(inputText.isEmpty() || Partido.existsByNumber(Integer.parseInt(inputText))) {
 					Display.setErrorInputBorder(numero_input);
+					numero_input.setToolTipText("Esse número já existe ou está vazio.");
+					//JOptionPane.showMessageDialog(null, "Esse número já existe ou está vazio.", "Erro no campo \"Número\"", JOptionPane.ERROR_MESSAGE);
 					setInputError(8);
 				} else {
 					Display.setSuccessInputBorder(numero_input);

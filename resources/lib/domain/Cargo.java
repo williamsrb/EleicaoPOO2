@@ -1,7 +1,11 @@
 package resources.lib.domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import resources.lib.other.ArrayCaster;
 
 public final class Cargo {
 	private Integer id;
@@ -65,6 +69,16 @@ public final class Cargo {
 	}
 	
 	//Métodos de controle da coleção de objetos paa evitar recriação de objetos após consultas
+	public static List<Cargo> getAll() {
+		List<Cargo> list = new ArrayList<Cargo>();
+		Integer index[] = ArrayCaster.objectCastInteger(all.keySet().toArray());
+		int i, size = index.length;
+		for(i = 0; i < size; i++) {
+			list.add(all.get(index[i]));
+		}
+		return list;
+	}
+	
 	public static boolean conflicts(Cargo obj) {
 		boolean returnValue = false;
 		tryAndCreate();
@@ -141,5 +155,9 @@ public final class Cargo {
 			}
 		}
 		return returnValue;
+	}
+	
+	public String toString() {
+		return this.nome;
 	}
 }

@@ -221,7 +221,11 @@ public final class Partido {
 		return returnValue;
 	}
 	
-	public String toString() {
+	public String toString(boolean tabbed) {
 		return String.format("%s\t%s\t%s\t%s", this.id.toString(), this.sigla, this.nome, this.numero.toString());
+	}
+	
+	public String toString() {
+		return String.format(this.sigla);
 	}
 }

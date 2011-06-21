@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 import modulo2.util.KeyEnum;
 import modulo2.util.VotingKey;
 
-import resources.lib.controller.FileUpload;
+import resources.lib.controller.DefaultFiles;
 import resources.lib.view.Display;
 
 public final class ImageButton {
@@ -16,9 +16,9 @@ public final class ImageButton {
 	private final ImageIcon none;
 	
 	ImageButton(KeyEnum key) {
-		this.light = Display.pathToImageIcon(FileUpload.effectPath + VotingKey.getPrefix(key) + "_light.png");
-		this.shadow = Display.pathToImageIcon(FileUpload.effectPath + VotingKey.getPrefix(key) + "_shadow.png");
-		this.none = Display.pathToImageIcon(FileUpload.imagePath + VotingKey.getPrefix(key) + ".png");
+		this.light = Display.pathToImageIcon(DefaultFiles.effectPath + VotingKey.getPrefix(key) + "_light.png");
+		this.shadow = Display.pathToImageIcon(DefaultFiles.effectPath + VotingKey.getPrefix(key) + "_shadow.png");
+		this.none = Display.pathToImageIcon(DefaultFiles.imagePath + VotingKey.getPrefix(key) + ".png");
 	}
 	
 	Dimension getSize() {

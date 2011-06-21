@@ -12,7 +12,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-import resources.lib.controller.FileUpload;
+import resources.lib.controller.DefaultFiles;
 import resources.lib.view.Display;
 
 public abstract class ViewMaster {
@@ -52,8 +52,8 @@ public abstract class ViewMaster {
 		return this.window;
 	}
 	
-	protected int getInputError() {
-		return this.inputError;
+	protected boolean hasInputError(int inputError) {
+		return ((this.inputError & inputError) != 0);
 	}
 
 	protected boolean isChanged() {
@@ -97,21 +97,21 @@ public abstract class ViewMaster {
 		int lastWidth = 0, lastX = 270;
 		JButton insert, update, delete;
 		
-		insert = new JButton("Inserir", Display.pathToImageIcon(FileUpload.imagePath + "insert.png"));
+		insert = new JButton("Inserir", Display.pathToImageIcon(DefaultFiles.imagePath + "insert.png"));
 		insert.setBorderPainted(false);
 		size = insert.getPreferredSize();
 		lastX = lastWidth + lastX;
 		insert.setBounds(lastX, 240, size.width, size.height);
 		lastWidth = size.width;
 		
-		update = new JButton("Atualizar", Display.pathToImageIcon(FileUpload.imagePath + "update.png"));
+		update = new JButton("Atualizar", Display.pathToImageIcon(DefaultFiles.imagePath + "update.png"));
 		update.setBorderPainted(false);
 		size = update.getPreferredSize();
 		lastX = lastWidth + lastX + 20;
 		update.setBounds(lastX, 240, size.width, size.height);
 		lastWidth = size.width;
 		
-		delete = new JButton("Remover", Display.pathToImageIcon(FileUpload.imagePath + "delete.png"));
+		delete = new JButton("Remover", Display.pathToImageIcon(DefaultFiles.imagePath + "delete.png"));
 		delete.setBorderPainted(false);
 		size = delete.getPreferredSize();
 		lastX = lastWidth + lastX + 20;

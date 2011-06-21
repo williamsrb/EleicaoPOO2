@@ -10,7 +10,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 
-import resources.lib.controller.FileUpload;
+import resources.lib.controller.DefaultFiles;
 import resources.lib.domain.Candidato;
 import resources.lib.view.Display;
 import resources.lib.view.ImagePanel;
@@ -81,7 +81,7 @@ public class CandidatoView {
 		partyName.setVerticalAlignment(JLabel.TOP);
 		partyName.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 		
-		mainPhoto = new ImagePanel(Display.pathToImageIcon(FileUpload.uploadPath + pessoa.getFoto()).getImage());//Depende do Candidato
+		mainPhoto = new ImagePanel(Display.pathToImageIcon(DefaultFiles.uploadPath + pessoa.getFoto()).getImage());//Depende do Candidato
 		size = mainPhoto.getSize();
 		mainPhoto.setBounds(320, 10, size.width, size.height);
 		mainPhoto.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -189,7 +189,7 @@ public class CandidatoView {
 		partyName.setVerticalAlignment(JLabel.TOP);
 		partyName.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 		
-		mainPhoto = new ImagePanel(Display.pathToImageIcon(FileUpload.uploadPath + "transparent.png").getImage());//Em branco
+		mainPhoto = new ImagePanel(Display.pathToImageIcon(DefaultFiles.uploadPath + "transparent.png").getImage());//Em branco
 		size = mainPhoto.getSize();
 		mainPhoto.setBounds(320, 10, size.width, size.height);
 		mainPhoto.setBorder(BorderFactory.createLineBorder(Color.black));

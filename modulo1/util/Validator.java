@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import resources.lib.other.DateString;
+import resources.lib.other.Debug;
 
 public class Validator {
 	public static boolean isMature(String date) {
@@ -18,6 +19,10 @@ public class Validator {
 				result = true;
 			}
 		} catch(NumberFormatException nfe) {
+			System.err.println(Debug.getTrace(nfe.getLocalizedMessage()));
+			result = false;
+		} catch(IndexOutOfBoundsException iobe) {
+			System.err.println(Debug.getTrace(iobe.getLocalizedMessage()));
 			result = false;
 		}
 		return result;
