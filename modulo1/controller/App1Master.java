@@ -16,11 +16,11 @@ import resources.lib.view.ScreenPanel;
 
 public final class App1Master extends JFrame {
 	private static final long serialVersionUID = 1000L;
-	private CargoDAO cargoDAO;
-	private DeputadoDAO deputadoDAO;
-	private GovernadorDAO governadorDAO;
-	private PartidoDAO partidoDAO;
-	private PresidenteDAO presidenteDAO;
+	private static CargoDAO cargoDAO;
+	private static DeputadoDAO deputadoDAO;
+	private static GovernadorDAO governadorDAO;
+	private static PartidoDAO partidoDAO;
+	private static PresidenteDAO presidenteDAO;
 	
 	public static void main(String[] args){
 		SwingUtilities.invokeLater(new Runnable() {
@@ -107,22 +107,22 @@ public final class App1Master extends JFrame {
 			//De acordo com as especificações, não será implementado.
 		} else {
 			//Database
-			this.cargoDAO = CargoDAOjdbc.getInstance();
-			this.partidoDAO = PartidoDAOjdbc.getInstance();
-			this.deputadoDAO = DeputadoDAOjdbc.getInstance();
-			this.governadorDAO = GovernadorDAOjdbc.getInstance();
-			this.presidenteDAO = PresidenteDAOjdbc.getInstance();
+			cargoDAO = CargoDAOjdbc.getInstance();
+			partidoDAO = PartidoDAOjdbc.getInstance();
+			deputadoDAO = DeputadoDAOjdbc.getInstance();
+			governadorDAO = GovernadorDAOjdbc.getInstance();
+			presidenteDAO = PresidenteDAOjdbc.getInstance();
 		}
 	}
 	
 	//Atualiza a lista global de objetos
 	private void updateResources() {
-		this.cargoDAO.obter();
-		this.partidoDAO.obter();
+		cargoDAO.obter();
+		partidoDAO.obter();
 		
-		this.deputadoDAO.obter();
-		this.governadorDAO.obter();
-		this.presidenteDAO.obter();
+		deputadoDAO.obter();
+		governadorDAO.obter();
+		presidenteDAO.obter();
 	}
 	
 	private boolean isStorageReady() {
@@ -134,5 +134,45 @@ public final class App1Master extends JFrame {
 			result = JdbcConnection.isConnectionWorking();
 		}
 		return result;
+	}
+	
+	public static CargoDAO getCargoDAO() {
+		return cargoDAO;
+	}
+	
+	public static DeputadoDAO getDeputadoDAO() {
+		return deputadoDAO;
+	}
+	
+	public static GovernadorDAO getGovernadorDAO() {
+		return governadorDAO;
+	}
+	
+	public static PartidoDAO getPartidoDAO() {
+		return partidoDAO;
+	}
+	
+	public static PresidenteDAO getPresidenteDAO() {
+		return presidenteDAO;
+	}
+	
+	public static void setCargoDAO(CargoDAO cargoDAO) {
+		App1Master.cargoDAO = cargoDAO;
+	}
+	
+	public static void setDeputadoDAO(DeputadoDAO deputadoDAO) {
+		App1Master.deputadoDAO = deputadoDAO;
+	}
+	
+	public static void setGovernadorDAO(GovernadorDAO governadorDAO) {
+		App1Master.governadorDAO = governadorDAO;
+	}
+	
+	public static void setPartidoDAO(PartidoDAO partidoDAO) {
+		App1Master.partidoDAO = partidoDAO;
+	}
+	
+	public static void setPresidenteDAO(PresidenteDAO presidenteDAO) {
+		App1Master.presidenteDAO = presidenteDAO;
 	}
 }

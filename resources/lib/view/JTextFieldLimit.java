@@ -9,6 +9,7 @@ public class JTextFieldLimit extends PlainDocument {
 	public static final int DIGITS_ONLY = 0;
 	public static final int LETTERS_ONLY = 1;
 	public static final int DIGITS_AND_LETTERS = 2;
+	public static final int DATE = 3;
 	public int digitsOrLetters;
 	private int limit;
 	public JTextFieldLimit(int limit) {
@@ -30,6 +31,8 @@ public class JTextFieldLimit extends PlainDocument {
 				success = isNumeric(str);
 			} else if(this.digitsOrLetters == LETTERS_ONLY) {
 				success = isAlphabetic(str);
+			} else if(this.digitsOrLetters == DATE) {
+				success = isDatePart(str);
 			} else {
 				success = true;
 			}
@@ -37,6 +40,18 @@ public class JTextFieldLimit extends PlainDocument {
 				super.insertString(offset, str, attr);
 			}
 		}
+	}
+	
+	private static boolean isDatePart(String str) {
+		if(str == null) {return false;}
+		boolean letterFound = false;
+		int size = str.length(), i;
+		for(i = 0; (i < size) && !letterFound; i++) {
+			if(!Character.isDigit(str.charAt(i)) && (str.charAt(i) != '/')) {
+				letterFound = true;
+			}
+		}
+		return !letterFound;
 	}
 	
 	private static boolean isNumeric(String str) {

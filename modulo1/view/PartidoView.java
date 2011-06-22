@@ -69,7 +69,7 @@ public class PartidoView extends ViewMaster {
 	
 	public void insertScreen() {
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		Map<String, Component> inputs = new HashMap<String, Component>();
+		HashMap<String, JTextField> inputs = new HashMap<String, JTextField>();
 		int width = 250, height = 1;
 		//Elementos - Inicio
 		final JTextField id_input, sigla_input, nome_input, numero_input;
@@ -100,6 +100,7 @@ public class PartidoView extends ViewMaster {
 					setInputError(2);
 				} else {
 					Display.setSuccessInputBorder(sigla_input);
+					sigla_input.setToolTipText(null);
 					unsetInputError(2);
 				}
 			}
@@ -123,6 +124,7 @@ public class PartidoView extends ViewMaster {
 					setInputError(4);
 				} else {
 					Display.setSuccessInputBorder(nome_input);
+					nome_input.setToolTipText(null);
 					unsetInputError(4);
 				}
 			}
@@ -146,6 +148,7 @@ public class PartidoView extends ViewMaster {
 					setInputError(8);
 				} else {
 					Display.setSuccessInputBorder(numero_input);
+					numero_input.setToolTipText(null);
 					unsetInputError(8);
 				}
 			}
@@ -188,7 +191,7 @@ public class PartidoView extends ViewMaster {
 	
 	public void updateScreen(int id) {
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		Map<String, Component> inputs = new HashMap<String, Component>();
+		Map<String, JTextField> inputs = new HashMap<String, JTextField>();
 		int width = 250, height = 1;
 		final Partido party = Partido.get(id);
 		Partido.unregister(party); //Temporário

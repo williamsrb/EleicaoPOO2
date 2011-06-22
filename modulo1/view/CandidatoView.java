@@ -40,6 +40,7 @@ import resources.lib.domain.Governador;
 import resources.lib.domain.Partido;
 import resources.lib.domain.Presidente;
 import resources.lib.other.ArrayCaster;
+import resources.lib.other.DateString;
 import resources.lib.view.Display;
 import resources.lib.view.JTextFieldLimit;
 
@@ -105,7 +106,7 @@ public class CandidatoView extends ViewMaster {
 	
 	public void insertScreen() {
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		Map<String, Component> inputs = new HashMap<String, Component>();
+		Map<String, JTextField> inputs = new HashMap<String, JTextField>();
 		int width = 250, height = 1;
 		//Elementos - Inicio
 		final JTextField id_input, numero_input, nome_input, nascimento_input, site_input, apelido_input, vice_nome_input;
@@ -138,7 +139,7 @@ public class CandidatoView extends ViewMaster {
 		
 		nascimento_input = new JTextField(); //inputError code: 8
 		Display.setSize(nascimento_input, 80, 20);
-		nascimento_input.setDocument(new JTextFieldLimit(10));
+		nascimento_input.setDocument(new JTextFieldLimit(10, JTextFieldLimit.DATE));
 		
 		site_label = new JLabel("Site", JLabel.RIGHT);
 		
@@ -174,24 +175,30 @@ public class CandidatoView extends ViewMaster {
 		sexo_comboBox.setSelectedItem(null);
 		
 		apelido_label = new JLabel("Apelido", JLabel.RIGHT);
+		apelido_label.setVisible(false);
 		
 		apelido_input = new JTextField();
 		Display.setSize(apelido_input, 80, 20);
 		apelido_input.setDocument(new JTextFieldLimit(50));
+		apelido_input.setVisible(false);
 		
 		vice_nome_label = new JLabel("Nome do Vice", JLabel.RIGHT);
+		vice_nome_label.setVisible(false);
 		
 		vice_nome_input = new JTextField(); //inputError code: 256
 		Display.setSize(vice_nome_input, 80, 20);
 		vice_nome_input.setDocument(new JTextFieldLimit(50));
+		vice_nome_input.setVisible(false);
 		
 		vice_foto_label = new JLabel("Foto do Vice", JLabel.RIGHT);
+		vice_foto_label.setVisible(false);
 		
 		vice_foto_hidden = new JTextField("mini_empty.jpg");
 		final ImageIcon defaultIcoVice = Display.pathToImageIcon(DefaultFiles.uploadPath + vice_foto_hidden.getText());
 		vice_foto_btn = new JButton(defaultIcoVice);
 		Display.setSize(vice_foto_btn, defaultIcoVice.getIconWidth(), defaultIcoVice.getIconHeight());
 		vice_foto_btn.setEnabled(false);
+		vice_foto_btn.setVisible(false);
 		
 		//Eventos
 		numero_input.addFocusListener(new FocusListener() {
@@ -220,6 +227,7 @@ public class CandidatoView extends ViewMaster {
 					setInputError(2);
 				} else {
 					Display.setSuccessInputBorder(numero_input);
+					numero_input.setToolTipText(null);
 					if(!foto_btn.isEnabled()) {
 						foto_btn.setEnabled(true);
 					}
@@ -244,6 +252,7 @@ public class CandidatoView extends ViewMaster {
 					setInputError(4);
 				} else {
 					Display.setSuccessInputBorder(nome_input);
+					nome_input.setToolTipText(null);
 					unsetInputError(4);
 				}
 			}
@@ -267,6 +276,7 @@ public class CandidatoView extends ViewMaster {
 					setInputError(8);
 				} else {
 					Display.setSuccessInputBorder(nascimento_input);
+					nascimento_input.setToolTipText(null);
 					unsetInputError(8);
 				}
 			}
@@ -285,6 +295,7 @@ public class CandidatoView extends ViewMaster {
 					setInputError(16);
 				} else {
 					Display.setSuccessInputBorder(site_input);
+					site_input.setToolTipText(null);
 					unsetInputError(16);
 				}
 			}
@@ -306,11 +317,16 @@ public class CandidatoView extends ViewMaster {
 					int returnVal = foto_chooser.showOpenDialog(null);
 					if(returnVal == JFileChooser.APPROVE_OPTION) {
 						File file = foto_chooser.getSelectedFile();
-						outfile = FileUpload.copy(file, Integer.parseInt(numero_input.getText()));
+						String prefix = "";
+						if(cargo_hidden.getText().equals("2")) {
+							prefix = "gov_";
+						}
+						outfile = FileUpload.copy(file, prefix, Integer.parseInt(numero_input.getText()));
 						if(outfile != null) {
 							foto_hidden.setText(outfile.getName());
 							CandidatoView.this.setFoto_file(outfile);
 							foto_btn.setIcon(new ImageIcon(outfile.getPath()));
+							foto_btn.setToolTipText("Imagem selecionada: \"" + outfile.getName() + "\"");
 						} else {
 							foto_btn.setIcon(defaultIco);
 						}
@@ -338,9 +354,11 @@ public class CandidatoView extends ViewMaster {
 						if(!numero_input.isEnabled()) {
 							numero_input.setEnabled(true);
 							numero_input.setText(party.getNumero().toString());
+							numero_input.requestFocus();
 						}
 					}
 					Display.setSuccessInputBorder(partido_comboBox);
+					partido_comboBox.setToolTipText("O número deste partido é: \"" + party.getNumero().toString() + "\"");
 					unsetInputError(32);
 					partido_hidden.setText(party.getId().toString());
 				}
@@ -366,7 +384,18 @@ public class CandidatoView extends ViewMaster {
 					if(office.getId() == 1) { //Deputado
 						apelido_label.setVisible(true);
 						apelido_input.setVisible(true);
+						
+						vice_nome_label.setVisible(false);
+						vice_nome_input.setVisible(false);
+						vice_foto_label.setVisible(false);
+						vice_foto_btn.setVisible(false);
+						
+						Display.setSuccessInputBorder(vice_nome_input);
+						unsetInputError(256);
 					} else { //Governador e Presidente
+						apelido_label.setVisible(false);
+						apelido_input.setVisible(false);
+						
 						vice_nome_label.setVisible(true);
 						vice_nome_input.setVisible(true);
 						vice_foto_label.setVisible(true);
@@ -374,6 +403,7 @@ public class CandidatoView extends ViewMaster {
 						vice_nome_input.requestFocus(); //Forçar validação do campo
 					}
 					Display.setSuccessInputBorder(cargo_comboBox);
+					cargo_comboBox.setToolTipText("Este cargo usa: " + office.getDigitos().toString() + " digitos");
 					unsetInputError(64);
 					cargo_hidden.setText(office.getId().toString());
 				}
@@ -414,6 +444,7 @@ public class CandidatoView extends ViewMaster {
 					setInputError(256);
 				} else {
 					Display.setSuccessInputBorder(vice_nome_input);
+					vice_nome_input.setToolTipText(null);
 					unsetInputError(256);
 				}
 			}
@@ -438,11 +469,16 @@ public class CandidatoView extends ViewMaster {
 					int returnVal = foto_chooser.showOpenDialog(null);
 					if(returnVal == JFileChooser.APPROVE_OPTION) {
 						File file = foto_chooser.getSelectedFile();
-						outfile = FileUpload.copy(file, "vice_", Integer.parseInt(numero_input.getText()));
+						String prefix = "vice_";
+						if(cargo_hidden.getText().equals("2")) {
+							prefix += "gov_";
+						}
+						outfile = FileUpload.copy(file, prefix, Integer.parseInt(numero_input.getText()));
 						if(outfile != null) {
 							vice_foto_hidden.setText(outfile.getName());
 							CandidatoView.this.setVice_foto_file(outfile);
 							vice_foto_btn.setIcon(new ImageIcon(outfile.getPath()));
+							vice_foto_btn.setToolTipText("Imagem selecionada: \"" + outfile.getName() + "\"");
 						} else {
 							vice_foto_btn.setIcon(defaultIcoVice);
 						}
@@ -520,6 +556,12 @@ public class CandidatoView extends ViewMaster {
 			result = JOptionPane.showConfirmDialog(null, panel, "Inserindo Candidato", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
 		} while((result == JOptionPane.OK_OPTION) && (this.inputError != 0));
 		if(result == JOptionPane.OK_OPTION) {
+			if(!vice_foto_btn.isVisible()) {
+				if(this.vice_foto_file != null && this.vice_foto_file.exists()) {
+					this.vice_foto_file.delete();
+					this.vice_foto_file = null;
+				}
+			}
 			App1Worker.insertCandidato(inputs);
 			this.table.setModel(this.createTableModel());
 		} else {
@@ -537,8 +579,19 @@ public class CandidatoView extends ViewMaster {
 	
 	public void updateScreen(int id) {
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		Map<String, Component> inputs = new HashMap<String, Component>();
+		Map<String, JTextField> inputs = new HashMap<String, JTextField>();
 		int width = 250, height = 1;
+		final Candidato person;
+		if(Deputado.exists(id)) {
+			person = Deputado.get(id);
+			Deputado.unregister((Deputado) person); //Temporário
+		} else if(Governador.exists(id)) {
+			person = Governador.get(id);
+			Governador.unregister((Governador) person); //Temporário
+		} else { //Então é presidente
+			person = Presidente.get(id);
+			Presidente.unregister((Presidente) person); //Temporário
+		}
 		//Elementos - Inicio
 		final JTextField id_input, numero_input, nome_input, nascimento_input, site_input, apelido_input, vice_nome_input;
 		final JTextField foto_hidden, vice_foto_hidden, partido_hidden, cargo_hidden, sexo_hidden;
@@ -548,39 +601,39 @@ public class CandidatoView extends ViewMaster {
 		
 		id_label = new JLabel("Id", JLabel.RIGHT);
 		
-		id_input = new JTextField();
+		id_input = new JTextField(person.getId().toString());
 		Display.setSize(id_input, 80, 20);
 		id_input.setEnabled(false);
 		id_input.setBackground(new Color(244, 246, 248));
 		
 		numero_label = new JLabel("Número", JLabel.RIGHT);
 		
-		numero_input = new JTextField(); //inputError code: 2
+		numero_input = new JTextField(person.getNumero().toString()); //inputError code: 2
 		Display.setSize(numero_input, 80, 20);
 		numero_input.setEnabled(false);
 		numero_input.setDocument(new JTextFieldLimit(2, JTextFieldLimit.DIGITS_ONLY));
 		
 		nome_label = new JLabel("Nome", JLabel.RIGHT);
 		
-		nome_input = new JTextField(); //inputError code: 4
+		nome_input = new JTextField(person.getNome()); //inputError code: 4
 		Display.setSize(nome_input, 80, 20);
 		nome_input.setDocument(new JTextFieldLimit(50));
 		
 		nascimento_label = new JLabel("Nascimento", JLabel.RIGHT);
 		
-		nascimento_input = new JTextField(); //inputError code: 8
+		nascimento_input = new JTextField(DateString.dateToString(person.getNascimento())); //inputError code: 8
 		Display.setSize(nascimento_input, 80, 20);
-		nascimento_input.setDocument(new JTextFieldLimit(10));
+		nascimento_input.setDocument(new JTextFieldLimit(10, JTextFieldLimit.DATE));
 		
 		site_label = new JLabel("Site", JLabel.RIGHT);
 		
-		site_input = new JTextField(); //inputError code: 16
+		site_input = new JTextField(person.getSite()); //inputError code: 16
 		Display.setSize(site_input, 80, 20);
 		site_input.setDocument(new JTextFieldLimit(50));
 		
 		foto_label = new JLabel("Foto", JLabel.RIGHT);
 		
-		foto_hidden = new JTextField("empty.jpg");
+		foto_hidden = new JTextField(person.getFoto());
 		final ImageIcon defaultIco = Display.pathToImageIcon(DefaultFiles.uploadPath + foto_hidden.getText());
 		foto_btn = new JButton(defaultIco);
 		Display.setSize(foto_btn, defaultIco.getIconWidth(), defaultIco.getIconHeight());
@@ -588,42 +641,50 @@ public class CandidatoView extends ViewMaster {
 		
 		partido_label = new JLabel("Partido", JLabel.RIGHT);
 		
-		partido_hidden = new JTextField(); //inputError code: 32
+		partido_hidden = new JTextField(person.getPartido().getId().toString()); //inputError code: 32
 		partido_comboBox = new JComboBox(Partido.getAll().toArray());
-		partido_comboBox.setSelectedItem(null);
+		partido_comboBox.setSelectedItem(person.getPartido());
 		
 		cargo_label = new JLabel("Cargo", JLabel.RIGHT);
 		
-		cargo_hidden = new JTextField(); //inputError code: 64
+		cargo_hidden = new JTextField(person.getCargo().getId().toString()); //inputError code: 64
 		cargo_comboBox = new JComboBox(Cargo.getAll().toArray());
-		cargo_comboBox.setSelectedItem(null);
+		cargo_comboBox.setSelectedItem(person.getCargo());
 		
 		sexo_label = new JLabel("Sexo", JLabel.RIGHT);
 		
-		sexo_hidden = new JTextField(); //inputError code: 128
-		String genders[] = {"M", "F"};
+		String genM = "M", genF = "F";
+		String defGender = person.getSexo().toString();
+		sexo_hidden = new JTextField(defGender); //inputError code: 128
+		String genders[] = {genM, genF};
 		sexo_comboBox = new JComboBox(genders);
-		sexo_comboBox.setSelectedItem(null);
+		sexo_comboBox.setSelectedItem(defGender);
 		
 		apelido_label = new JLabel("Apelido", JLabel.RIGHT);
+		apelido_label.setVisible(false);
 		
 		apelido_input = new JTextField();
 		Display.setSize(apelido_input, 80, 20);
 		apelido_input.setDocument(new JTextFieldLimit(50));
+		apelido_input.setVisible(false);
 		
 		vice_nome_label = new JLabel("Nome do Vice", JLabel.RIGHT);
+		vice_nome_label.setVisible(false);
 		
 		vice_nome_input = new JTextField(); //inputError code: 256
 		Display.setSize(vice_nome_input, 80, 20);
 		vice_nome_input.setDocument(new JTextFieldLimit(50));
+		vice_nome_input.setVisible(false);
 		
 		vice_foto_label = new JLabel("Foto do Vice", JLabel.RIGHT);
+		vice_foto_label.setVisible(false);
 		
 		vice_foto_hidden = new JTextField("mini_empty.jpg");
 		final ImageIcon defaultIcoVice = Display.pathToImageIcon(DefaultFiles.uploadPath + vice_foto_hidden.getText());
 		vice_foto_btn = new JButton(defaultIcoVice);
 		Display.setSize(vice_foto_btn, defaultIcoVice.getIconWidth(), defaultIcoVice.getIconHeight());
 		vice_foto_btn.setEnabled(false);
+		vice_foto_btn.setVisible(false);
 		
 		//Eventos
 		numero_input.addFocusListener(new FocusListener() {
@@ -652,6 +713,7 @@ public class CandidatoView extends ViewMaster {
 					setInputError(2);
 				} else {
 					Display.setSuccessInputBorder(numero_input);
+					numero_input.setToolTipText(null);
 					if(!foto_btn.isEnabled()) {
 						foto_btn.setEnabled(true);
 					}
@@ -676,6 +738,7 @@ public class CandidatoView extends ViewMaster {
 					setInputError(4);
 				} else {
 					Display.setSuccessInputBorder(nome_input);
+					nome_input.setToolTipText(null);
 					unsetInputError(4);
 				}
 			}
@@ -699,6 +762,7 @@ public class CandidatoView extends ViewMaster {
 					setInputError(8);
 				} else {
 					Display.setSuccessInputBorder(nascimento_input);
+					nascimento_input.setToolTipText(null);
 					unsetInputError(8);
 				}
 			}
@@ -717,6 +781,7 @@ public class CandidatoView extends ViewMaster {
 					setInputError(16);
 				} else {
 					Display.setSuccessInputBorder(site_input);
+					site_input.setToolTipText(null);
 					unsetInputError(16);
 				}
 			}
@@ -738,11 +803,16 @@ public class CandidatoView extends ViewMaster {
 					int returnVal = foto_chooser.showOpenDialog(null);
 					if(returnVal == JFileChooser.APPROVE_OPTION) {
 						File file = foto_chooser.getSelectedFile();
-						outfile = FileUpload.copy(file, Integer.parseInt(numero_input.getText()));
+						String prefix = "";
+						if(cargo_hidden.getText().equals("2")) {
+							prefix = "gov_";
+						}
+						outfile = FileUpload.copy(file, prefix, Integer.parseInt(numero_input.getText()));
 						if(outfile != null) {
 							foto_hidden.setText(outfile.getName());
 							CandidatoView.this.setFoto_file(outfile);
 							foto_btn.setIcon(new ImageIcon(outfile.getPath()));
+							foto_btn.setToolTipText("Imagem selecionada: \"" + outfile.getName() + "\"");
 						} else {
 							foto_btn.setIcon(defaultIco);
 						}
@@ -769,10 +839,11 @@ public class CandidatoView extends ViewMaster {
 					if((cargo_comboBox.getSelectedIndex() != -1)) {
 						if(!numero_input.isEnabled()) {
 							numero_input.setEnabled(true);
-							numero_input.setText(party.getNumero().toString());
+							//numero_input.setText(party.getNumero().toString());
 						}
 					}
 					Display.setSuccessInputBorder(partido_comboBox);
+					partido_comboBox.setToolTipText("O número deste partido é: \"" + party.getNumero().toString() + "\"");
 					unsetInputError(32);
 					partido_hidden.setText(party.getId().toString());
 				}
@@ -796,16 +867,34 @@ public class CandidatoView extends ViewMaster {
 					office = (Cargo) cargo_comboBox.getSelectedItem();
 					numero_input.setDocument(new JTextFieldLimit(office.getDigitos().intValue(), JTextFieldLimit.DIGITS_ONLY)); //Setando um limite baseado no número de digitos do cargo
 					if(office.getId() == 1) { //Deputado
+						apelido_label.setText(((Deputado) person).getApelido());
 						apelido_label.setVisible(true);
 						apelido_input.setVisible(true);
+						
+						vice_nome_label.setVisible(false);
+						vice_nome_input.setVisible(false);
+						vice_foto_label.setVisible(false);
+						vice_foto_btn.setVisible(false);
+						
+						Display.setSuccessInputBorder(vice_nome_input);
+						unsetInputError(256);
 					} else { //Governador e Presidente
+						apelido_label.setVisible(false);
+						apelido_input.setVisible(false);
+						apelido_input.setText(null);
+						
 						vice_nome_label.setVisible(true);
 						vice_nome_input.setVisible(true);
 						vice_foto_label.setVisible(true);
 						vice_foto_btn.setVisible(true);
-						vice_nome_input.requestFocus(); //Forçar validação do campo
+						
+						String photo = (office.getId() == 2) ? ((Governador) person).getVice_nome() : ((Presidente) person).getVice_nome();
+						ImageIcon img = Display.pathToImageIcon(DefaultFiles.uploadPath + ((photo == null) ? "mini_empty.jpg" : photo)); //Forçar validação do campo
+						vice_nome_input.setText((office.getId() == 2) ? ((Governador) person).getVice_nome() : ((Presidente) person).getVice_nome()); //Forçar validação do campo
+						vice_foto_btn.setIcon(img);
 					}
 					Display.setSuccessInputBorder(cargo_comboBox);
+					cargo_comboBox.setToolTipText("Este cargo usa: " + office.getDigitos().toString() + " digitos");
 					unsetInputError(64);
 					cargo_hidden.setText(office.getId().toString());
 				}
@@ -846,6 +935,7 @@ public class CandidatoView extends ViewMaster {
 					setInputError(256);
 				} else {
 					Display.setSuccessInputBorder(vice_nome_input);
+					vice_nome_input.setToolTipText(null);
 					unsetInputError(256);
 				}
 			}
@@ -870,11 +960,16 @@ public class CandidatoView extends ViewMaster {
 					int returnVal = foto_chooser.showOpenDialog(null);
 					if(returnVal == JFileChooser.APPROVE_OPTION) {
 						File file = foto_chooser.getSelectedFile();
-						outfile = FileUpload.copy(file, "vice_", Integer.parseInt(numero_input.getText()));
+						String prefix = "vice_";
+						if(cargo_hidden.getText().equals("2")) {
+							prefix += "gov_";
+						}
+						outfile = FileUpload.copy(file, prefix, Integer.parseInt(numero_input.getText()));
 						if(outfile != null) {
 							vice_foto_hidden.setText(outfile.getName());
 							CandidatoView.this.setVice_foto_file(outfile);
 							vice_foto_btn.setIcon(new ImageIcon(outfile.getPath()));
+							vice_foto_btn.setToolTipText("Imagem selecionada: \"" + outfile.getName() + "\"");
 						} else {
 							vice_foto_btn.setIcon(defaultIcoVice);
 						}
@@ -951,29 +1046,54 @@ public class CandidatoView extends ViewMaster {
 		do {
 			result = JOptionPane.showConfirmDialog(null, panel, "Inserindo Candidato", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null);
 		} while((result == JOptionPane.OK_OPTION) && (this.inputError != 0));
+		//Candidato.register(person); //Recolocando
+		int ofId = person.getCargo().getId();
+		if(ofId == 1) { //Deputado
+			Deputado.register((Deputado) person); //Temporário
+		} else if(ofId == 2) { //Governador
+			Governador.register((Governador) person); //Temporário
+		} else { //Então é presidente
+			Presidente.register((Presidente) person); //Temporário
+		}
 		if(result == JOptionPane.OK_OPTION) {
-			App1Worker.insertCandidato(inputs);
+			if(!vice_foto_btn.isVisible()) {
+				if(this.vice_foto_file != null && this.vice_foto_file.exists()) {
+					this.vice_foto_file.delete();
+					this.vice_foto_file = null;
+				}
+			}
+			App1Worker.updateCandidato(inputs);
 			this.table.setModel(this.createTableModel());
 		} else {
-			if(this.foto_file != null && this.foto_file.exists()) {
-				this.foto_file.delete();
-				this.foto_file = null;
-			}
-			if(this.vice_foto_file != null && this.vice_foto_file.exists()) {
-				this.vice_foto_file.delete();
-				this.vice_foto_file = null;
+			int opt = JOptionPane.showConfirmDialog(null, "Deseja apagar as imagens?", "Cancelado, mas...", JOptionPane.YES_NO_OPTION);
+			if(opt == JOptionPane.YES_OPTION) {
+				if(this.foto_file != null && this.foto_file.exists()) {
+					this.foto_file.delete();
+					this.foto_file = null;
+				}
+				if(this.vice_foto_file != null && this.vice_foto_file.exists()) {
+					this.vice_foto_file.delete();
+					this.vice_foto_file = null;
+				}
 			}
 			this.inputError = 0; //resetando
 		}
 	}
 	
 	public void deleteScreen(int id) {
-/*		Candidato party = Candidato.get(id);
-		String mes = "Deseja realmente apagar este partido?\nSigla: " + party.getSigla() + "\nNome: " + party.getNome() + "\nNúmero: " + party.getNumero().toString();
+		Candidato person;
+		if(Deputado.exists(id)) {
+			person = Deputado.get(id);
+		} else if(Governador.exists(id)) {
+			person = Governador.get(id);
+		} else { //Então é presidente
+			person = Presidente.get(id);
+		}
+		String mes = "Deseja realmente apagar este candidato?\nPartido: " + person.getPartido().getNome() + "\nNome: " + person.getNome() + "\nNúmero: " + person.getNumero().toString();
 		int result = JOptionPane.showConfirmDialog(null, mes, "Confirmação de exclusão: Candidato", JOptionPane.OK_CANCEL_OPTION);
 		if(result == JOptionPane.OK_OPTION) {
 			App1Worker.deleteCandidato(id);
 			this.table.setModel(this.createTableModel());
 		}
-	*/}
+	}
 }

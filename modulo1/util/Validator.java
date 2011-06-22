@@ -19,10 +19,10 @@ public class Validator {
 				result = true;
 			}
 		} catch(NumberFormatException nfe) {
-			System.err.println(Debug.getTrace(nfe.getLocalizedMessage()));
+			System.err.println("Não é data.");
 			result = false;
 		} catch(IndexOutOfBoundsException iobe) {
-			System.err.println(Debug.getTrace(iobe.getLocalizedMessage()));
+			System.err.println("Data mal formada.");
 			result = false;
 		}
 		return result;
