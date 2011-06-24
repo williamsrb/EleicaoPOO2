@@ -48,11 +48,6 @@ SELECT pg_catalog.setval('"Partido_id_seq"', 1, false);
 
 ALTER TABLE "Partido" ALTER COLUMN id SET DEFAULT nextval('"Partido_id_seq"'::regclass);
 
---partidos de teste
-INSERT INTO "Partido" (id, sigla, nome, numero) VALUES (1, 'PMN', 'Partido Muito Nerd', 78);
-INSERT INTO "Partido" (id, sigla, nome, numero) VALUES (2, 'PXK', 'Partido Xuntos Konkistamos', 59);
-INSERT INTO "Partido" (id, sigla, nome, numero) VALUES (3, 'PR', 'Partido Repartido', 31);
-
 
 ALTER TABLE ONLY "Partido"
     ADD CONSTRAINT "Partido_numero_key" UNIQUE (numero);
@@ -60,6 +55,12 @@ ALTER TABLE ONLY "Partido"
 
 ALTER TABLE ONLY "Partido"
     ADD CONSTRAINT "Partido_pkey" PRIMARY KEY (id);
+
+
+--partidos de teste
+INSERT INTO "Partido" (sigla, nome, numero) VALUES ('PMN', 'Partido Muito Nerd', 78);
+INSERT INTO "Partido" (sigla, nome, numero) VALUES ('PXK', 'Partido Xuntos Konkistamos', 59);
+INSERT INTO "Partido" (sigla, nome, numero) VALUES ('PR', 'Partido Repartido', 31);
 
 
 REVOKE ALL ON TABLE "Partido" FROM PUBLIC;

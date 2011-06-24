@@ -78,6 +78,7 @@ public final class Partido {
 	//Métodos de controle da coleção de objetos paa evitar recriação de objetos após consultas
 	public static List<Partido> getAll() {
 		List<Partido> list = new ArrayList<Partido>();
+		tryAndCreate();
 		Integer index[] = ArrayCaster.objectCastInteger(all.keySet().toArray());
 		int i, size = index.length;
 		for(i = 0; i < size; i++) {

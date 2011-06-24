@@ -17,7 +17,7 @@ public final class Deputado extends Candidato {
 	private static Map<Integer, Deputado> allByNumber; //by Number
 	
 	//Construtor que usa gerador de id automático da classe mãe. Usado pelo controller para criar objetos desse tipo, em o id, que só gerado no banco de dados
-	private Deputado(Integer number, String name, Partido partido, Cargo cargo, Date nascimento, Character sexo, String foto, String site, String apelido) {
+	public Deputado(Integer number, String name, Partido partido, Cargo cargo, Date nascimento, Character sexo, String foto, String site, String apelido) {
 		super(number, name, partido, cargo, nascimento, sexo, foto, site, true);
 		this.apelido = apelido;
 	}

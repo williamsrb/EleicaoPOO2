@@ -45,11 +45,6 @@ SELECT pg_catalog.setval('"Cargo_id_seq"', 1, false);
 ALTER TABLE "Cargo" ALTER COLUMN id SET DEFAULT nextval('"Cargo_id_seq"'::regclass);
 
 
-INSERT INTO "Cargo" (id, digitos, nome) VALUES (1, 5, 'Deputado');
-INSERT INTO "Cargo" (id, digitos, nome) VALUES (2, 2, 'Governador');
-INSERT INTO "Cargo" (id, digitos, nome) VALUES (3, 2, 'Presidente');
-
-
 ALTER TABLE ONLY "Cargo"
     ADD CONSTRAINT "Cargo_nome_key" UNIQUE (nome);
 
@@ -57,6 +52,10 @@ ALTER TABLE ONLY "Cargo"
 ALTER TABLE ONLY "Cargo"
     ADD CONSTRAINT "Cargo_pkey" PRIMARY KEY (id);
 
+
+INSERT INTO "Cargo" (digitos, nome) VALUES (5, 'Deputado');
+INSERT INTO "Cargo" (digitos, nome) VALUES (2, 'Governador');
+INSERT INTO "Cargo" (digitos, nome) VALUES (2, 'Presidente');
 
 REVOKE ALL ON TABLE "Cargo" FROM PUBLIC;
 GRANT ALL ON TABLE "Cargo" TO PUBLIC;

@@ -112,8 +112,8 @@ public class Candidato {
 	//Métodos de controle da coleção de objetos paa evitar recriação de objetos após consultas
 	
 	public static List<Candidato> getAll(boolean parent) {
-		tryAndCreate();
 		List<Candidato> list = new ArrayList<Candidato>();
+		tryAndCreate();
 		Integer index[] = ArrayCaster.objectCastInteger(all.keySet().toArray());
 		int i, size = index.length;
 		for(i = 0; i < size; i++) {
